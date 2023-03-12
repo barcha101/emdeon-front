@@ -1,0 +1,91 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">LOGS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">Logs</span>
+        </div>
+    </div>
+</div>
+<div class="box mt-20">
+    <div class="filters flex g-20">
+        <div class="fc-50">
+            <select [(ngModel)]="filterUser" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Select User</option>
+                <option value="">All Users</option>
+                <option *ngFor="let user of userOpts" [value]="user._id">{{user.name}} - {{user.email}}</option>
+            </select>
+        </div>
+        <div class="fc-50">
+            <select [(ngModel)]="filterType" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Select Type</option>
+                <option value="">All Types</option>
+                <option *ngFor="let type of typeOpts" [value]="type">{{type}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead class="sortable">
+                <tr>
+                    <td><p>User</p></td>
+                    <td><p>Type</p></td>
+                    <td><p>Patient</p></td>
+                    <td (click)="sortDir = (sortKey == 'createdAt') ? !sortDir : sortDir; sortKey = 'createdAt'; getLogs();">
+                        <p>Log Time</p>
+                        <span *ngIf="sortKey == 'createdAt'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <!-- <td><p>View Patient</p></td> -->
+                    <td><p>View Data</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let item of list">
+                        <td>
+                            <div class="detailed">
+                                <div class="first">
+                                    <div class="initials">{{item.user.name | initials}}</div>
+                                </div>
+                                <div class="second">
+                                    <p class="big">{{item.user.name}}</p>
+                                    <p class="small">{{item.cellNum}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.type}}</p>
+                        </td>
+                        <td>
+                            <div class="detailed">
+                                <div routerLink="/patients/view/{{item.objectId._id}}" class="first">
+                                    <div class="initials">{{item.objectId.fName | initials}}</div>
+                                </div>
+                                <div class="second">
+                                    <p class="big">{{item.objectId.fName}} {{item.objectId.mName}} {{item.objectId.lName}}</p>
+                                    <p class="small">{{item.objectId.phone}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.createdAt ? (item.createdAt | date: 'd MMM y') : '-'}}</p>
+                                    <p class="small">{{item.createdAt | date: 'h:mm a'}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td>
+                            <a routerLink="/patients/view/{{item.objectId}}">View Patient</a>
+                        </td> -->
+                        <td>
+                            <button class="primary" (click)="viewData(item.data)">View Data</button>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">SETTINGS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Settings</span>
+            <i class="fas fa-caret-right"></i>
+            <span *ngIf="cUrl.endsWith('doctors')" class="item active">Doctors List</span>
+            <span *ngIf="cUrl.endsWith('cpt')" class="item active">CPT</span>
+        </div>
+    </div>
+</div>
+<div class="settings-container flex mt-20 g-20">
+    <div class="settings-sidebar flex-child fc-25">
+        <div class="links">
+            <div class="link" [ngClass]="{'active': cUrl.endsWith('doctors')}" routerLink="doctors">
+                <i class="fas fa-user-md"></i>
+                <span>Doctors List</span>
+            </div>
+            <div class="link" [ngClass]="{'active': cUrl.endsWith('cpt')}" routerLink="cpt">
+                <i class="fas fa-notes-medical"></i>
+                <span>CPT</span>
+            </div>
+        </div>
+    </div>
+    <div class="settings-child flex-child fc-75">
+        <router-outlet></router-outlet>
+    </div>
+</div>

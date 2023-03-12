@@ -1,0 +1,45 @@
+.paginator-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    .stats{
+        color: #94A4C4;
+        width: 25%;
+    }
+    .change-per-page{
+        width: 25%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        select{
+            width: 60px;
+            margin: 0px 12px;
+        }
+        p{
+            margin: 0px;
+            color: #94A4C4;
+        }
+    }
+    .paginator{
+        width: 50%;
+        margin-left: auto;
+        display: flex;
+        justify-content: right;
+        align-content: center;
+        align-items: center;
+        .page{
+            padding: 5px 13px;
+            color: #94A4C4;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.5s;
+            margin: 0px 5px;
+        }
+        .page.active,
+        .page:hover{
+            background-color: #05a3b1;
+            color: white;
+        }
+    }
+}

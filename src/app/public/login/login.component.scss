@@ -1,0 +1,58 @@
+.login-container{
+    .flex-child{
+        overflow: hidden;
+    }
+    .back-image{
+        background-image: url(../../../assets/images/banner.jpeg);
+        height: 100vh;
+        background-size: cover;
+        background-position-x: -915px;
+        .overlay{
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.63);
+            position: relative;
+            .content{
+                background: #ffffff66;
+                display: inline-block;
+                position: absolute;
+                bottom: 50px;
+                left: 50px;
+                padding: 20px;
+                border-radius: 6px;
+                .logo{
+                    width: 200px;
+                }
+            }
+        }
+    }
+    .signin-container{
+        width: 400px;
+        margin: 0 auto;
+        height: calc(100vh - 8% - 50px);
+        position: relative;
+        margin-top: 8%;
+        .title{
+            border-bottom: 3px solid #05a3b1;
+            display: inline-block;
+        }
+        .action{
+            margin-top: 40px;
+            button{
+                width: 100%;
+            }
+        }
+        .forgot{
+            text-align: center;
+            margin-top: 15px;
+        }
+        .copyrights{
+            position: absolute;
+            bottom: 0px;
+            text-align: center;
+            width: 400px;
+            p{
+                color: #8b8b8b;
+            }
+        }
+    }
+}

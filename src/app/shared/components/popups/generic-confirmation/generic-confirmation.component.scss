@@ -1,0 +1,18 @@
+.popup{
+    padding: 20px;
+    text-align: center;
+    h4{
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+    .desc{
+        margin-bottom: 20px;
+    }
+    .btns{
+        display: flex;
+        gap: 15px;
+        justify-content: right;
+    }
+}

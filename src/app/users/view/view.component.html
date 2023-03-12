@@ -1,0 +1,79 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">USERS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Users</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">{{user.name}}</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button *ngIf="user && user.metadata && !user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Super Admin'" class="danger" (click)="archive()"><i class="icon-bin"></i>&nbsp;Archive</button>
+        <button *ngIf="user && user.metadata && user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Super Admin'" class="danger" (click)="unarchive()"><i class="icon-bin"></i>&nbsp;Unrchive</button>
+        <button *ngIf="user._id != loggedInUser._id" class="primary-outline" routerLink="/users/edit/{{user._id}}"><i class="icon-edit"></i>&nbsp;Edit</button>
+        <button *ngIf="user._id == loggedInUser._id" class="primary-outline" routerLink="/profile/update"><i class="icon-edit"></i>&nbsp;Edit</button>
+    </div>
+</div>
+<div class="flex mt-20 g-20">
+    <div class="flex-child fc-40">
+        <div class="box user-details">
+            <div class="text-center">
+                <div *ngIf="!user.picture" class="initials">{{user.name | initials}}</div>
+                <img class="picture"  *ngIf="user.picture" [src]="user.picture" />
+                <p class="title">{{user.name}}</p>
+                <p class="regno">{{user.userIdString}}</p>
+                <div class="cats">
+                    <p class="chip blue">{{user.role}}</p>
+                </div>
+            </div>
+            <div *ngIf="user.metadata && user.metadata.createdOn" class="flex keyvalues g-20">
+                <p class="key fc-50">Added On</p>
+                <p class="value fc-50 ml-a text-right">{{user.metadata.createdOn | date: 'd MMM y, h:mm a'}}</p>
+            </div>
+            <div *ngIf="user.metadata && user.metadata.createdBy" class="flex keyvalues g-20">
+                <p class="key fc-50">Added By</p>
+                <p class="value fc-50 ml-a text-right"><a routerLink="/users/view/{{user.metadata.createdBy._id}}">{{user.metadata.createdBy.name}}</a></p>
+            </div>
+            <ng-container *ngIf="user.metadata && user.metadata.lastEditedBy && user.metadata.lastEditedOn">
+                <div class="separator"></div>
+                <p class="last-edited">Last edited on <span class="date">{{user.metadata.lastEditedOn | date: 'd MMM y, h:mm a'}}</span> by <a routerLink="/users/view/{{user.metadata.lastEditedBy._id}}">{{user.metadata.lastEditedBy.name}}</a></p>
+            </ng-container>
+        </div>
+    </div>
+    <div class="flex-child fc-60">
+        <div class="box basic-details">
+            <h3 class="title">Basic Details</h3>
+            <div *ngIf="this.loggedInUser.role == 'Super Admin' || user._id == loggedInUser._id" class="primary-outline" routerLink="/myaccount/{{user._id}}" class="flex g-20">
+                <div class="fc-50">
+                    <p class="login-key">Last Login</p>
+                    <p class="login-value">02 Jan 2022 2:23AM</p>
+                </div>
+                <div class="fc-50 ml-a text-right">
+                    <button class="primary" (click)="changePassword()"><i class="icon-lock"></i>&nbsp;&nbsp;Change Password</button>
+                </div>
+            </div>
+            <div class="separator"></div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Email</p>
+                <p class="value fc-50 ml-a text-right">{{user.email}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Phone</p>
+                <p class="value fc-50 ml-a text-right">{{user.cellNum}}</p>
+            </div>
+            <ng-container *ngIf="user.role == 'Doctor' || user.role == 'Finance'">
+                <div class="flex keyvalues g-20">
+                    <p class="key fc-50"><i class="icon-phone"></i>Doctors</p>
+                </div>
+                <div class="keywords chip-container">
+                    <div *ngFor="let word of user.doctors; let i=index;" class="chip primary">{{idWiseDoc[word].name}}</div>
+                </div>
+                <div *ngIf="!user.doctors || !user.doctors.length">
+                    No doctors added yet
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,185 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">PATIENTS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Patients</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">Finance</span>
+        </div>
+    </div>
+</div>
+<div class="box mt-20">
+    <div class="filters flex g-20">
+        <div class="search-bar fc-100">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+        </div>
+    </div>
+    <div class="table-container scrollable">
+        <table>
+            <thead class="sortable">
+                <tr>
+                    <td (click)="sortDir = (sortKey == 'fName') ? !sortDir : sortDir; sortKey = 'fName'; getPatients();">
+                        <p>Patient</p>
+                        <span *ngIf="sortKey == 'fName'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <p>Address</p>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'dob.dob') ? !sortDir : sortDir; sortKey = 'dob.dob'; getPatients();">
+                        <p>DoB</p>
+                        <span *ngIf="sortKey == 'dob.dob'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td>
+                        <p>Insurance</p>
+                    </td>
+                    <td>
+                        <p>Insurance ID</p>
+                    </td>
+                    <td>
+                        <p>Year</p>
+                    </td>
+                    <td>
+                        <p>Plan Name</p>
+                    </td>
+                    <td>
+                        <p>Group Number</p>
+                    </td>
+                    <td>
+                        <p>Effective Date</p>
+                    </td>
+                    <td>
+                        <p>Termination Date</p>
+                    </td>
+                    <td>
+                        <p>Deductable</p>
+                    </td>
+                    <td>
+                        <p>Co Pay</p>
+                    </td>
+                    <td>
+                        <p>Co Insurance</p>
+                    </td>
+                    <td>
+                        <p>Status</p>
+                    </td>
+                    <td>
+                        <p>Added On</p>
+                    </td>
+                    <td>
+                        <p>Appointment CPTs</p>
+                    </td>
+                    <td>
+                        <p>Appointment ICDs</p>
+                    </td>
+                    <td>
+                        <p>Appointment Copay</p>
+                    </td>
+                    <td>
+                        <p>Appointment Copay Desc</p>
+                    </td>
+                    <td>
+                        <p>Appointment DOS</p>
+                    </td>
+                    <td>
+                        <p>Appointment Seen On</p>
+                    </td>
+                    <td>
+                        <p>Appointment Doctor Seen</p>
+                    </td>
+                    <td>
+                        <p>Submit</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!list || !list.length">
+                    <td colspan="16" class="text-center">No patient found</td>
+                </tr>
+                <tr *ngFor="let item of list; let i=index;">
+                    <td>
+                        <div class="detailed">
+                            <div class="first">
+                                <div class="initials">{{item.fName | initials}}</div>
+                            </div>
+                            <div class="second">
+                                <p class="big">{{item.fName}} {{item.mName}} {{item.lName}}</p>
+                                <p class="small">{{item.phone}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="detailed">
+                            <div class="second">
+                                <p class="big">{{item.street}}</p>
+                                <p class="small">{{item.city}}-{{item.state}}-{{item.zip}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p>
+                    </td>
+                    <td> <p class="cell chip orange capitalize">{{item.insurances.insuranceName}}</p> </td>
+                    <td> <p class="cell">{{item.insurances.insuraceId}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.name}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.groupNumber}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.effectiveDate | date}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.terminationDate}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.deductable}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.copay}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.coinsurance}}</p> </td>
+                    <td> <p class="cell" *ngFor="let plan of item.insurances.plans">{{plan.year}}: {{plan.status}}</p> </td>
+                    <td>
+                        <div class="detailed">
+                            <div class="second">
+                                <p class="big">{{item.metadata.createdOn | date: 'd MMM y'}}</p>
+                                <p class="small">{{item.metadata.createdOn | date: 'h:mm a'}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.appointments[item.appointments.length-1].cpts.join(', ')}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.appointments[item.appointments.length-1].icds.join(', ')}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.appointments[item.appointments.length-1].copay}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.appointments[item.appointments.length-1].copayDesc}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">
+                            {{item.appointments[item.appointments.length-1].dos.month}}/
+                            {{item.appointments[item.appointments.length-1].dos.day}}/
+                            {{item.appointments[item.appointments.length-1].dos.year}}
+                        </p>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.appointments[item.appointments.length-1].seenOn | date}}</p>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let docs of item.docSeen">
+                            <ng-container *ngIf="docs._id == item.appointments[item.appointments.length-1].doctorSeen">
+                                <p class="cell">{{docs.name}}</p>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <button class="primary" (click)="submitCodes(item)">Submit</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum"
+            (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
+</div>

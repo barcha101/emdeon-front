@@ -1,0 +1,9 @@
+<div class="popup">
+    <i [ngClass]="data.iconClass"></i>
+    <h4>{{data.title}}</h4>
+    <div [innerHTML]="data.text" class="desc"></div>
+    <div class="btns">
+        <button class="grey-outline" (click)="reject()">{{data.rejectText}}</button>
+        <button [ngClass]="data.acceptBtnClass" (click)="accept()">{{data.acceptText}}</button>
+    </div>
+</div>

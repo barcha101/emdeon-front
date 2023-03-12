@@ -1,0 +1,72 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">USERS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">Users</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="primary" routerLink="/users/add">+ Add New</button>
+    </div>
+</div>
+<div class="box mt-20">
+    <div class="filters flex g-20">
+        <div class="search-bar fc-50">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterRole" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Role</option>
+                <option value="">All</option>
+                <option *ngFor="let role of roles" [value]="role">{{role}}</option>            </select>
+        </div>
+        <div class="fc-25 text-center">
+            <mat-checkbox style="margin-top: 6px;" [(ngModel)]="filterIsArchive" (ngModelChange)="filterUpdated()">Show Archived</mat-checkbox>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Name</p></td>
+                    <td><p>Email</p></td>
+                    <td><p>Role</p></td>
+                    <td><p>Last Login</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let item of list" routerLink="/users/view/{{item._id}}">
+                        <td>
+                            <div class="detailed">
+                                <div class="first">
+                                    <div class="initials">{{item.name | initials}}</div>
+                                </div>
+                                <div class="second">
+                                    <p class="big">{{item.name}}</p>
+                                    <p class="small">{{item.cellNum}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.email}}</p>
+                        </td>
+                        <td>
+                            <p class="chip blue">{{item.role}}</p>
+                        </td>
+                        <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.lastLoginDate ? (item.lastLoginDate | date: 'd MMM y') : '-'}}</p>
+                                    <p class="small">{{item.lastLoginDate | date: 'h:mm a'}}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
+    </div>
+</div>

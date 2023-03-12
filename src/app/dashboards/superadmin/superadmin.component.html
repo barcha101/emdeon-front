@@ -1,0 +1,154 @@
+<div class="box mt-20">
+    <h3 class="title">Days Till Last Appointment Report</h3>
+    <div class="filters flex g-20">
+        <div class="search-bar fc-75">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="days_filterSearch" debounce (debouncedModelUpdate)="days_filterUpdated()" placeholder="Search" />
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterDays" (ngModelChange)="days_filterUpdated()" class="basic">
+                <option value="" disabled selected>Days Passed</option>
+                <option value="">All</option>
+                <option value=">30">More than 30</option>
+                <option [value]="-1">Never</option>
+            </select>
+        </div>
+    </div>
+    <div class="table-container scrollable">
+        <table>
+            <thead>
+                <tr>
+                    <td>
+                        <p>Patient</p>
+                    </td>
+                    <td>
+                        <p>Days Passed</p>
+                    </td>
+                    <td>
+                        <p>Address</p>
+                    </td>
+                    <td>
+                        <p>Phone</p>
+                    </td>
+                    <td>
+                        <p>Insurance</p>
+                    </td>
+                    <td>
+                        <p>Plan Name</p>
+                    </td>
+                    <td>
+                        <p>Group Number</p>
+                    </td>
+                    <td>
+                        <p>Effective Date</p>
+                    </td>
+                    <td>
+                        <p>Termination Date</p>
+                    </td>
+                    <td>
+                        <p>Deductable</p>
+                    </td>
+                    <td>
+                        <p>Co Pay</p>
+                    </td>
+                    <td>
+                        <p>Co Insurance</p>
+                    </td>
+                    <td>
+                        <p>Status</p>
+                    </td>
+                    <td>
+                        <p>Added On</p>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!days_list || !days_list.length">
+                    <td colspan="14" class="text-center">No patient found</td>
+                </tr>
+                <tr *ngFor="let item of days_list;" routerLink="/patients/view/{{item._id}}">
+                    <td>
+                        <div class="detailed">
+                            <div class="first">
+                                <div class="initials">{{item.fName | initials}}</div>
+                            </div>
+                            <div class="second">
+                                <p class="big">{{item.fName}} {{item.mName}} {{item.lName}}</p>
+                                <p class="small">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.lastAppointmentDaysPassed > -1 ? (item.lastAppointmentDaysPassed | number: '1.0-0') : 'Never'}}</p>
+                    </td>
+                    <td>
+                        <div class="detailed">
+                            <div class="second">
+                                <p class="big">{{item.street}}</p>
+                                <p class="small">{{item.city}}-{{item.state}}-{{item.zip}}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.phone}}</p>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell chip orange capitalize">{{plan.year}}: {{plan.insuranceName}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.name}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.groupNumber}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.effectiveDate | date}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.terminationDate}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.deductable}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.copay}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.coinsurance}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <ng-container *ngFor="let plan of item.insurances" >
+                            <p *ngIf="plan.active" class="cell">{{plan.year}}: {{plan.status}}</p>
+                        </ng-container>
+                    </td>
+                    <td>
+                        <div class="detailed">
+                            <div class="second">
+                                <p class="big">{{item.metadata.createdOn | date: 'd MMM y'}}</p>
+                                <p class="small">{{item.metadata.createdOn | date: 'h:mm a'}}</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <app-paginator [totalCount]="days_totalCount" [perPage]="perPage" [pageNum]="days_pageNum"
+            (onPageChange)="days_pageChanged($event)"></app-paginator>
+</div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'fpi-front';
+
+  constructor(
+    public router: Router
+  ){}
+
+  public showSidebar = false;
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event: any) => {       
+      if(event instanceof NavigationEnd){
+        let currentUrl = event.url; 
+        if(currentUrl == '/' || currentUrl.indexOf('/login') >= 0){
+          this.showSidebar = false;
+        } else {
+          this.showSidebar = true;
+        }
+      }   
+    })  
+  }
 }

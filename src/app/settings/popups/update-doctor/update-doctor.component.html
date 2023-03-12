@@ -1,0 +1,50 @@
+<div class="popup">
+    <h4>{{data.type == 'add' ? 'Add Doctor' : 'Update Doctor'}}</h4>
+    <form #doctorForm="ngForm">
+        <div class="flex g-20">
+            <div class="input fc-50">
+                <p class="label">Name</p>
+                <input type="text" [(ngModel)]="doctor.name" name="name" required/>
+            </div>
+            <div class="input fc-50">
+                <p class="label">NPI</p>
+                <input type="text" [(ngModel)]="doctor.npi" name="npi" required/>
+            </div>
+        </div>
+        <div class="flex g-20">
+            <div class="input fc-50">
+                <p class="label">Tax ID</p>
+                <input type="text" [(ngModel)]="doctor.taxId" name="taxId"/>
+            </div>
+            <div class="input fc-50">
+                <p class="label">Taxonomy</p>
+                <input type="text" [(ngModel)]="doctor.taxonomy" name="taxonomy" required/>
+            </div>
+        </div>
+        <div class="flex g-20">
+            <div class="input fc-50">
+                <p class="label">Street Address</p>
+                <input type="text" [(ngModel)]="doctor.street" name="street" required/>
+            </div>
+            <div class="input fc-50">
+                <p class="label">City</p>
+                <input type="text" [(ngModel)]="doctor.city" name="city" required/>
+            </div>
+        </div>
+        <div class="flex g-20">
+            <div class="input fc-50">
+                <p class="label">State</p>
+                <input type="text" [(ngModel)]="doctor.state" name="state" required/>
+            </div>
+            <div class="input fc-50">
+                <p class="label">Zip</p>
+                <input type="text" [(ngModel)]="doctor.zip" name="zip" required/>
+            </div>
+        </div>
+        <div class="btns">
+            <button class="grey-outline" (click)="reject()">Cancel</button>
+            <button *ngIf="data.type == 'add'" class="primary" (click)="doctorForm.form.markAllAsTouched(); doctorForm.form.valid ? accept() : '' ">Add</button>
+            <button *ngIf="data.type == 'edit'" class="primary" (click)="doctorForm.form.markAllAsTouched(); doctorForm.form.valid ? accept() : '' ">Update</button>
+        </div>
+    </form>
+</div>

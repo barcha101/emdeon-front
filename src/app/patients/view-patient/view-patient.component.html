@@ -1,0 +1,285 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">PATIENTS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Patients</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">View Patient</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="primary-outline" routerLink="/patients/update/{{patientId}}"><i class="icon-edit"></i>&nbsp;Edit</button>
+    </div>
+</div>
+<div class="flex mt-20 g-20" style="    justify-content: center;">
+    <div class="flex-child fc-50">
+        <div class="box user-details">
+            <div class="text-center">
+                <div class="initials">{{patient.fName | initials}}</div>
+                <p class="title">{{patient.fName}}</p>
+                <p class="regno">{{patient.mName}} {{patient.lName}}</p>
+                <div class="cats">
+                    <p class="chip blue">{{patient.gender}}</p>
+                </div>
+                <div class="text-left">
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>DoB</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.dob.month}}/{{patient.dob.day}}/{{patient.dob.year}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Phone</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.phone}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Street Address</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.street}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>City</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.city}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>State</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.state}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Zip</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.zip}}</p>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+</div>
+<div class="mt-20 box">
+    <h1 class="title">Appointments</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Seen On</p></td>
+                    <td><p>Doctor Seen</p></td>
+                    <td><p>Status</p></td>
+                    <td><p>Doctor Account</p></td>
+                    <td><p>Copay</p></td>
+                    <td><p>Copay Desc</p></td>
+                    <td><p>DOS</p></td>
+                    <td><p>ICDs</p></td>
+                    <td><p>CPTs</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let app of patient.appointments">
+                        <td>
+                            <p class="cell">{{app.seenOn | date}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.doctorSeen?.name}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.status}}</p>
+                        </td>
+                        <td>
+                            <p class="cell"><a routerLink="/users/view/{{app.seenBy._id}}">{{app.seenBy.name}}</a></p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.copay}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.copayDesc}}</p>
+                        </td>
+                        <td>
+                            <p class="cell" *ngIf="app.dos">{{app.dos.month}}/{{app.dos.day}}/{{app.dos.year}}</p>
+                            <p class="cell" *ngIf="!app.dos">-</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.icds.join(', ')}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{app.cpts.join(', ')}}</p>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div *ngFor="let plan of patient.insurances; let i=index;" class="flex mt-20 g-20 box">
+    <div class="flex-child fc-50">
+        <div [ngClass]="{'mt-20': i != 0}" class="basic-details" style="    border-right: 1px solid #d7d7da; padding-right: 25px; box-sizing: border-box;">
+            <h3 class="title">Insurance <ng-container *ngIf="plan.year">({{plan.year}})</ng-container></h3>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Active Insurance</p>
+                <p class="value fc-50 ml-a text-right">{{plan.insuranceName ? plan.insuranceName : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Insurance Id</p>
+                <p class="value fc-50 ml-a text-right">{{plan.insuraceId ? plan.insuraceId : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Is Active</p>
+                <p class="value fc-50 ml-a text-right">{{plan.active ? 'Yes' : 'No'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Year</p>
+                <p class="value fc-50 ml-a text-right">{{plan.year ? plan.year : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Plan Name</p>
+                <p class="value fc-50 ml-a text-right">{{plan.name ? plan.name : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Group Number</p>
+                <p class="value fc-50 ml-a text-right">{{plan.groupNumber ? plan.groupNumber : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Effective Date</p>
+                <p class="value fc-50 ml-a text-right">{{plan.effectiveDate | date}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Termination Date</p>
+                <p class="value fc-50 ml-a text-right">{{plan.terminationDate}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Deductable</p>
+                <p class="value fc-50 ml-a text-right">{{plan.deductable ? plan.deductable : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Co Insurance</p>
+                <p class="value fc-50 ml-a text-right">{{plan.coinsurance ? plan.coinsurance : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Co Pay</p>
+                <p class="value fc-50 ml-a text-right">{{plan.copay ? plan.copay : '-'}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-phone"></i>Status</p>
+                <p class="value fc-50 ml-a text-right">{{plan.status ? plan.status : '-'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex-child fc-50">
+        <h3 class="title">Status History</h3>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <td><p>Status</p></td>
+                        <td><p>Updated By</p></td>
+                        <td><p>Updated On</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let his of plan.statusHistory">
+                            <td>
+                                <p class="cell">{{his.newStatus}}</p>
+                            </td>
+                            <td>
+                                <p class="cell"><a routerLink="/users/view/{{his.updatedBy._id}}">{{his.updatedBy.name}}</a></p>
+                            </td>
+                            <td>
+                                <p class="cell">{{his.updatedOn | date}}</p>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="mt-20 box">
+    <div class="flex">
+        <h1 class="title">Files</h1>
+    </div>
+    <div class="upload-container">
+        <h3>Upload New File</h3>
+        <div class="flex g-20">
+            <div class="input fc-50">
+                <p class="label">File Type <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="fileTypeModel" required #fileTypee="ngModel" name="fileTypee"/>
+                <ng-container *ngIf="fileTypee.touched">
+                    <p class="error" *ngIf="fileTypee.errors?.['required']">File Type is required</p>
+                </ng-container>
+            </div>
+            <div class="fc-25">
+                <input style="display:none;" type="file" name="upload-pdf" id="upload-pdf" accept="*.*" class="inputfile" (change)="onFileChange($event)">
+                <button id="uploadPdfButton" onclick="$('#upload-pdf').trigger('click');" class="primary-outline">{{attachBtnText}}</button>
+            </div>
+            <div class="fc-25">
+                <button class="primary" (click)="uploadFiles()">Upload</button>
+            </div>
+        </div>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>File Name</p></td>
+                    <td><p>File Type</p></td>
+                    <td><p>Uploaded On</p></td>
+                    <td><p>Uploaded By</p></td>
+                    <td><p>View</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let file of files">
+                        <td>
+                            <p class="cell">{{file.fileName}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{file.fileType}}</p>
+                        </td>            
+                        <td>
+                            <p class="cell">{{file.uploadedOn | date}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{file.uploadedBy?.name}}</p>
+                        </td>
+                        <td>
+                            <button (click)="getS3File(file.s3Key, file.fileName)" class="primary-outline">View File</button>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="separator mt-20"></div>
+<div *ngIf="patientId && patient && patient.metadata" class="item-history flex mt-20 g-20">
+    <div class="fc-33 ind-history box">
+        <p class="title">Created By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.createdBy && patient.metadata.createdBy.name" class="first">
+                <div class="initials">{{patient.metadata.createdBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.createdBy && patient.metadata.createdBy.name ? patient.metadata.createdBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.createdOn" class="small">{{patient.metadata.createdOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="fc-33 ind-history box">
+        <p class="title">Last Edited By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.lastEditedBy && patient.metadata.lastEditedBy.name" class="first">
+                <div class="initials">{{patient.metadata.lastEditedBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.lastEditedBy && patient.metadata.lastEditedBy.name ? patient.metadata.lastEditedBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.lastEditedOn" class="small">{{patient.metadata.lastEditedOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="fc-33 ind-history box">
+        <p class="title">Last Archived By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.deletedBy && patient.metadata.deletedBy.name" class="first">
+                <div class="initials">{{patient.metadata.deletedBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.deletedBy && patient.metadata.deletedBy.name ? patient.metadata.deletedBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.deletedOn" class="small">{{patient.metadata.deletedOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+</div>

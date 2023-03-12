@@ -1,0 +1,101 @@
+<div class="page-top-menu">
+    <div class="head-info">
+        <h3 class="title">PATIENTS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Patients</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">Bulk Import Patients</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="grey-outline" routerLink="/patients/list">Cancel</button>
+    </div>
+</div>
+
+<div class="box mt-20 text-center">
+    <input style="display:none;" type="file" name="sheet-file-ori" id="sheet-file-ori" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="inputfile" (change)="onFileChange($event)">
+    <button class="primary" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-file-excel"></i>&nbsp;Upload Excel File</button>
+</div>
+<div *ngIf="isDone" class="flex g-20 mt-20">
+    <div class="box fc-33">
+        <p class="mb-0">Total Patients</p>
+        <h1 class="mb-0">{{data.length}}</h1>
+    </div>
+    <div class="box fc-33">
+        <p class="mb-0">Total Errored Patients</p>
+        <h1 class="mb-0">{{errCount}}</h1>
+    </div>
+    <div class="box fc-33">
+        <p class="mb-0">Total Patients to be added</p>
+        <h1 class="mb-0">{{data.length - errCount}}</h1>
+    </div>
+</div>
+<div *ngIf="isDone" class="box mt-20">
+    <h3 class="title">Patients Found</h3>
+    <div class="table-container">
+        <table>
+            <thead class="sortable">
+                <tr>
+                    <td (click)="sortDir = (sortKey == 'fName') ? !sortDir : sortDir; sortKey = 'fName';">
+                        <p>First Name</p>
+                        <span *ngIf="sortKey == 'fName'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'mName') ? !sortDir : sortDir; sortKey = 'mName';">
+                        <p>Middle Name</p>
+                        <span *ngIf="sortKey == 'mName'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'lName') ? !sortDir : sortDir; sortKey = 'lName';">
+                        <p>Last Name</p>
+                        <span *ngIf="sortKey == 'lName'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'dob.dob') ? !sortDir : sortDir; sortKey = 'dob.dob';">
+                        <p>DoB</p>
+                        <span *ngIf="sortKey == 'dob.dob'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'insurances[0].insuranceName') ? !sortDir : sortDir; sortKey = 'insurances[0].insuranceName';">
+                        <p>Active Insurane Name</p>
+                        <span *ngIf="sortKey == 'insurances[0].insuranceName'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'insurances[0].insuraceId') ? !sortDir : sortDir; sortKey = 'insurances[0].insuraceId';">
+                        <p>Active Insurance Id</p>
+                        <span *ngIf="sortKey == 'insurances[0].insuraceId'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                    <td (click)="sortDir = (sortKey == 'error') ? !sortDir : sortDir; sortKey = 'error';">
+                        <p>Error</p>
+                        <span *ngIf="sortKey == 'error'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of data | sort:sortKey:sortDir;" [ngClass]="{'red-back': item.error}">
+                    <td><p class="cell">{{item.fName}}</p></td>
+                    <td><p class="cell">{{item.mName}}</p></td>
+                    <td><p class="cell">{{item.lName}}</p></td>
+                    <td><p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p></td>
+                    <td><p class="cell">{{item.insurances[0].insuranceName}}</p></td>
+                    <td><p class="cell">{{item.insurances[0].insuraceId}}</p></td>
+                    <td><p class="cell">{{item.error}}</p></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mt-20 text-right">
+            <button (click)="addVerifiedBulkImport()" class="primary">Proceed</button> 
+        </div>
+    </div>
+</div>

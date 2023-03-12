@@ -1,0 +1,48 @@
+<div class="text-right">
+    <button class="primary" (click)="addDoctor()">+ Add Doctor</button>
+</div>
+<div class="box mt-20">
+    <div class="table-container">
+        <div class="filters flex g-20">
+            <div class="search-bar fc-100">
+                <i class="fas fa-search"></i>
+                <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+            </div>
+        </div>
+        <table class="mt-20">
+            <thead>
+                <tr>
+                    <td><p>Name</p></td>
+                    <td><p>NPI</p></td>
+                    <td><p>Tax ID</p></td>
+                    <td><p>Taxonomy</p></td>
+                    <td><p>State</p></td>
+                    <td><p>City</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr  *ngFor="let item of list">
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.name}}</p>
+                    </td>
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.npi}}</p>
+                    </td>
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.taxId}}</p>
+                    </td>
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.taxonomy}}</p>
+                    </td>
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.state}}</p>
+                    </td>
+                    <td (click)="editDoctor(item)">
+                        <p class="cell">{{item.city}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)"></app-paginator>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="popup">
+    <h4>{{data.type == 'add' ? 'Add CPT' : 'Update CPT'}}</h4>
+    <form #doctorForm="ngForm">
+        <div class="flex g-20">
+            <div class="input fc-100">
+                <p class="label">Code</p>
+                <input type="text" [(ngModel)]="cpt.code" name="name" required/>
+            </div>
+        </div>
+        <div class="flex g-20">
+            <div class="input fc-100">
+                <p class="label">Description</p>
+                <input type="text" [(ngModel)]="cpt.desc" name="desc" required/>
+            </div>
+        </div>
+        <div class="flex g-20">
+            <div class="input fc-100">
+                <p class="label">Amount</p>
+                <input type="number" [(ngModel)]="cpt.amount" name="amount" required/>
+            </div>
+        </div>
+        <div class="btns">
+            <button class="grey-outline" (click)="reject()">Cancel</button>
+            <button *ngIf="data.type == 'add'" class="primary" (click)="doctorForm.form.markAllAsTouched(); doctorForm.form.valid ? accept() : '' ">Add</button>
+            <button *ngIf="data.type == 'edit'" class="primary" (click)="doctorForm.form.markAllAsTouched(); doctorForm.form.valid ? accept() : '' ">Update</button>
+        </div>
+    </form>
+</div>

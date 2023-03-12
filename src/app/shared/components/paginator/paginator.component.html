@@ -1,0 +1,26 @@
+<div *ngIf="startNum && endNum && pageNum" class="paginator-container">
+    <div class="stats">
+        Showing {{startNum}}-{{endNum}} of {{totalCount}} records
+    </div>
+    <div class="change-per-page">
+        <p>Show</p>
+        <select class="basic" [(ngModel)]="perPage" (ngModelChange)="perPageUpdatedLocal()">
+            <option value="" disabled selected>Per Page Items</option>
+            <option *ngFor="let opt of perPageOpts" [value]="opt">{{opt}}</option>
+        </select>
+        <p>items per page</p>
+    </div>
+    <div class="paginator">
+        <p class="page" *ngIf="pageNum > 1" (click)="pageClicked(pageNum-1)"><i class="fas fa-chevron-left"></i></p>
+
+        <p [ngClass]="{'active': pageNum == 1}" *ngIf="totalPages >= 1" (click)="pageClicked(1)" class="page">1</p>
+
+        <p *ngIf="pageNum > 2 && pageNum < totalPages && pageNum" (click)="pageClicked(pageNum-1)" class="page">{{pageNum-1}}</p>
+        <p *ngIf="pageNum > 1 && pageNum < totalPages && pageNum" class="page active">{{pageNum}}</p>
+        <p *ngIf="pageNum > 1 && pageNum < totalPages-1 && pageNum" (click)="pageClicked(pageNum+1)" class="page">{{pageNum+1}}</p>
+
+        <p [ngClass]="{'active': pageNum == totalPages}" *ngIf="totalPages > 1" (click)="pageClicked(totalPages)" class="page">{{totalPages}}</p>
+
+        <p class="page" *ngIf="pageNum < totalPages" (click)="pageClicked(pageNum+1)"><i class="fas fa-chevron-right"></i></p>
+    </div>
+</div>
