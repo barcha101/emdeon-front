@@ -1,0 +1,91 @@
+<ng-container *ngIf="!noPatientFound">
+    <div class="bc-contain">
+        <div class="titles">
+            <h3 class="title">PATIENTS</h3>
+        </div>
+        <div class="buttons">
+            <button class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+        </div>
+    </div>
+    <div class="box mt-20" style="padding: 0px;">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <p>File Name</p>
+                        </td>
+                        <td>
+                            <p>Total Patients</p>
+                        </td>
+                        <td>
+                            <p>Processing</p>
+                        </td>
+                        <td>
+                            <p>Found</p>
+                        </td>
+                        <td>
+                            <p>Dead</p>
+                        </td>
+                        <td>
+                            <p>Error</p>
+                        </td>
+                        <td>
+                            <p>Added On</p>
+                        </td>
+                        <td>
+                            <p>Export</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!list || !list.length">
+                        <td colspan="7" class="text-center">No file found</td>
+                    </tr>
+                    <tr *ngFor="let item of list;">
+                        <td (click)="getS3File(item._id.s3Key, item._id.fileName)">
+                            <p style="color: #8400d9;" class="cell">{{item._id.fileName}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.total}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.processing}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.found}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.dead}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.error}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item._id.createdAt | date: 'd MMM y h:mm a'}}</p>
+                        </td>
+                        <td (click)="exportPatients(item._id._id, item._id.fileName)">
+                            <p class="cell" style="color: #8400d9;"><i class="fas fa-download"></i>&nbsp;Export Results</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="noPatientFound" style="background-color: white;" class="no-patient">
+    <div class="no-patient-container">
+        <div class="act-no-patient">
+            <p>You need to import patients to get started. Click "Import Patients" button below to get started. Click on "Download File Format" to view the format to upload patients.</p>
+            <div class="flex g-20 buttons">
+                <div class="flex-child fc-50">
+                    <button class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download File Format</button>
+                </div>
+                <div class="flex-child fc-50">
+                    <button class="primary" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

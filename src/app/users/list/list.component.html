@@ -1,5 +1,5 @@
-<div class="page-top-menu">
-    <div class="head-info">
+<div class="bc-contain">
+    <div class="titles">
         <h3 class="title">USERS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
@@ -32,6 +32,7 @@
             <thead>
                 <tr>
                     <td><p>Name</p></td>
+                    <td><p>Username</p></td>
                     <td><p>Email</p></td>
                     <td><p>Role</p></td>
                     <td><p>Last Login</p></td>
@@ -51,6 +52,9 @@
                             </div>
                         </td>
                         <td>
+                            <p class="cell">{{item.username}}</p>
+                        </td>
+                        <td>
                             <p class="cell">{{item.email}}</p>
                         </td>
                         <td>
@@ -67,6 +71,6 @@
                     </tr>
             </tbody>
         </table>
-        <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
+        <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
     </div>
 </div>

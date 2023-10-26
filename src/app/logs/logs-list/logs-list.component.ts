@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ViewDataComponent } from '../view-data/view-data.component';
-import { LogsService } from './../../shared/services/logs.service';
-import { UsersService } from './../../shared/services/users.service';
+import { LogsService } from '../../shared/services/logs.service';
+import { UsersService } from '../../shared/services/users.service';
 
 @Component({
-  selector: 'app-logs-list',
+  selector: 'emdeon-logs-list',
   templateUrl: './logs-list.component.html',
   styleUrls: ['./logs-list.component.scss']
 })
@@ -16,7 +16,7 @@ export class LogsListComponent implements OnInit {
   public perPage = 10;
   public pageNum = 1;
 
-  public typeOpts = ['Add Patient', 'Update Patient', 'Doctor Visit', 'Biller Submission'];
+  public typeOpts = ['Add Patient', 'Update Patient'];
   public userOpts: any = [];
   public filterUser = '';
   public filterType = '';

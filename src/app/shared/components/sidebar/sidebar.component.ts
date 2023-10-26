@@ -4,7 +4,7 @@ import { SessionStorageService } from '../../services/session-storage.service';
 import { UsersService } from '../../services/users.service';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'emdeon-topbar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
       }   
     });
     this.user= SessionStorageService.getGenericJSON("user");
-    this.usersService.getUserDetails(this.user._id).subscribe(user => {
+    this.usersService.getMyInfo(this.user._id).subscribe(user => {
       this.userFromApi = user;
     })
   }

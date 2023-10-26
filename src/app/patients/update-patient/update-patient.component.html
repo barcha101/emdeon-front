@@ -1,23 +1,25 @@
-<div class="page-top-menu">
-    <div class="head-info">
-        <h3 class="title">PATIENTS</h3>
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">THIS PAGE DOES NOT WORK</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
             <span class="item">Patients</span>
             <i class="fas fa-caret-right"></i>
-            <span *ngIf="!patientId" class="item active">Add Patient</span>
-            <span *ngIf="patientId" class="item active">Update Patient</span>
+            <!-- <span *ngIf="!patientId" class="item active">Add Patient</span>
+            <span *ngIf="patientId" class="item active">Update Patient</span> -->
+            <span class="item active">THIS PAGE DOES NOT WORK</span>
         </div>
     </div>
     <div class="buttons">
-        <button class="grey-outline" routerLink="/patients/list">Cancel</button>
+        <button class="grey-outline" routerLink="/app">Cancel</button>
         <!-- <button *ngIf="patientId && patient && patient.metadata && !patient.metadata.isDeleted" class="danger" (click)="archive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Archive</button>
         <button *ngIf="patientId && patient && patient.metadata && patient.metadata.isDeleted" class="danger" (click)="unarchive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Unarchive</button> -->
         <button class="primary" (click)="catForm.form.markAllAsTouched(); catForm.form.valid ? submit() : '';">Save</button>
     </div>
 </div>
 <div class="box mt-20">
+    <h1>THIS PAGE DOES NOT WORK</h1>
     <h3 class="title mb-5">{{patientId ? 'Update Patient' : 'Add Patient'}}</h3>
     <form #catForm="ngForm" (submit)="submit()">
         <div class="flex g-20">
@@ -42,16 +44,23 @@
         </div>
         <div class="flex g-20">
             <div class="input fc-33">
-                <p class="label">Gender <span class="required">*</span></p>
-                <select type="text" [(ngModel)]="patient.gender" required #pGender="ngModel" name="pGender">
+                <p class="label">Gender</p>
+                <select type="text" [(ngModel)]="patient.gender" #pGender="ngModel" name="pGender">
                     <option value="">Select gender</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
-                <ng-container *ngIf="pGender.touched">
+                <!-- <ng-container *ngIf="pGender.touched">
                     <p class="error" *ngIf="pGender.errors?.['required']">Gender is required</p>
-                </ng-container>
+                </ng-container> -->
             </div>
+            <!-- <div class="input fc-33">
+                <p class="label">Gender <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="patient.gender" required #gender="ngModel" name="gender"/>
+                <ng-container *ngIf="gender.touched">
+                    <p class="error" *ngIf="gender.errors?.['required']">Gender is required</p>
+                </ng-container>
+            </div> -->
             <div class="input fc-33">
                 <p class="label">Phone <span class="required">*</span></p>
                 <input type="text" [(ngModel)]="patient.phone" required #pPhone="ngModel" name="pPhone"/>
@@ -59,9 +68,16 @@
                     <p class="error" *ngIf="pPhone.errors?.['required']">Phone is required</p>
                 </ng-container>
             </div>
+            <!-- <div class="input fc-33">
+                <p class="label">DoB <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="patient?.dob.dobStr" required #dobStr="ngModel" name="dobStr"/>
+                <ng-container *ngIf="dobStr.touched">
+                    <p class="error" *ngIf="dobStr.errors?.['required']">DoB is required</p>
+                </ng-container>
+            </div> -->
             <div class="input fc-33" style="position: relative;">
                 <p class="label">DoB <span class="required">*</span></p>
-                <input [(ngModel)]="patient.dob.dob" [matDatepicker]="pickerStart"  required #txDate="ngModel" name="txDate" placeholder="Date From" (ngModelChange)="dateUpdated()" class="basic" />
+                <input [(ngModel)]="patient.dob.dob" [matDatepicker]="pickerStart"  required #txDate="ngModel" name="txDate" placeholder="Date From" (ngModelChange)="dobUpdated()" class="basic" />
                 <mat-datepicker-toggle style="position: absolute; top: 23px; right: 5px;" matSuffix [for]="pickerStart"></mat-datepicker-toggle>
                 <mat-datepicker #pickerStart></mat-datepicker>
                 <ng-container *ngIf="txDate.touched">
@@ -101,114 +117,31 @@
                 </ng-container>
             </div>
         </div>
-    </form>
-    <!-- <div class="bottom-buttons text-right mt-20">
-        <button (click)="catForm.form.markAllAsTouched(); catForm.form.valid ? submit() : '';" class="primary">Save</button>
-    </div> -->
-</div>
-
-<div *ngFor="let insurance of patient.insurances; let i=index;" style="position: relative;" class="box mt-20">
-    <h3 class="title mb-5">Insurance <ng-container *ngIf="insurance.year">({{insurance.year}})</ng-container></h3>
-    <i *ngIf="patient.insurances.length > 1" (click)="patient.insurances.splice(i, 1);" class="fas fa-trash-alt"></i>
-    <form  #planForm="ngForm" (submit)="submit()">
-        <div class="flex g-20">
+        <div class="separator colored mt-50"></div>
+        <div class="flex g-20 mt-20">
             <div class="input fc-33">
-                <p class="label">Insurance Name</p>
-                <select type="text" [(ngModel)]="insurance.insuranceName" name="aInsurance{{i}}">
-                    <option value="">Select insurance</option>
-                    <option value="UHC">UHC</option>
-                    <option value="Humana">Humana</option>
-                    <option value="none">None</option>
-                </select>
+                <p class="label">City <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="patient.city" required #pCity="ngModel" name="pCity"/>
+                <ng-container *ngIf="pCity.touched">
+                    <p class="error" *ngIf="pCity.errors?.['required']">City is required</p>
+                </ng-container>
             </div>
             <div class="input fc-33">
-                <p class="label">Insurance Id </p>
-                <input type="text" [(ngModel)]="insurance.insuraceId" name="activeInsuraceId{{i}}"/>
+                <p class="label">State <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="patient.state" required #pState="ngModel" name="pState"/>
+                <ng-container *ngIf="pState.touched">
+                    <p class="error" *ngIf="pState.errors?.['required']">State is required</p>
+                </ng-container>
             </div>
             <div class="input fc-33">
-                <p class="label">Is Active </p>
-                <select type="text" [(ngModel)]="insurance.active" name="insIsActive{{i}}">
-                    <option value="">Select status</option>
-                    <option [value]="true">Active</option>
-                    <option [value]="false">Inactive</option>
-                </select>
-            </div>
-        </div>
-        <div class="flex g-20">
-            <div class="input fc-33">
-                <p class="label">Status </p>
-                <select type="text" [(ngModel)]="insurance.status" (ngModelChange)="statusUpdated(insurance)" name="status{{i}}">
-                    <option value="">Select status</option>
-                    <option value="accept">Accept</option>
-                    <option value="reject">Reject</option>
-                </select>
-            </div>
-            <div class="input fc-33">
-                <p class="label">Insurance Type </p>
-                <select type="text" [(ngModel)]="insurance.typee" name="type{{i}}">
-                    <option value="">Select Type</option>
-                    <option value="Primary">Primary</option>
-                    <option value="Secondary">Secondary</option>
-                    <option value="Tertiary">Tertiary</option>
-                </select>
-            </div>
-            <div class="input fc-33">
-               
-            </div>
-        </div>
-        <div *ngFor="let plan of insurance.plans; let j=index;" class="plan">
-            <i *ngIf="insurance.plans.length > 1" (click)="insurance.plans.splice(j, 1);" class="fas fa-trash-alt"></i>
-            <div class="flex g-20">
-                <div class="input fc-33">
-                    <p class="label">Year </p>
-                    <input type="text" [(ngModel)]="plan.year" name="pYear{{j}}"/>
-                </div>
-                <div class="input fc-33">
-                    <p class="label">Plan Name </p>
-                    <input type="text" [(ngModel)]="plan.name" name="plName{{j}}"/>
-                </div>
-                <div class="input fc-33">
-                    <p class="label">Group Number </p>
-                    <input type="text" [(ngModel)]="plan.groupNumber" name="groupNumber{{j}}"/>
-                </div>
-            </div>
-            <div class="flex g-20">
-                <div class="input fc-33" style="position: relative;">
-                    <p class="label">Effective Date </p>
-                    <input [(ngModel)]="plan.effectiveDate" [matDatepicker]="effectiveDatePick" name="effectiveDate{{j}}" class="basic" />
-                    <mat-datepicker-toggle style="position: absolute; top: 23px; right: 5px;" matSuffix [for]="effectiveDatePick"></mat-datepicker-toggle>
-                    <mat-datepicker #effectiveDatePick></mat-datepicker>
-                </div>
-                <div class="input fc-33" style="position: relative;">
-                    <p class="label">Termination Date </p>
-                    <input [(ngModel)]="plan.terminationDate"type="text" name="terminationDate{{j}}" class="basic" />
-                </div>
-                <div class="input fc-33">
-                    <p class="label">Deductable </p>
-                    <input type="text" [(ngModel)]="plan.deductable" name="deductable{{j}}"/>
-                </div>
-            </div>
-            <div class="flex g-20">
-                <div class="input fc-33">
-                    <p class="label">Co Insurance </p>
-                    <input type="text" [(ngModel)]="plan.coinsurance" name="coinsurance{{j}}"/>
-                </div>
-                <div class="input fc-33">
-                    <p class="label">Co Pay </p>
-                    <input type="text" [(ngModel)]="plan.copay" name="copay{{j}}"/>
-                </div>
-                <div class="input fc-33">
-                    <a style="position: relative; top: 32px; text-align: center; display: block;" (click)="insurance.plans.push({})" class="primary">Add Another Plan</a>
-                </div>
+                <p class="label">Zip Code <span class="required">*</span></p>
+                <input type="text" [(ngModel)]="patient.zip" required #pZip="ngModel" name="pZip"/>
+                <ng-container *ngIf="pZip.touched">
+                    <p class="error" *ngIf="pZip.errors?.['required']">Zip code is required</p>
+                </ng-container>
             </div>
         </div>
     </form>
-    <!-- <div class="bottom-buttons text-right mt-20">
-        <button (click)="planForm.form.markAllAsTouched(); planForm.form.valid ? submit() : '';" class="primary">Save</button>
-    </div> -->
-</div>
-<div class="mt-20 text-center">
-    <button (click)="addInsurance()" class="primary-outline">Add Insurance</button>
 </div>
 
 <div *ngIf="patientId && patient && patient.metadata" class="item-history flex mt-20 g-20">

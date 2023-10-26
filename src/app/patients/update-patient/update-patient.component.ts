@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { SnackBarService } from './../../shared/services/snack-bar.service';
+import { SnackBarService } from '../../shared/services/snack-bar.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { PatientsService } from './../../shared/services/patients.service';
+import { PatientsService } from '../../shared/services/patients.service';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
 
 @Component({
-  selector: 'app-update-patient',
+  selector: 'emdeon-update-patient',
   templateUrl: './update-patient.component.html',
   styleUrls: ['./update-patient.component.scss']
 })
@@ -46,7 +46,7 @@ export class UpdatePatientComponent implements OnInit {
     }
   }
 
-  dateUpdated(){
+  dobUpdated(){
     this.patient.dob.month = this.patient.dob.dob.getMonth()+1;
     this.patient.dob.day = this.patient.dob.dob.getDate();
     this.patient.dob.year = this.patient.dob.dob.getFullYear();
@@ -100,7 +100,7 @@ export class UpdatePatientComponent implements OnInit {
 
   update(){
     this.patientsService.update(this.patient).subscribe((d: any) => {
-      this.router.navigate(['/patients/list/']);
+      this.router.navigate(['/app/']);
     });
   }
 
@@ -119,8 +119,8 @@ export class UpdatePatientComponent implements OnInit {
 
   add(){
     this.patientsService.add(this.patient).subscribe((d: any) => {
-      // this.router.navigate(['/patients/view/'+d._id]);
-      this.router.navigate(['/patients/list/']);
+      // this.router.navigate(['/app/view/'+d._id]);
+      this.router.navigate(['/app/']);
     });
   }
 

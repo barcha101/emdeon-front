@@ -1,57 +1,68 @@
-.login-container{
+.lc-top{
+    position: relative;
     .flex-child{
         overflow: hidden;
     }
-    .back-image{
-        background-image: url(../../../assets/images/banner.jpeg);
+    .bg{
+        // background-image: url(../../../assets/images/banner.jpeg);
+        background-color: #2e308e;
         height: 100vh;
         background-size: cover;
-        background-position-x: -915px;
+        // background-position-x: -915px;
         .overlay{
             height: 100vh;
             background-color: rgba(0, 0, 0, 0.63);
             position: relative;
             .content{
-                background: #ffffff66;
+                // background: linear-gradient(164deg, #ffffff44 36.13%, #ffffff99 80.67%);
+                background-color: white;
                 display: inline-block;
                 position: absolute;
-                bottom: 50px;
-                left: 50px;
+                top: 15%;
+                left: calc(50vw - 220px);
                 padding: 20px;
-                border-radius: 6px;
-                .logo{
-                    width: 200px;
+                border-radius: 0px;
+                .fc{
+                    width: 400px;
+                    margin: 0 auto;
+                    position: relative;
+                    .logo{
+                        width: 200px;
+                        margin: 0 auto;
+                        display: block;
+                    }
+                    .title{
+                        margin-top: 20px;
+                        color: #3f3f3f;
+                        border-bottom:1px solid #8400d9;
+                        text-align: center;
+                        font-size: 18px;
+                        padding-bottom: 5px;
+                    }
+                    .label{
+                        // color: white;
+                        color: #3f3f3f;
+                    }
+                    .action{
+                        margin-top: 40px;
+                        button{
+                            width: 100%;
+                        }
+                    }
+                    .forgot{
+                        text-align: center;
+                        margin-top: 15px;
+                    }
+                    .copyrights{
+                        position: absolute;
+                        bottom: 0px;
+                        text-align: center;
+                        width: 400px;
+                        p{
+                            color: #8b8b8b;
+                        }
+                    }
                 }
-            }
-        }
-    }
-    .signin-container{
-        width: 400px;
-        margin: 0 auto;
-        height: calc(100vh - 8% - 50px);
-        position: relative;
-        margin-top: 8%;
-        .title{
-            border-bottom: 3px solid #05a3b1;
-            display: inline-block;
-        }
-        .action{
-            margin-top: 40px;
-            button{
-                width: 100%;
-            }
-        }
-        .forgot{
-            text-align: center;
-            margin-top: 15px;
-        }
-        .copyrights{
-            position: absolute;
-            bottom: 0px;
-            text-align: center;
-            width: 400px;
-            p{
-                color: #8b8b8b;
             }
         }
     }

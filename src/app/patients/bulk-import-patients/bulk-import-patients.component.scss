@@ -1,0 +1,49 @@
+.import-section{
+    .main-container{
+        display: flex;
+        gap: 20px;
+        justify-content: space-between;
+        .first{
+            width: 33%;
+            border-right: 1px solid lightgrey;
+            padding-right: 30px;
+            box-sizing: border-box;
+            .sns{
+                margin-top: 20px;
+                .ind-range{
+                    display: flex;
+                    gap: 20px;
+                    border: 1px solid lightgrey;
+                    padding: 0px 10px 10px 10px;
+                    position: relative;
+                    margin-top: 10px;
+                    .input{
+                        width: 50%;
+                    }
+                    .fa-minus-circle{
+                        position: absolute;top: -7px;right: -8px;color: red;cursor: pointer;font-size: 18px;background-color: white;
+                    }
+                }
+                .add-range{
+                    width: 100%;
+                    text-align: center;
+                    margin-top: 20px;
+                }
+            }
+        }
+        .second{
+            text-align: center;
+            width: 33%;
+            border-right: 1px solid lightgrey;
+            padding-right: 30px;
+            padding-left: 30px;
+            box-sizing: border-box;
+        }
+        .third{
+            width: 33%;
+            text-align: right;
+            padding-left: 30px;
+            box-sizing: border-box;
+        }
+    }
+}

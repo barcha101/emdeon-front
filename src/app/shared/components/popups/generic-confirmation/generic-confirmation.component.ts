@@ -11,7 +11,7 @@ export interface DialogData {
 }
 
 @Component({
-  selector: 'app-generic-confirmation',
+  selector: 'emdeon-generic-confirmation',
   templateUrl: './generic-confirmation.component.html',
   styleUrls: ['./generic-confirmation.component.scss']
 })

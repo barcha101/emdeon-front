@@ -18,8 +18,7 @@ import { ModelChangeDebounceDirective } from './directives/model-change-debounce
 import { GenericConfirmationComponent } from './components/popups/generic-confirmation/generic-confirmation.component';
 import { ChangeUserPasswordComponent } from './components/popups/change-user-password/change-user-password.component';
 import { SortPipe } from './pipes/sort.pipe';
-
-
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -43,7 +42,8 @@ import { SortPipe } from './pipes/sort.pipe';
     MatAutocompleteModule,
     MatNativeDateModule,
     MatDatepickerModule,
-    RouterModule
+    RouterModule,
+    ToastrModule
   ],
   exports: [
     ReactiveFormsModule, FormsModule,
@@ -61,7 +61,8 @@ import { SortPipe } from './pipes/sort.pipe';
     RouterModule,
     InitialsPipe,
     ModelChangeDebounceDirective,
-    SortPipe
+    SortPipe,
+    ToastrModule
   ]
 })
 export class SharedModule { }

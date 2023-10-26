@@ -5,11 +5,10 @@ import { url } from 'inspector';
 import { GenericConfirmationComponent } from 'src/app/shared/components/popups/generic-confirmation/generic-confirmation.component';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
 import { SnackBarService } from 'src/app/shared/services/snack-bar.service';
-import { UsersService } from './../../shared/services/users.service';
-import { DoctorsService } from './../../shared/services/doctors.service';
+import { UsersService } from '../../shared/services/users.service';
 
 @Component({
-  selector: 'app-update',
+  selector: 'emdeon-update',
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss']
 })
@@ -21,10 +20,9 @@ export class UpdateComponent implements OnInit {
     public router: Router,
     public usersService: UsersService,
     public snackBarService: SnackBarService,
-    private doctorsService: DoctorsService
   ) { }
 
-  public roles = ['Super Admin', 'Admin', 'Doctor', 'Finance'];
+  public roles = ['Admin', 'User'];
 
   public userId: any = '';
 
@@ -53,40 +51,17 @@ export class UpdateComponent implements OnInit {
       this.userId = this.loggedInUser._id;
     }
     if(this.userId){
-      this.usersService.getUserDetails(this.userId).subscribe((d: any) => {
+      this.usersService.getMyInfo(this.userId).subscribe((d: any) => {
         this.user = d;
         if(!this.user.permissions){
           this.user.permissions = {};
         }
       });
     }
-    this.getDoctors();
   }
 
-  getDoctors(){
-    this.doctorsService.list({
-      query: {
-        filterSearch: '',
-        filterIsArchive: false
-      },
-      pagination: {
-        perPage: 500,
-        pageNum: 1
-      }
-    }).subscribe((resp: any) => {
-      this.idWiseDoc = {};
-      this.docList = resp.list;
-      this.docList.forEach((doc: any) => {
-        this.idWiseDoc[doc._id] = doc;
-      });
-    })
-  }
 
   submit(){
-    if((!this.user.doctors || !this.user.doctors.length) && this.user.role == 'Doctor'){
-      this.snackBarService.errorMessage('Add atleast one doctor to continue');
-      return;
-    }
     if(this.userId){
       this.update();
     } else {
@@ -107,7 +82,7 @@ export class UpdateComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if(result){
         this.isLoading = true;
         this.usersService.editUserDetails(this.user).subscribe((d: any) => {
@@ -132,7 +107,7 @@ export class UpdateComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if(result){
         this.isLoading = true;
         this.usersService.add(this.user).subscribe((d: any) => {

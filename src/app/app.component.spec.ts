@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'fpi-front'`, () => {
+  it(`should have as title 'emdeon-system-front'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('fpi-front');
+    expect(app.title).toEqual('emdeon-system-front');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('fpi-front app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('emdeon-system-front app is running!');
   });
 });

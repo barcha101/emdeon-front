@@ -1,0 +1,37 @@
+.filters.bulk{
+    border: 1px solid #ff9d1a;
+    max-width: 660px;
+    padding: 10px;
+    align-content: center;
+    align-items: center;
+    margin: 0 auto;
+    border-radius: 0px;
+    background-color: rgba(255, 157, 26, 0.07);
+    margin-top: 20px;
+    p{
+        margin: 0px;
+    }
+}
+
+.top-stats{
+    .stat{
+        padding: 5px 15px;
+    }
+    h1{
+        margin: 0px;
+        font-size: 28px;
+    }
+    h2{
+        margin: 0px;
+        font-size: 18px;
+    }
+}
+
+.no-patient{
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0px 3px 8px 0px #8400d97a;
+    margin-top: 6%;
+}

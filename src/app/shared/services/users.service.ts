@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from './../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { SnackBarService } from './snack-bar.service';
@@ -28,12 +28,12 @@ export class UsersService {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/login', { email, password });
   }
 
-  loginWithCode(email: any, password: any, code: any) {
-    return this.HttpClientObj.post(this.apiUrlPrefix + '/loginWithCode', { email, password, code });
+  validateLoginCode(email: any, password: any, code: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/validateLoginCode', { email, password, code });
   }
 
-  sendLoginCode(email: any, password: any) {
-    return this.HttpClientObj.post(this.apiUrlPrefix + '/sendLoginCode', { email, password });
+  confirmUsernamePassword(email: any, password: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/confirmUsernamePassword', { email, password });
   }
 
   signup(email: any, password: any, cellNum: any, name: any) {
@@ -44,8 +44,8 @@ export class UsersService {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/list', data);
   }
 
-  getUserDetails(_id: any) {
-    return this.HttpClientObj.post(this.apiUrlPrefix + '/getUserDetails', { _id });
+  getMyInfo(_id: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/getMyInfo', { _id });
   }
 
   removeUser(userId: any, archive: any) {

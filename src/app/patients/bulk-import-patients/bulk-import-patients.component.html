@@ -1,38 +1,81 @@
-<div class="page-top-menu">
-    <div class="head-info">
-        <h3 class="title">PATIENTS</h3>
-        <div class="breadcrumb">
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">IMPORT PATIENTS</h3>
+        <!-- <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
             <span class="item">Patients</span>
             <i class="fas fa-caret-right"></i>
             <span class="item active">Bulk Import Patients</span>
-        </div>
+        </div> -->
     </div>
     <div class="buttons">
-        <button class="grey-outline" routerLink="/patients/list">Cancel</button>
+        <button class="grey-outline" routerLink="/app">Cancel</button>
+        <button  *ngIf="data && data.length" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
+        <button *ngIf="isDone" (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processors for {{data.length - errCount}} patients</button> 
     </div>
 </div>
 
-<div class="box mt-20 text-center">
-    <input style="display:none;" type="file" name="sheet-file-ori" id="sheet-file-ori" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="inputfile" (change)="onFileChange($event)">
-    <button class="primary" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-file-excel"></i>&nbsp;Upload Excel File</button>
+<div class="box mt-20 import-section">
+    <div class="main-container">
+        <div class="first">
+            <p class="title">Step 1: Select Processors</p>
+            <div class="check-container">
+                <mat-checkbox [(ngModel)]="process.eligibility">Find Eligibility</mat-checkbox>
+                <mat-checkbox style="margin-left: 20px;" [(ngModel)]="process.sns">Find SNS</mat-checkbox>
+            </div>
+            <div *ngIf="process.sns" class="sns">
+                <p class="title">Choose CPT Code Ranges for SNS</p>
+                <div class="ind-range" *ngFor="let range of process.cptCodes; let i=index;">
+                    <i *ngIf="process.cptCodes.length > 1" (click)="process.cptCodes.splice(i,1)" class="fas fa-minus-circle"></i>
+                    <div class="input">
+                        <p class="label">Start</p>
+                        <input [disabled]="isDone" type="text" [(ngModel)]="range.start" required name="start{{i}}"/>
+                    </div>
+                    <div class="input">
+                        <p class="label">End</p>
+                        <input [disabled]="isDone" type="text" [(ngModel)]="range.end" required name="end{{i}}"/>
+                    </div>
+                </div>
+                <div class="add-range">
+                    <button *ngIf="!isDone" class="primary-outline" (click)="process.cptCodes.push({start: '', end: ''})">Add Another Range</button>
+                </div>
+            </div>
+        </div>
+        <div class="second">
+            <p class="title">Step 2: Choose Excel File </p>
+            <input style="display:none;" type="file" name="sheet-file-ori" id="sheet-file-ori" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="inputfile" (change)="onFileChange($event)">
+            <div *ngIf="!file || !file.name" class="no-file">
+                <button class="primary" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose File</button>
+            </div>
+            <div *ngIf="file && file.name" class="yes-file">
+                <p class="filename">{{file.name}}</p>
+                <button  *ngIf="!isDone" class="primary-outline" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
+            </div>
+            <p style="color: darkgrey; margin-top: 10px; font-size: 12px;">* Maximum 20,000 patients per file</p>
+        </div>
+        <div class="third">
+            <p class="title">Step 3: Submit for Processing </p>
+            <button  *ngIf="!isDone" class="primary" (click)="submitFile()"><i class="fas fa-cogs"></i>&nbsp;Submit</button>
+        </div>
+    </div>
 </div>
 <div *ngIf="isDone" class="flex g-20 mt-20">
     <div class="box fc-33">
-        <p class="mb-0">Total Patients</p>
+        <p class="mb-0">Total Found in File</p>
         <h1 class="mb-0">{{data.length}}</h1>
     </div>
     <div class="box fc-33">
-        <p class="mb-0">Total Errored Patients</p>
-        <h1 class="mb-0">{{errCount}}</h1>
+        <p class="mb-0">Total Errors - Incorrect Info</p>
+        <h1 class="mb-0" style="display: inline;">{{errCount}}</h1>
+        <button  *ngIf="data && data.length" style="margin-left: 20px;" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
     </div>
     <div class="box fc-33">
-        <p class="mb-0">Total Patients to be added</p>
+        <p class="mb-0">Total Patients - Correct Info</p>
         <h1 class="mb-0">{{data.length - errCount}}</h1>
     </div>
 </div>
-<div *ngIf="isDone" class="box mt-20">
+<div *ngIf="isDone && false" class="box mt-20">
     <h3 class="title">Patients Found</h3>
     <div class="table-container">
         <table>
@@ -44,33 +87,21 @@
                             <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
                         </span>
                     </td>
-                    <td (click)="sortDir = (sortKey == 'mName') ? !sortDir : sortDir; sortKey = 'mName';">
-                        <p>Middle Name</p>
-                        <span *ngIf="sortKey == 'mName'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
                     <td (click)="sortDir = (sortKey == 'lName') ? !sortDir : sortDir; sortKey = 'lName';">
                         <p>Last Name</p>
                         <span *ngIf="sortKey == 'lName'" class="sort">
                             <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
                         </span>
                     </td>
+                    <td (click)="sortDir = (sortKey == 'subscriberId') ? !sortDir : sortDir; sortKey = 'subscriberId';">
+                        <p>Subscriber Id</p>
+                        <span *ngIf="sortKey == 'subscriberId'" class="sort">
+                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                        </span>
+                    </td>
                     <td (click)="sortDir = (sortKey == 'dob.dob') ? !sortDir : sortDir; sortKey = 'dob.dob';">
                         <p>DoB</p>
                         <span *ngIf="sortKey == 'dob.dob'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
-                    <td (click)="sortDir = (sortKey == 'insurances[0].insuranceName') ? !sortDir : sortDir; sortKey = 'insurances[0].insuranceName';">
-                        <p>Active Insurane Name</p>
-                        <span *ngIf="sortKey == 'insurances[0].insuranceName'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
-                    <td (click)="sortDir = (sortKey == 'insurances[0].insuraceId') ? !sortDir : sortDir; sortKey = 'insurances[0].insuraceId';">
-                        <p>Active Insurance Id</p>
-                        <span *ngIf="sortKey == 'insurances[0].insuraceId'" class="sort">
                             <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
                         </span>
                     </td>
@@ -83,19 +114,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of data | sort:sortKey:sortDir;" [ngClass]="{'red-back': item.error}">
+                <!-- <tr *ngFor="let item of data | sort:sortKey:sortDir;" [ngClass]="{'red-back': item.error}">
                     <td><p class="cell">{{item.fName}}</p></td>
-                    <td><p class="cell">{{item.mName}}</p></td>
                     <td><p class="cell">{{item.lName}}</p></td>
+                    <td><p class="cell">{{item.phone}}</p></td>
+                    <td><p class="cell">{{item.subscriberId}}</p></td>
                     <td><p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p></td>
-                    <td><p class="cell">{{item.insurances[0].insuranceName}}</p></td>
-                    <td><p class="cell">{{item.insurances[0].insuraceId}}</p></td>
+                    <td><p class="cell">{{item.cpt}}</p></td>
                     <td><p class="cell">{{item.error}}</p></td>
-                </tr>
+                </tr> -->
+                <ng-container *ngFor="let item of data">
+                    <tr *ngIf="item.error" [ngClass]="{'red-back': item.error}">
+                        <td><p class="cell">{{item.fName}}</p></td>
+                        <td><p class="cell">{{item.lName}}</p></td>
+                        <td><p class="cell">{{item.subscriberId}}</p></td>
+                        <td><p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p></td>
+                        <td><p class="cell">{{item.error}}</p></td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
-        <div class="mt-20 text-right">
-            <button (click)="addVerifiedBulkImport()" class="primary">Proceed</button> 
+        <div class="mt-20 text-right"> 
+            <button (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processors for {{data.length - errCount}} patients</button> 
         </div>
     </div>
 </div>

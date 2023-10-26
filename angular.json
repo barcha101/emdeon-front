@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "fpi-front": {
+    "emdeon-system-front": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/fpi-front",
+            "outputPath": "dist/emdeon-system-front",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -58,6 +58,195 @@
               ],
               "outputHashing": "all"
             },
+            "medex": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.medex.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "bio": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.bio.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "immac": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.immac.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "lonestar": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.lonestar.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "quicklab": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.quicklab.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "chicago": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.chicago.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "alameer": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.alameer.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "eligibility": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.eligibility.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "eligibilityOthers": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.eligibility-others.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -73,10 +262,37 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "fpi-front:build:production"
+              "browserTarget": "emdeon-system-front:build:production"
+            },
+            "medex": {
+              "browserTarget": "emdeon-system-front:build:medex"
+            },
+            "bio": {
+              "browserTarget": "emdeon-system-front:build:bio"
+            },
+            "immac": {
+              "browserTarget": "emdeon-system-front:build:immac"
+            },
+            "lonestar": {
+              "browserTarget": "emdeon-system-front:build:lonestar"
+            },
+            "quicklab": {
+              "browserTarget": "emdeon-system-front:build:quicklab"
+            },
+            "chicago": {
+              "browserTarget": "emdeon-system-front:build:chicago"
+            },
+            "alameer": {
+              "browserTarget": "emdeon-system-front:build:alameer"
             },
             "development": {
-              "browserTarget": "fpi-front:build:development"
+              "browserTarget": "emdeon-system-front:build:development"
+            },
+            "eligibility": {
+              "browserTarget": "emdeon-system-front:build:eligibility"
+            },
+            "eligibilityOthers": {
+              "browserTarget": "emdeon-system-front:build:eligibilityOthers"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +300,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fpi-front:build"
+            "browserTarget": "emdeon-system-front:build"
           }
         },
         "test": {
@@ -109,5 +325,5 @@
       }
     }
   },
-  "defaultProject": "fpi-front"
+  "defaultProject": "emdeon-system-front"
 }

@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { UsersService } from './../../shared/services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from 'src/app/shared/services/snack-bar.service';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
 import { GenericConfirmationComponent } from 'src/app/shared/components/popups/generic-confirmation/generic-confirmation.component';
 import { ChangeUserPasswordComponent } from 'src/app/shared/components/popups/change-user-password/change-user-password.component';
-import { DoctorsService } from 'src/app/shared/services/doctors.service';
 
 @Component({
-  selector: 'app-view',
+  selector: 'emdeon-view',
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.scss']
 })
@@ -21,7 +20,6 @@ export class ViewComponent implements OnInit {
     private usersService: UsersService,
     public router: Router,
     private snackBarService: SnackBarService,
-    private doctorsService: DoctorsService
 
   ) { }
   
@@ -41,32 +39,12 @@ export class ViewComponent implements OnInit {
       this.userId = this.loggedInUser._id;
     }
     this.getUser();
-    this.getDoctors();
   }
 
   getUser(){
-    this.usersService.getUserDetails(this.userId).subscribe((d: any) => {
+    this.usersService.getMyInfo(this.userId).subscribe((d: any) => {
       this.user = d;
     });
-  }
-
-  getDoctors(){
-    this.doctorsService.list({
-      query: {
-        filterSearch: '',
-        filterIsArchive: false
-      },
-      pagination: {
-        perPage: 500,
-        pageNum: 1
-      }
-    }).subscribe((resp: any) => {
-      this.idWiseDoc = {};
-      this.docList = resp.list;
-      this.docList.forEach((doc: any) => {
-        this.idWiseDoc[doc._id] = doc;
-      });
-    })
   }
 
   archive(){
@@ -82,7 +60,7 @@ export class ViewComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if(result){
         this.usersService.removeUser(this.userId, true).subscribe((d: any) => {
           this.snackBarService.successMessage("The user is archived");
@@ -105,7 +83,7 @@ export class ViewComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result: any) => {
       if(result){
         this.usersService.removeUser(this.userId, false).subscribe((d: any) => {
           this.snackBarService.successMessage("The user is unarchived");

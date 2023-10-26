@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrlPrefix: 'http://localhost:32135/api'
+  apiUrlPrefix: 'http://localhost:43572/interfaces'
 };
 
 /*

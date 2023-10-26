@@ -1,5 +1,5 @@
-<div class="page-top-menu">
-    <div class="head-info">
+<div class="bc-contain">
+    <div class="titles">
         <h3 class="title">LOGS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
@@ -60,7 +60,7 @@
                         </td>
                         <td>
                             <div class="detailed">
-                                <div routerLink="/patients/view/{{item.objectId._id}}" class="first">
+                                <div routerLink="/app/view/{{item.objectId._id}}" class="first">
                                     <div class="initials">{{item.objectId.fName | initials}}</div>
                                 </div>
                                 <div class="second">
@@ -78,7 +78,7 @@
                             </div>
                         </td>
                         <!-- <td>
-                            <a routerLink="/patients/view/{{item.objectId}}">View Patient</a>
+                            <a routerLink="/app/view/{{item.objectId}}">View Patient</a>
                         </td> -->
                         <td>
                             <button class="primary" (click)="viewData(item.data)">View Data</button>
@@ -86,6 +86,6 @@
                     </tr>
             </tbody>
         </table>
-        <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
+        <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
     </div>
 </div>

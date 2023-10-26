@@ -2,7 +2,7 @@ import {  Injectable, NgModule } from '@angular/core';
 import { SessionStorageService } from './session-storage.service';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HTTP_INTERCEPTORS, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import {environment} from './../../../environments/environment'
+import {environment} from '../../../environments/environment'
 import { tap, catchError } from "rxjs/operators";
 import { SnackBarService } from './snack-bar.service';
 import { Router } from '@angular/router';
@@ -22,7 +22,7 @@ export class HttpInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     // this.requestConCount++;
     // console.log('requestConCount++');
-    document.getElementById('loading').className = "loading";
+    document.getElementById('loading').className = "loading-container";
     if (SessionStorageService.getValue('token') && req.url.includes(environment.apiUrlPrefix)) {
         req = req.clone({
           setHeaders: {
@@ -38,15 +38,15 @@ export class HttpInterceptorService implements HttpInterceptor {
               // document.getElementById('loading').className = "loading hidden";
             // }
             if (evt instanceof HttpResponse) {
-              document.getElementById('loading').className = "loading hidden";
-                if(evt.body && evt.body.message){
-                  this.snackBarService.successMessage(evt.body.message);
+              document.getElementById('loading').className = "loading-container hidden";
+                if(evt.body && evt.body.displayMessage){
+                  this.snackBarService.successMessage(evt.body.displayMessage);
                 }
             }
         }),
         catchError((error: any) => {
             if(error instanceof HttpErrorResponse) {
-              document.getElementById('loading').className = "loading hidden";
+              document.getElementById('loading').className = "loading-container hidden";
               if (error.status === 0) {
                 this.snackBarService.errorMessage('Network error!');
               } else {
@@ -55,13 +55,13 @@ export class HttpInterceptorService implements HttpInterceptor {
                 } else if(error.error.error){
                   this.snackBarService.errorMessage(error.error.error.toString());
                 } else if(error.error.error){
-                  this.snackBarService.errorMessage('Something went wrong');
+                  this.snackBarService.errorMessage('Error Occured');
                 } else {
-                  this.snackBarService.errorMessage('Something went wrong');
+                  this.snackBarService.errorMessage('Error Occured');
                 }
                 if(error.status == 401){
-                  // SessionStorageService.clear();
-                  // this.router.navigate(['/login']);
+                  SessionStorageService.clear();
+                  this.router.navigate(['/login']);
                 }
               }
             }

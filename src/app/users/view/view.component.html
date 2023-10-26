@@ -1,5 +1,5 @@
-<div class="page-top-menu">
-    <div class="head-info">
+<div class="bc-contain">
+    <div class="titles">
         <h3 class="title">USERS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="buttons">
-        <button *ngIf="user && user.metadata && !user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Super Admin'" class="danger" (click)="archive()"><i class="icon-bin"></i>&nbsp;Archive</button>
-        <button *ngIf="user && user.metadata && user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Super Admin'" class="danger" (click)="unarchive()"><i class="icon-bin"></i>&nbsp;Unrchive</button>
+        <button *ngIf="user && user.metadata && !user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger" (click)="archive()"><i class="icon-bin"></i>&nbsp;Archive</button>
+        <button *ngIf="user && user.metadata && user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger" (click)="unarchive()"><i class="icon-bin"></i>&nbsp;Unrchive</button>
         <button *ngIf="user._id != loggedInUser._id" class="primary-outline" routerLink="/users/edit/{{user._id}}"><i class="icon-edit"></i>&nbsp;Edit</button>
         <button *ngIf="user._id == loggedInUser._id" class="primary-outline" routerLink="/profile/update"><i class="icon-edit"></i>&nbsp;Edit</button>
     </div>
@@ -45,7 +45,7 @@
     <div class="flex-child fc-60">
         <div class="box basic-details">
             <h3 class="title">Basic Details</h3>
-            <div *ngIf="this.loggedInUser.role == 'Super Admin' || user._id == loggedInUser._id" class="primary-outline" routerLink="/myaccount/{{user._id}}" class="flex g-20">
+            <div *ngIf="this.loggedInUser.role == 'Admin' || user._id == loggedInUser._id" class="primary-outline" routerLink="/myaccount/{{user._id}}" class="flex g-20">
                 <div class="fc-50">
                     <p class="login-key">Last Login</p>
                     <p class="login-value">02 Jan 2022 2:23AM</p>
@@ -55,6 +55,10 @@
                 </div>
             </div>
             <div class="separator"></div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Username</p>
+                <p class="value fc-50 ml-a text-right">{{user.username}}</p>
+            </div>
             <div class="flex keyvalues g-20">
                 <p class="key fc-50"><i class="icon-email"></i>Email</p>
                 <p class="value fc-50 ml-a text-right">{{user.email}}</p>

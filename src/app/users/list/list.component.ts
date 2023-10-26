@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from './../../shared/services/users.service';
+import { UsersService } from '../../shared/services/users.service';
 
 @Component({
-  selector: 'app-list',
+  selector: 'emdeon-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
@@ -15,7 +15,7 @@ export class ListComponent implements OnInit {
   public filterSearch = '';
   public filterRole = '';
   public filterIsArchive = false;
-  public roles = ['Super Admin', 'Admin', 'Doctor', 'Finance'];
+  public roles = ['Admin', 'User'];
 
   constructor(
     private usersService: UsersService

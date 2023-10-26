@@ -1,248 +1,189 @@
-<div class="page-top-menu">
-    <div class="head-info">
+<div class="bc-contain">
+    <!-- <div class="titles">
         <h3 class="title">PATIENTS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
             <span class="item active">Patients</span>
         </div>
-    </div>
-    <div class="buttons">
-        <div class="dropdown-button">
-            <button class="primary" routerLink="/patients/bulk-upload"><i class="fas fa-upload"></i>&nbsp;Bulk Import</button>
-            <div class="dropdown-content">
-                <div class="dc-item" routerLink="/patients/bulk-upload">
-                    Bulk Import Patients
+    </div> -->
+    
+</div>
+<ng-container *ngIf="!noPatientFound">
+    <div class="flex g-20" style="align-items: center;">
+        <div class="flex g-20 top-stats">
+            <div *ngFor="let stat of statusCounts" class="stat box">
+                <h2>{{stat._id}}</h2>
+                <h1>{{stat.total}}</h1>
+            </div>
+        </div>
+        <div class="buttons" style="margin-left: auto;">
+            <!-- <div class="dropdown-button">
+                <button class="primary" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Bulk Import</button>
+                <div class="dropdown-content">
+                    <div class="dc-item" routerLink="/app/import-patients">
+                        Bulk Import Patients
+                    </div>
+                    <div (click)="downloadSampleImport()" class="dc-item" style="    border-top: 1px solid #e2e2e5;">
+                        Sample File Format
+                    </div>
                 </div>
-                <div (click)="downloadSampleImport()" class="dc-item" style="    border-top: 1px solid #e2e2e5;">
-                    Sample File Format
+            </div> -->
+            <button class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+            <button *ngIf="selectedSourceFile" class="primary" style="margin-left: 10px;" (click)="exportPatients()"><i class="fas fa-download"></i>&nbsp;Export Selected File</button>
+        </div>
+    </div>
+    <div class="box mt-20">
+        <div class="filters flex g-20">
+            <div class="search-bar fc-40">
+                <i class="fas fa-search"></i>
+                <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+            </div>
+            <div class="fc-40">
+                <select [(ngModel)]="selectedSourceFile" (ngModelChange)="filterUpdated()" class="basic">
+                    <option value="" disabled selected>Source File</option>
+                    <option value="">All</option>
+                    <option *ngFor="let file of filesList" [value]="file.fileId">{{file._id}} (Leads Uploaded: {{file.total}}) (Uploaded On: {{file.time | date: 'd MMM y h:mm a'}})</option>
+                </select>
+            </div>
+            <div class="fc-20">
+                <select [(ngModel)]="filterPlanStatus" (ngModelChange)="filterUpdated()" class="basic">
+                    <option value="" disabled selected>Status</option>
+                    <option value="">All</option>
+                    <ng-container>
+                        <option *ngFor="let opt of statusOptsEligibility" [value]="opt">{{opt}}</option>
+                    </ng-container>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="box mt-20" style="padding: 0px;">
+        <div *ngIf="bulkSelectedCount" class="filters bulk flex g-20">
+            <div class="fc-33">
+                <p>Bulk Update Status</p>
+            </div>
+            <div class="fc-33 input mt-0">
+                <select class="basic" [(ngModel)]="bulkUpdateStatusModel">
+                    <option [value]="''">Select Status</option>
+                    <ng-container>
+                        <option *ngFor="let opt of statusOptsEligibility" [value]="opt">{{opt}}</option>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="fc-33">
+                <button class="primary" (click)="bulkUpdateStatus()">Update {{bulkSelectedCount}} Patient(s)</button>
+            </div>
+        </div>
+        <div class="table-container">
+            <!-- scrollable above class -->
+            <table>
+                <thead class="sortable">
+                    <tr>
+                        <td>
+                            <div class="flex g-20">
+                                <!-- <div class="fc-10">
+                                    <mat-checkbox [(ngModel)]="allSelected" (ngModelChange)="allSelectionUpdated()"></mat-checkbox>
+                                </div> -->
+                                <!-- class="fc-90" below class -->
+                                <div (click)="sortDir = (sortKey == 'fName') ? !sortDir : sortDir; sortKey = 'fName'; getPatients();">
+                                    <p>Patient</p>
+                                    <span *ngIf="sortKey == 'fName'" class="sort">
+                                        <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                        <td (click)="sortDir = (sortKey == 'dob.dob') ? !sortDir : sortDir; sortKey = 'dob.dob'; getPatients();">
+                            <p>Date of Birth</p>
+                            <span *ngIf="sortKey == 'dob.dob'" class="sort">
+                                <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                            </span>
+                        </td>
+                        <td (click)="sortDir = (sortKey == 'subscriberId') ? !sortDir : sortDir; sortKey = 'subscriberId'; getPatients();">
+                            <p>Subscriber Id</p>
+                            <span *ngIf="sortKey == 'subscriberId'" class="sort">
+                                <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
+                            </span>
+                        </td>
+                        <td>
+                            <p>Status</p>
+                        </td>
+                        <td>
+                            <p>Added On</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!list || !list.length">
+                        <td colspan="13" class="text-center">No patient found</td>
+                    </tr>
+                    <!-- routerLink="/app/view/{{item._id}}" -->
+                    <tr *ngFor="let item of list;">
+                        <!-- <td>
+                            <div class="flex g-20">
+                                <div class="fc-10">
+                                    <mat-checkbox [(ngModel)]="item.selected" (ngModelChange)="selectionUpdated()"></mat-checkbox>
+                                </div>
+                                class="fc-90" below class
+                                <div>
+                                    <div class="detailed">
+                                        <div class="first">
+                                            <div class="initials">{{item.fName | initials}}{{item.lName | initials}}</div>
+                                        </div>
+                                        <div class="second">
+                                            <p class="big">{{item.fName}} {{item.lName}}</p>
+                                            <p class="small">{{item?.dob?.dobStr}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td> -->
+                        <td>
+                            <p class="cell">{{item.lName}}, {{item.fName}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.subscriberId}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.frontStatus}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.metadata.createdOn | date: 'd MMM y h:mm a'}}</p>
+                        </td>
+                        <!-- <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.metadata.createdOn | date: 'd MMM y'}}</p>
+                                    <p class="small">{{item.metadata.createdOn | date: 'h:mm a'}}</p>
+                                </div>
+                            </div>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div style="padding: 20px; border-top: 1px solid lightgray; padding-top: 0px;">
+            <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum"
+                (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="noPatientFound" style="background-color: white;" class="no-patient">
+    <div class="no-patient-container">
+        <div class="act-no-patient">
+            <p>You need to import patients to get started. Click "Import Patients" button below to get started. Click on "Download File Format" to view the format to upload patients.</p>
+            <div class="flex g-20 buttons">
+                <div class="flex-child fc-50">
+                    <button class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download File Format</button>
+                </div>
+                <div class="flex-child fc-50">
+                    <button class="primary" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
                 </div>
             </div>
         </div>
-        <button class="primary" (click)="exportPatients()"><i class="fas fa-download"></i>&nbsp;Export All</button>
-        <button class="primary" routerLink="/patients/add">+ Add New</button>
     </div>
-</div>
-<div class="box mt-20">
-    <div class="filters flex g-20">
-        <div class="search-bar fc-50">
-            <i class="fas fa-search"></i>
-            <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
-        </div>
-        <div class="fc-25">
-            <select [(ngModel)]="filterDays" (ngModelChange)="filterUpdated()" class="basic">
-                <option value="" disabled selected>Days Passed</option>
-                <option value="">All</option>
-                <option value=">15">More than 15</option>
-                <option value=">20">More than 20</option>
-                <option value=">25">More than 25</option>
-                <option value=">30">More than 30</option>
-                <option value=">35">More than 35</option>
-                <option [value]="-1">Never</option>
-            </select>
-        </div>
-        <div class="fc-25">
-            <select [(ngModel)]="filterPlanStatus" (ngModelChange)="filterUpdated()" class="basic">
-                <option value="" disabled selected>Plan Status</option>
-                <option value="">All</option>
-                <option value="accept">Accepted</option>
-                <option value="reject">Rejected</option>
-                <option value="seen">Seen</option>
-                <option value="complete">Completed</option>
-            </select>
-        </div>
-    </div>
-    <div class="table-container scrollable">
-        
-        <table>
-            <thead class="sortable">
-                <tr>
-                    <td (click)="sortDir = (sortKey == 'fName') ? !sortDir : sortDir; sortKey = 'fName'; getPatients();">
-                        <p>Patient</p>
-                        <span *ngIf="sortKey == 'fName'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
-                    <td>
-                        <p>Address</p>
-                    </td>
-                    <td (click)="sortDir = (sortKey == 'lastAppointmentDaysPassed') ? !sortDir : sortDir; sortKey = 'lastAppointmentDaysPassed'; getPatients();">
-                        <p>Last Seen (days)</p>
-                        <span *ngIf="sortKey == 'lastAppointmentDaysPassed'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
-                    <td (click)="sortDir = (sortKey == 'dob.dob') ? !sortDir : sortDir; sortKey = 'dob.dob'; getPatients();">
-                        <p>DoB</p>
-                        <span *ngIf="sortKey == 'dob.dob'" class="sort">
-                            <i [ngClass]="{'fa-long-arrow-alt-down': !sortDir, 'fa-long-arrow-alt-up': sortDir}" class="fas"></i>
-                        </span>
-                    </td>
-                    <td>
-                        <p>Insurance</p>
-                    </td>
-                    <td>
-                        <p>Insurance ID</p>
-                    </td>
-                    <td>
-                        <p>Is Active</p>
-                    </td>
-                    <td>
-                        <p>Status</p>
-                    </td>
-                    <td>
-                        <p>Type</p>
-                    </td>
-                    <td>
-                        <p>Plan Name</p>
-                    </td>
-                    <td>
-                        <p>Group Number</p>
-                    </td>
-                    <td>
-                        <p>Effective Date</p>
-                    </td>
-                    <td>
-                        <p>Termination Date</p>
-                    </td>
-                    <td>
-                        <p>Deductable</p>
-                    </td>
-                    <td>
-                        <p>Co Pay</p>
-                    </td>
-                    <td>
-                        <p>Co Insurance</p>
-                    </td>
-                    <td>
-                        <p>Status</p>
-                    </td>
-                    <td>
-                        <p>Added On</p>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngIf="!list || !list.length">
-                    <td colspan="13" class="text-center">No patient found</td>
-                </tr>
-                <tr *ngFor="let item of list;">
-                    <td>
-                        <div class="detailed">
-                            <div routerLink="/patients/view/{{item._id}}" class="first">
-                                <div class="initials">{{item.fName | initials}}</div>
-                            </div>
-                            <div class="second">
-                                <p class="big">{{item.fName}} {{item.mName}} {{item.lName}}</p>
-                                <p class="small">{{item.phone}}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="detailed">
-                            <div class="second">
-                                <p class="big">{{item.street}}</p>
-                                <p class="small">{{item.city}}-{{item.state}}-{{item.zip}}</p>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <p class="cell">{{item.lastAppointmentDaysPassed > -1 ? (item.lastAppointmentDaysPassed | number: '1.0-0') : 'Never'}}</p>
-                    </td>
-                    <td>
-                        <p class="cell">{{item.dob.month}}/{{item.dob.day}}/{{item.dob.year}}</p>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell chip orange capitalize">{{ins.insuranceName ? ins.insuranceName : '-'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell">{{ins.insuraceId ? ins.insuraceId : '-'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}: {{ins.isActive ? 'Yes' : 'No'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}: {{ins.status ? ins.status : '-'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}: {{ins.typee ? ins.typee : '-'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.name ? plan.name : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.groupNumber ? plan.groupNumber : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.effectiveDate ? (plan.effectiveDate | date) : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.terminationDate ? plan.terminationDate : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.deductable ? plan.deductable : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.copay ? plan.copay : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <ng-container *ngFor="let plan of ins.plans">
-                                <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}:{{plan.year ? plan.year : 'NA'}}:{{plan.coinsurance ? plan.coinsurance : '-'}}</p>
-                            </ng-container>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <ng-container *ngFor="let ins of item.insurances" >
-                            <p class="cell">{{ins.insuranceName ? ins.insuranceName : 'NA'}}: {{ins.status ? ins.status : '-'}}</p>
-                        </ng-container>
-                    </td>
-                    <td>
-                        <div class="detailed">
-                            <div class="second">
-                                <p class="big">{{item.metadata.createdOn | date: 'd MMM y'}}</p>
-                                <p class="small">{{item.metadata.createdOn | date: 'h:mm a'}}</p>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <app-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum"
-            (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></app-paginator>
 </div>

@@ -1,58 +1,41 @@
-<div class="sidebar">
-    <img class="logo" src="assets/images/fpi-logo.png" />
-    <div class="links">
-        <div *ngIf="false" class="link" [ngClass]="{'active': cUrl.startsWith('/dashboard')}" routerLink="/dashboard/superadmin">
-            <i class="fas fa-home"></i>
-            <span>Dashboard</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewPatientsMenu" class="link" [ngClass]="{'active': cUrl.startsWith('/patients') && !cUrl.startsWith('/patients/visits') && !cUrl.startsWith('/patients/finance') && !cUrl.startsWith('/patients/reconciliation')}" routerLink="/patients/list">
-            <i class="fas fa-user-injured"></i>
-            <span>Patients</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewVisits" class="link" [ngClass]="{'active': cUrl.startsWith('/patients/visits')}" routerLink="/patients/visits">
-            <i class="fas fa-hospital-user"></i>
-            <span>Visits</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewBilling"  class="link" [ngClass]="{'active': cUrl.startsWith('/patients/finance')}" routerLink="/patients/finance">
-            <i class="fas fa-stamp"></i>
-            <span>Biller</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewReconciliation"   class="link" [ngClass]="{'active': cUrl.startsWith('/patients/reconciliation')}" routerLink="/patients/reconciliation">
-            <i class="fas fa-paste"></i>
-            <span>Reconciliation</span>
-        </div>
-      
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewUsers" class="link" [ngClass]="{'active': cUrl.startsWith('/users')}" routerLink="/users/list">
-            <i class="fas fa-users"></i>
-            <span>Users</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewSettingsMenu" class="link" [ngClass]="{'active': cUrl.startsWith('/settings')}" routerLink="/settings">
-            <i class="fas fa-cogs"></i>
-            <span>Settings</span>
-        </div>
-        <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewLogs" class="link" [ngClass]="{'active': cUrl.startsWith('/logs')}" routerLink="/logs">
-            <i class="fas fa-list-alt"></i>
-            <span>Audit Logs</span>
-        </div>
-
-        <div class="separator"></div>
-
-        <div class="link user" [ngClass]="{'active': cUrl.startsWith('/profile')}" routerLink="/profile">
-            <i class="fas fa-user"></i>
-            <div>
-                <p class="name">{{user.name}}</p>
-                <p class="email">{{user.email}}</p>
+<div class="menu-container">
+    <div class="top-menu">
+        <img routerLink="/app" class="logo" src="assets/images/eslogo.png" />
+        <div *ngIf="userFromApi.role == 'Admin'" class="user-menu">
+            <div class="user-dropdown">{{userFromApi.name}}<i class="fas fa-caret-down"></i></div>
+            <div class="menu-content">
+                <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewPatientsMenu" class="link" [ngClass]="{'active': cUrl.startsWith('/app')}" routerLink="/app">
+                    <i class="fas fa-hospital-user"></i>
+                    <span>Patients</span>
+                </div>
+                <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewUsers" class="link" [ngClass]="{'active': cUrl.startsWith('/users')}" routerLink="/users/list">
+                    <i class="fas fa-users" style="position: relative; right: 1px;"></i>
+                    <span>Users</span>
+                </div>
+                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/bots')}" routerLink="/bots/list">
+                    <i class="fas fa-robot" style="position: relative; right: 2px;"></i>
+                    <span>Bots</span>
+                </div>
+                <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewLogs" class="link" [ngClass]="{'active': cUrl.startsWith('/logs')}" routerLink="/logs">
+                    <i class="fas fa-list-alt"></i>
+                    <span>Audit Logs</span>
+                </div>
+        
+                <div class="separator"></div>
+        
+                <div class="link user" [ngClass]="{'active': cUrl.startsWith('/profile')}" routerLink="/profile">
+                    <i class="fas fa-user-circle"></i>
+                    <span>My Profile</span>
+                </div>
+                <div routerLink="/login" class="link">
+                    <i class="fas fa-door-closed" style="position: relative; right: 3px;"></i>
+                    <span>Sign out</span>
+                </div>
             </div>
         </div>
-        <div routerLink="/login" class="link">
-            <i class="fas fa-sign-out-alt"></i>
-            <span>Sign out</span>
-        </div>
-
-        <div class="separator"></div>
-
-        <div class="copyrights">
-            <p>All Rights Reserved © FPIMed 2022</p>
+        <div routerLink="/login" *ngIf="userFromApi.role == 'User'" class="user-menu">
+            <div class="user-dropdown"><i class="fas fa-door-closed" style="position: relative; right: 3px;"></i>Sign out</div>
         </div>
     </div>
 </div>
+

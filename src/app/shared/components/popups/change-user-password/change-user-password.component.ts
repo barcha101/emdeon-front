@@ -4,7 +4,7 @@ import { UsersService } from 'src/app/shared/services/users.service';
 import { SnackBarService } from '../../../services/snack-bar.service';
 
 @Component({
-  selector: 'app-change-user-password',
+  selector: 'emdeon-change-user-password',
   templateUrl: './change-user-password.component.html',
   styleUrls: ['./change-user-password.component.scss']
 })

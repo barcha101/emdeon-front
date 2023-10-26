@@ -1,11 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SnackBarService } from './../../shared/services/snack-bar.service';
-import { environment } from './../../../environments/environment';
+import { SnackBarService } from '../../shared/services/snack-bar.service';
+import { environment } from '../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
-import { PatientsService } from './../../shared/services/patients.service';
+import { PatientsService } from '../../shared/services/patients.service';
 
 @Component({
-  selector: 'app-superadmin',
+  selector: 'emdeon-superadmin',
   templateUrl: './superadmin.component.html',
   styleUrls: ['./superadmin.component.scss']
 })

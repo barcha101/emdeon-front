@@ -1,0 +1,61 @@
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">BOTS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Bots</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">View <ng-container *ngIf="botInfo && botInfo.username">({{botInfo.username}})</ng-container></span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button *ngIf="botInfo && botInfo.metadata && !botInfo.metadata.isDeleted" class="danger" (click)="archive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Archive</button>
+        <button *ngIf="botInfo && botInfo.metadata && botInfo.metadata.isDeleted" class="danger" (click)="unarchive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Unarchive</button>
+        <button class="primary" (click)="updateBot()"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Update</button>
+    </div>
+</div>
+<div class="box mt-20">
+    <h1 class="title">Logs</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Patient Name</p></td>
+                    <td><p>Patient Phone</p></td>
+                    <td><p>Patient Subscriber Id</p></td>
+                    <td><p>Activity</p></td>
+                    <td><p>Log Time</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="!list || !list.length">
+                    <td colspan="5" class="text-center">No log found</td>
+                </tr>
+                    <tr *ngFor="let item of list">
+                        <td>
+                            <p class="cell" routerLink="/app/view/{{item.patientId._id}}">{{item.patientId.lName}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.patientId.phone}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.patientId.subscriberId}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.activity}}</p>
+                        </td>
+                        <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.on ? (item.on | date: 'd MMM y') : '-'}}</p>
+                                    <p class="small">{{item.on ? (item.on | date: 'h:mm a') : '-'}}</p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+    </div>
+</div>

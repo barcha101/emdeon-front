@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { environment } from './../../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
@@ -7,7 +7,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 })
 export class PatientsService {
 
-  private apiUrlPrefix = environment.apiUrlPrefix + '/patient';
+  private apiUrlPrefix = environment.apiUrlPrefix + '/app';
 
   constructor(
     private HttpClientObj: HttpClient
@@ -17,12 +17,24 @@ export class PatientsService {
     return this.HttpClientObj.post(this.apiUrlPrefix+'/bulkUpload', data);
   }
 
+  getUploadedFileStats() {
+    return this.HttpClientObj.post(this.apiUrlPrefix+'/getUploadedFileStats', {});
+  }
+
   addVerifiedBulkImport(patients: any) {
     return this.HttpClientObj.post(this.apiUrlPrefix+'/addVerifiedBulkImport', {patients});
   }
 
+  exportBulkImportResults(patients: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix+'/exportBulkImportResults', {patients});
+  }
+
   list(data: any) {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/list', data);
+  }
+
+  bulkUpdateStatus(data: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/bulkUpdateStatus', data);
   }
 
   listForDoctorFinance(data: any) {
@@ -63,5 +75,9 @@ export class PatientsService {
 
   export(data: any) {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/export', data);
+  }
+
+  getMyFiles(data: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/getMyFiles', data);
   }
 }
