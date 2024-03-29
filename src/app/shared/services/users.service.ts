@@ -48,6 +48,10 @@ export class UsersService {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/getMyInfo', { _id });
   }
 
+  getInfoToEdit(_id: any) {
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/getInfoToEdit', { _id });
+  }
+
   removeUser(userId: any, archive: any) {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/removeUser', { userId, archive });
   }

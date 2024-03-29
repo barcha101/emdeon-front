@@ -115,6 +115,7 @@ export class ViewBotComponent implements OnInit {
   updateBot(){
     const dialogRef = this.dialog.open(UpdateBotComponent, {
       width: '400px',
+      height: '90vh',
       data: {
         what: 'update',
         botInfo: this.botInfo

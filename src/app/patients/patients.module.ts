@@ -7,10 +7,12 @@ import { SharedModule } from '../shared/shared.module';
 import { ViewPatientComponent } from './view-patient/view-patient.component';
 import { UpdatePatientComponent } from './update-patient/update-patient.component';
 import { FilesListComponent } from './files-list/files-list.component';
+import { AdminFilesListComponent } from './admin-files-list/admin-files-list.component';
 
 const routes: Routes = [
   { path: '', component: FilesListComponent},
   { path: 'patient-list', component: PatientListComponent},
+  { path: 'admin-list', component: AdminFilesListComponent},
   { path: 'import-patients', component: BulkImportPatientsComponent},
   { path: 'view/:id', component: ViewPatientComponent},
   { path: 'update/:id', component: UpdatePatientComponent},
@@ -24,6 +26,7 @@ const routes: Routes = [
     ViewPatientComponent,
     UpdatePatientComponent,
     FilesListComponent,
+    AdminFilesListComponent,
   ],
   imports: [
     CommonModule,

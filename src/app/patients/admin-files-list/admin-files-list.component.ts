@@ -5,20 +5,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { PatientsService } from '../../shared/services/patients.service';
 import { HelperService } from '../../shared/services/helper.service';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
-  selector: 'emdeon-files-list',
-  templateUrl: './files-list.component.html',
-  styleUrls: ['./files-list.component.scss']
+  selector: 'app-admin-files-list',
+  templateUrl: './admin-files-list.component.html',
+  styleUrls: ['./admin-files-list.component.scss']
 })
-export class FilesListComponent implements OnInit {
+export class AdminFilesListComponent implements OnInit {
 
   constructor(
     private snackBarService: SnackBarService,
     public dialog: MatDialog,
     private patientsService: PatientsService,
-    private helperService: HelperService
+    private helperService: HelperService,
+    private router: Router
   ) { }
 
   public list: any = [];
@@ -31,6 +33,9 @@ export class FilesListComponent implements OnInit {
   ngOnInit(): void {
     this.getFiles();
     this.thisUser = SessionStorageService.getGenericJSON('user');
+    if(this.thisUser.role != 'Admin'){
+      this.router.navigate(['/app']); 
+    }
     // if(this.thisUser.role == 'Admin' || ){
     //   this.currentView = 'table';
     // } else {
@@ -93,14 +98,15 @@ export class FilesListComponent implements OnInit {
     });
   }
 
-  exportPatients(sourceFileId: any, sourceFileName: any){
+  exportPatients(sourceFileId: any, sourceFileName: any, generateOut: any = null){
     this.patientsService.export({
       query: {
         filterSearch: '',
         filterIsArchive: null,
         filterDays: null,
         filterPlanStatus: null,
-        selectedSourceFile: sourceFileId
+        selectedSourceFile: sourceFileId,
+        generateOut: generateOut
       }
     }).subscribe((d: any) => {
       this.snackBarService.downloadFileWithUrl(sourceFileName+'-Findings.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/' + d['fileUrl']);

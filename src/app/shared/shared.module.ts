@@ -8,7 +8,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatNativeDateModule } from '@angular/material/core';
 import { InterceptorModule } from './services/http-interceptor.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -18,7 +20,6 @@ import { ModelChangeDebounceDirective } from './directives/model-change-debounce
 import { GenericConfirmationComponent } from './components/popups/generic-confirmation/generic-confirmation.component';
 import { ChangeUserPasswordComponent } from './components/popups/change-user-password/change-user-password.component';
 import { SortPipe } from './pipes/sort.pipe';
-import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ToastrModule } from 'ngx-toastr';
     MatNativeDateModule,
     MatDatepickerModule,
     RouterModule,
-    ToastrModule
+    MatTooltipModule,
+    MatRadioModule
   ],
   exports: [
     ReactiveFormsModule, FormsModule,
@@ -62,7 +64,8 @@ import { ToastrModule } from 'ngx-toastr';
     InitialsPipe,
     ModelChangeDebounceDirective,
     SortPipe,
-    ToastrModule
+    MatTooltipModule,
+    MatRadioModule
   ]
 })
 export class SharedModule { }

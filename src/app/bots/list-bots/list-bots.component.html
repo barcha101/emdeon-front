@@ -21,26 +21,35 @@
             <mat-checkbox style="margin-top: 6px;" [(ngModel)]="filterIsArchive" (ngModelChange)="filterUpdated()">Show Archived</mat-checkbox>
         </div>
     </div>
-    <div class="table-container">
+    <div class="table-container mt-20">
         <table>
             <thead>
                 <tr>
                     <td><p>Username</p></td>
-                    <td><p>Password</p></td>
+                    <td><p>Email</p></td>
+                    <td><p>Code Type</p></td>
+                    <td><p>Eligibility Source</p></td>
                     <td><p>Current Status</p></td>
                     <td><p>Last Ran</p></td>
+                    <td><p>Edit</p></td>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngIf="!list || !list.length">
                     <td colspan="4" class="text-center">No bot found</td>
                 </tr>
-                    <tr *ngFor="let item of list" routerLink="/bots/view/{{item._id}}">
+                    <tr *ngFor="let item of list">
                         <td>
-                            <p class="cell">{{item.username}}</p>
+                            <p routerLink="/bots/view/{{item._id}}" class="cell">{{item.username}}</p>
                         </td>
                         <td>
-                            <p class="cell">{{item.password}}</p>
+                            <p class="cell">{{item.email}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.codeType}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.eligibilityPlatform}}</p>
                         </td>
                         <td>
                             <p class="chip blue">{{item.status}}</p>
@@ -52,6 +61,9 @@
                                     <p class="small">{{item.lastRan ? (item.lastRan | date: 'h:mm a') : '-'}}</p>
                                 </div>
                             </div>
+                        </td>
+                        <td>
+                            <i class="fas fa-pencil-alt" style="font-size: 20px; color: #8400d9; cursor: pointer;" (click)="updateBot(item)"></i>
                         </td>
                     </tr>
             </tbody>

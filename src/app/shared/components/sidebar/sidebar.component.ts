@@ -32,4 +32,9 @@ export class SidebarComponent implements OnInit {
     })
   }
 
+  signout(){
+    SessionStorageService.clear();
+    this.router.navigate(['/login']);
+  }
+
 }

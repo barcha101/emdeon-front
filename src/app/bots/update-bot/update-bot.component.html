@@ -21,6 +21,14 @@
             <p class="label">Email Code Received</p>
             <input type="text" [(ngModel)]="bot.myCgsCode" #myCgsCode="ngModel" name="myCgsCode"/>
         </div>
+        <div class="input">
+            <p class="label">Machine ID</p>
+            <input type="text" [(ngModel)]="bot.machine" #machine="ngModel" name="machine"/>
+        </div>
+        <div class="input">
+            <p class="label">Email</p>
+            <input type="text" [(ngModel)]="bot.email" #emaill="ngModel" name="emaill"/>
+        </div>
         <div *ngIf="what == 'update'" class="input">
             <p class="label">Status</p>
             <select type="text" [(ngModel)]="bot.status" required #status="ngModel" name="status">
@@ -28,6 +36,23 @@
                 <option value="Ready">Ready</option>
             </select>
             <p>Update status if bot is running on same patient for more than 15 minutes</p>
+        </div>
+        <div class="input">
+            <p class="label">Eligibility Platform</p>
+            <select type="text" [(ngModel)]="bot.eligibilityPlatform" required #eligibilityPlatform="ngModel" name="eligibilityPlatform">
+                <option value="MyCGS">MyCGS</option>
+                <option value="Noridian">Noridian</option>
+                <option value="Availity">Availity</option>
+                <option value="Wellcare">Wellcare</option>
+                <option value="OfficeAlly">OfficeAlly</option>
+            </select>
+        </div>
+        <div class="input">
+            <p class="label">Code Type</p>
+            <select type="text" [(ngModel)]="bot.codeType" required #codeType="ngModel" name="codeType">
+                <option value="Email">Email</option>
+                <option value="Authenticator">Authenticator</option>
+            </select>
         </div>
         <div class="btns">
             <button class="grey-outline" (click)="close()">Cancel</button>

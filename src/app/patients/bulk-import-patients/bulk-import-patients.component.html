@@ -11,18 +11,42 @@
     </div>
     <div class="buttons">
         <button class="grey-outline" routerLink="/app">Cancel</button>
-        <button  *ngIf="data && data.length" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
-        <button *ngIf="isDone" (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processors for {{data.length - errCount}} patients</button> 
+        <button  *ngIf="data && data.length && process.eligibility" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
+        <button *ngIf="isDone" (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
     </div>
 </div>
 
 <div class="box mt-20 import-section">
     <div class="main-container">
         <div class="first">
-            <p class="title">Step 1: Select Processors</p>
+            <p class="title">Step 1: Select Processor</p>
+            <!-- <div class="check-container">
+                <mat-checkbox [disabled]="process.wellcareElig" [(ngModel)]="process.eligibility">Medicare Eligibility</mat-checkbox>
+                <mat-checkbox disabled="" style="margin-left: 20px;" [(ngModel)]="process.sns">Find SNS</mat-checkbox>
+                <mat-checkbox [disabled]="process.eligibility" style="margin-left: 20px;" [(ngModel)]="process.wellcareElig">Wellcare Eligibility</mat-checkbox>
+                <div style="margin-top: 20px;">
+                    <button *ngIf="process.eligibility" class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="process.wellcareElig" class="primary-outline" (click)="downloadWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                </div>
+            </div> -->
             <div class="check-container">
-                <mat-checkbox [(ngModel)]="process.eligibility">Find Eligibility</mat-checkbox>
-                <mat-checkbox style="margin-left: 20px;" [(ngModel)]="process.sns">Find SNS</mat-checkbox>
+                <mat-radio-group class="rad-group" [(ngModel)]="radioModel" aria-label="Select an option">
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('medicare')" value="medicare">Medicare Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('wellcare')" value="wellcare">Wellcare Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('broaderWellcare')" value="broaderWellcare">Broader Wellcare Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('medicarePCP')" value="medicarePCP">Medicare Physician(s)</mat-radio-button>
+                    
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('united')" value="united">UHC Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('aetna')" value="aetna">Aetna Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('cigna')" value="cigna">Cigna Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('humana')" value="humana">Humana Eligibility</mat-radio-button>
+                </mat-radio-group>
+                <div style="margin-top: 20px;">
+                    <button *ngIf="radioModel == 'medicare' || radioModel == 'medicarePCP'" class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'wellcare'" class="primary-outline" (click)="downloadWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'broaderWellcare'" class="primary-outline" (click)="downloadBroaderWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
+                    <button *ngIf="['united', 'aetna', 'cigna', 'humana'].indexOf(radioModel) >= 0" class="primary-outline" (click)="downloadGeneralSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                </div>
             </div>
             <div *ngIf="process.sns" class="sns">
                 <p class="title">Choose CPT Code Ranges for SNS</p>
@@ -68,7 +92,7 @@
     <div class="box fc-33">
         <p class="mb-0">Total Errors - Incorrect Info</p>
         <h1 class="mb-0" style="display: inline;">{{errCount}}</h1>
-        <button  *ngIf="data && data.length" style="margin-left: 20px;" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
+        <button  *ngIf="data && data.length && process.eligibility" style="margin-left: 20px;" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
     </div>
     <div class="box fc-33">
         <p class="mb-0">Total Patients - Correct Info</p>
@@ -135,7 +159,7 @@
             </tbody>
         </table>
         <div class="mt-20 text-right"> 
-            <button (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processors for {{data.length - errCount}} patients</button> 
+            <button (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
         </div>
     </div>
 </div>

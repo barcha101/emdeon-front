@@ -61,15 +61,15 @@ html, body{
 
 .error-snackbar{
     // background-color: #ec4757;
-    background-color: #eed202;
+    background-color: rgb(255, 71, 0);
     margin: 0 !important;
     position: absolute;
     right: 25px;
     top: 60px;
-    border-radius: 0px !important;
+    border-radius: 25px !important;
     .mat-simple-snack-bar-content{
         // color: #ffffff !important;
-        color: #8400d9 !important;
+        color: white !important;
     }
 }
 
@@ -79,6 +79,7 @@ html, body{
     position: absolute;
     right: 25px;
     top: 60px;
+    border-radius: 25px !important;
     .mat-simple-snack-bar-content{
         color: #ffffff !important;
     }
@@ -967,3 +968,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
   }
 // ---------------------------------------------- loading end ----------------------------------------  
+
+
+
+.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color:#8400d9;
+  }
+  
+  .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color:#8400d9;
+    background-color: #8400d9;
+  }
+  
+  .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+      background-color:#8400d950;
+  }

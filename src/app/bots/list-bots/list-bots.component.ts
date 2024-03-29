@@ -12,7 +12,7 @@ export class ListBotsComponent implements OnInit {
 
   public list: any = [];
   public totalCount = 0;
-  public perPage = 10;
+  public perPage = 50;
   public pageNum = 1;
   public filterSearch = '';
   public filterIsArchive = false;
@@ -60,6 +60,7 @@ export class ListBotsComponent implements OnInit {
   addBot(){
     const dialogRef = this.dialog.open(UpdateBotComponent, {
       width: '400px',
+      height: '90vh',
       data: {
         what: 'add'
       },
@@ -68,6 +69,23 @@ export class ListBotsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
       if(result){
         this.pageChanged(1);
+      }
+    });
+  }
+
+  updateBot(bot: any){
+    const dialogRef = this.dialog.open(UpdateBotComponent, {
+      width: '400px',
+      height: '90vh',
+      data: {
+        what: 'update',
+        botInfo: bot
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      if(result){
+        this.ngOnInit();
       }
     });
   }

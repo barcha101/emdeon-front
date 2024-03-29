@@ -20,14 +20,20 @@ export class LoginComponent implements OnInit {
   view = 'login';
   codeMessage = '';
   public code = '';
+  public message: any = '';
 
   ngOnInit(): void {
+    const token = SessionStorageService.getValue('token');
+    if(token){
+      this.router.navigate(['/app']); 
+    }
   }
 
   submit(){
     if(this.view == 'login'){
       this.usersService.confirmUsernamePassword(this.email, this.password).subscribe((d: any) => {
         this.view = 'code';
+        this.message = d.displayMessage;
       });
     } else if(this.view == 'code'){
       this.usersService.validateLoginCode(this.email, this.password, this.code).subscribe((d: any) => {

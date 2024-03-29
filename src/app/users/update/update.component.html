@@ -80,6 +80,31 @@
 <div *ngIf="loggedInUser.role == 'Admin'" class="box mt-20 permissions">
     <h3 class="title mb-5">Permissions</h3>
     <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.medicareEligibility">Medicare Eligibility</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.wellcareFromWellcare">Wellcare From Wellcare ID</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.wellcareFromMedicare">Wellcare From Medicare/Medicaid</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.medicarePCP">Medicare Physician(s)</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.united">United Eligibility</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.aetna">Aetna Eligibility</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.cigna">Cigna Eligibility</mat-checkbox>
+    </div>
+    <div class="ind-row">
+        <mat-checkbox [(ngModel)]="user.permissions.humana">Humana Eligibility</mat-checkbox>
+    </div>
+    <div class="hr separator"></div>
+    <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.viewPatientsMenu">View Patients Menu</mat-checkbox>
         <mat-checkbox [(ngModel)]="user.permissions.viewPatients" class="ml-20">View Patients</mat-checkbox>
         <mat-checkbox [(ngModel)]="user.permissions.updatePatients" class="ml-20">Add/Update Patients</mat-checkbox>

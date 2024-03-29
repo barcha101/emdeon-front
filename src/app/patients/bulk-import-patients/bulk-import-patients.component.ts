@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { PatientsService } from '../../shared/services/patients.service';
+import { UsersService } from '../../shared/services/users.service';
 import { SnackBarService } from '../../shared/services/snack-bar.service';
+import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
 
 declare var $: any;
 declare var readXlsxFile: any;
@@ -18,7 +20,8 @@ export class BulkImportPatientsComponent implements OnInit {
   constructor(
     public patientsService: PatientsService,
     private router: Router,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private usersService: UsersService
   ) { }
 
   public errors: any = [];
@@ -32,23 +35,55 @@ export class BulkImportPatientsComponent implements OnInit {
   public process: any = {
     eligibility: false,
     sns: false,
+    wellcareElig: false,
+    broadWellcareElig: false,
+    united: false,
+    aetna: false,
+    cigna: false,
+    humana: false,
+    medicarePCP: false,
     cptCodes: [{
       start: '',
       end: ''
     }]
   };
 
+  public radioModel: any = '';
+
   public sortKey = 'fName';
   public sortDir = false;
 
+  public userFromApi: any = {};
+
 
   ngOnInit(): void {
+    const userr = SessionStorageService.getGenericJSON('user');
+    this.usersService.getMyInfo(userr._id).subscribe(data => {
+      this.userFromApi = data;
+      console.log(data);
+    });
   }
 
   exportBulkImportResults(){
     this.patientsService.exportBulkImportResults(this.data).subscribe((d: any) => {
       this.snackBarService.downloadFileWithUrl(this.file.name+' Results.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/' + d['fileUrl']);
     });
+  }
+
+  downloadSampleImport(){
+    this.snackBarService.downloadFileWithUrl('Medicare-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/Medicare-Format.xlsx');
+  }
+
+  downloadWellcareSample(){
+    this.snackBarService.downloadFileWithUrl('Wellcare-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/Wellcare-Format.xlsx');
+  }
+
+  downloadBroaderWellcareSample(){
+    this.snackBarService.downloadFileWithUrl('Broader-Wellcare-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/Broader-Wellcare-Format.xlsx');
+  }
+
+  downloadGeneralSampleImport(){
+    this.snackBarService.downloadFileWithUrl('Broader-Wellcare-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/General-Format.xlsx');
   }
 
   onFileChange(event: any): void{
@@ -61,8 +96,32 @@ export class BulkImportPatientsComponent implements OnInit {
   }
 
   submitFile(){
-    if(!this.process.eligibility && !this.process.sns){
+    if(!this.radioModel){
       return this.snackBarService.errorMessage('Choose atleast one processor');
+    } else {
+      this.process.eligibility = false;
+      this.process.wellcareElig = false;
+      this.process.broadWellcareElig = false;
+      this.process.medicarePCP = false;
+      if(this.radioModel == 'medicare'){
+        this.process.eligibility = true;
+      } else if(this.radioModel == 'wellcare'){
+        this.process.wellcareElig = true;
+      } else if(this.radioModel == 'broaderWellcare'){
+        this.process.broadWellcareElig = true;
+      } else if(this.radioModel == 'medicarePCP'){
+        this.process.medicarePCP = true;
+      } else if(this.radioModel == 'united'){
+        this.process.united = true;
+      } else if(this.radioModel == 'aetna'){
+        this.process.aetna = true;
+      } else if(this.radioModel == 'cigna'){
+        this.process.cigna = true;
+      } else if(this.radioModel == 'humana'){
+        this.process.humana = true;
+      } else {
+        return this.snackBarService.errorMessage('Invalid processor selected');
+      }
     }
     if(!this.file || !this.file.name){
       return this.snackBarService.errorMessage('Upload a file');

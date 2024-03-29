@@ -51,7 +51,7 @@ export class UpdateComponent implements OnInit {
       this.userId = this.loggedInUser._id;
     }
     if(this.userId){
-      this.usersService.getMyInfo(this.userId).subscribe((d: any) => {
+      this.usersService.getInfoToEdit(this.userId).subscribe((d: any) => {
         this.user = d;
         if(!this.user.permissions){
           this.user.permissions = {};

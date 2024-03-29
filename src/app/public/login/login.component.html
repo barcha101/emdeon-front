@@ -28,7 +28,7 @@
                                     </ng-container>
                                 </div>
                                 <div *ngIf="view == 'code'" class="input">
-                                    <p class="label">One-Time Passphrase</p>
+                                    <p class="label">{{message ? message : 'One-Time Passphrase'}}</p>
                                     <input [(ngModel)]="code" type="text" name="codee" #codee="ngModel" required />
                                     <div [hidden]="codee.valid || codee.pristine" class="error">
                                         Code is required

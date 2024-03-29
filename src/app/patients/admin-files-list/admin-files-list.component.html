@@ -82,6 +82,9 @@
                         <td>
                             <p>Export</p>
                         </td>
+                        <td>
+                            <p>Export File</p>
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,6 +119,12 @@
                         </td>
                         <td (click)="exportPatients(item._id._id, item._id.fileName)">
                             <p class="cell" style="color: #8400d9;"><i class="fas fa-download"></i>&nbsp;Export Results</p>
+                        </td>
+                        <td *ngIf="item._id.outputFileKey">
+                            <p class="cell">Generated</p>
+                        </td>
+                        <td *ngIf="!item._id.outputFileKey" (click)="exportPatients(item._id._id, item._id.fileName,true)">
+                            <p class="cell" style="color: #8400d9;"><i class="fas fa-download"></i>&nbsp;Generate</p>
                         </td>
                     </tr>
                 </tbody>

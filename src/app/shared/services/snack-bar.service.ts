@@ -15,15 +15,15 @@ export class SnackBarService {
   ) { }
 
   successMessage(msg: string){
-    this.snackBar.open(msg, '', {
-      duration: 3000,
-      panelClass: ['success-snackbar'],
-    });
+    // this.snackBar.open(msg, '', {
+    //   duration: 5000,
+    //   panelClass: ['success-snackbar'],
+    // });
   }
 
   errorMessage(msg: string){
     this.snackBar.open(msg, '', {
-      duration: 3000,
+      duration: 5000,
       panelClass: ['error-snackbar'],
     });
   }
