@@ -33,6 +33,11 @@ const routes: Routes = [
     path: 'bots',
     canActivate: [AuthGuardService],
     loadChildren: () => import('./bots/bots.module').then(mod => mod.BotsModule)
+  },
+  {
+    path: 'claims',
+    canActivate: [AuthGuardService],
+    loadChildren: () => import('./claims/claims.module').then(mod => mod.ClaimsModule)
   }
 ];
 

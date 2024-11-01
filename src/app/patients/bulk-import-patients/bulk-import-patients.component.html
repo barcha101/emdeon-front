@@ -40,12 +40,17 @@
                     <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('aetna')" value="aetna">Aetna Eligibility</mat-radio-button>
                     <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('cigna')" value="cigna">Cigna Eligibility</mat-radio-button>
                     <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('humana')" value="humana">Humana Eligibility</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('add-claims')" value="add-claims">Add Claims</mat-radio-button>
+                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('add-claims-cpts')" value="add-claims-cpts">Add Claims with CPTs</mat-radio-button>
+                    
                 </mat-radio-group>
                 <div style="margin-top: 20px;">
                     <button *ngIf="radioModel == 'medicare' || radioModel == 'medicarePCP'" class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
                     <button *ngIf="radioModel == 'wellcare'" class="primary-outline" (click)="downloadWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
                     <button *ngIf="radioModel == 'broaderWellcare'" class="primary-outline" (click)="downloadBroaderWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
                     <button *ngIf="['united', 'aetna', 'cigna', 'humana'].indexOf(radioModel) >= 0" class="primary-outline" (click)="downloadGeneralSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'add-claims'" class="primary-outline" (click)="downloadClaimsSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
+                    <button *ngIf="radioModel == 'add-claims-cpts'" class="primary-outline" (click)="downloadClaimsCptSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
                 </div>
             </div>
             <div *ngIf="process.sns" class="sns">
@@ -76,6 +81,10 @@
                 <p class="filename">{{file.name}}</p>
                 <button  *ngIf="!isDone" class="primary-outline" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
             </div>
+            <select *ngIf="radioModel == 'add-claims-cpts'" [(ngModel)]="selectedClient" style="margin-top: 20px; border-radius: 20px; max-width: 200px;" class="basic fc-30">
+                <option selected disabled value="">Select Client</option>
+                <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
+            </select>
             <p style="color: darkgrey; margin-top: 10px; font-size: 12px;">* Maximum 20,000 patients per file</p>
         </div>
         <div class="third">
@@ -99,7 +108,7 @@
         <h1 class="mb-0">{{data.length - errCount}}</h1>
     </div>
 </div>
-<div *ngIf="isDone && false" class="box mt-20">
+<div *ngIf="isDone" class="box mt-20">
     <h3 class="title">Patients Found</h3>
     <div class="table-container">
         <table>

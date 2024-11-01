@@ -45,6 +45,14 @@
                 <option value="Availity">Availity</option>
                 <option value="Wellcare">Wellcare</option>
                 <option value="OfficeAlly">OfficeAlly</option>
+                <option value="OfficeAlly Claims">OfficeAlly Claims</option>
+            </select>
+        </div>
+        <div *ngIf="bot.eligibilityPlatform == 'OfficeAlly Claims'" class="input">
+            <p class="label">Client</p>
+            <select type="text" [(ngModel)]="bot.client" required #client="ngModel" name="client">
+                <option selected disabled value="">Assign Client</option>
+                <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
             </select>
         </div>
         <div class="input">

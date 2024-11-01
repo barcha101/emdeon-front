@@ -1,0 +1,54 @@
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">CLIENT Dashboard</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">Client Dashboard</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="primary" routerLink="/claims">View Files</button>
+    </div>
+</div>
+<div class="box mt-20">
+    <div class="filters flex g-20">
+        <div class="search-bar fc-50">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="filterInsurance" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Insurance Search" />
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterClient" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Client</option>
+                <option value="">All Clients</option>
+                <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterGroupBy" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Group By</option>
+                <option *ngFor="let gbOpt of groupByOpts" [value]="gbOpt">{{gbOpt}}</option>            
+            </select>
+        </div>
+    </div>
+    <div class="table-container mt-20">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>{{filterGroupBy}}</p></td>
+                    <td><p>Count</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let item of results">
+                        <td>
+                            <p class="cell">{{item._id}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.total}}</p>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -20,6 +20,7 @@ import { ModelChangeDebounceDirective } from './directives/model-change-debounce
 import { GenericConfirmationComponent } from './components/popups/generic-confirmation/generic-confirmation.component';
 import { ChangeUserPasswordComponent } from './components/popups/change-user-password/change-user-password.component';
 import { SortPipe } from './pipes/sort.pipe';
+import { AddEraComponent } from './components/popups/add-era/add-era.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SortPipe } from './pipes/sort.pipe';
     ModelChangeDebounceDirective,
     GenericConfirmationComponent,
     ChangeUserPasswordComponent,
-    SortPipe
+    SortPipe,
+    AddEraComponent
   ],
   imports: [
     CommonModule,

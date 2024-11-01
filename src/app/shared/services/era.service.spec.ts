@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { HelperService } from './helper.service';
+import { EraService } from './era.service';
 
-describe('HelperService', () => {
-  let service: HelperService;
+describe('EraService', () => {
+  let service: EraService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(HelperService);
+    service = TestBed.inject(EraService);
   });
 
   it('should be created', () => {

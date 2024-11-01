@@ -1,0 +1,71 @@
+<ng-container *ngIf="!noPatientFound">
+    <div class="bc-contain">
+        <div class="titles">
+            <h3 class="title">CLAIMS</h3>
+        </div>
+        <div class="buttons">
+            <button class="primary-outline" style="margin-left: 10px;" routerLink="/claims/era-list">ERAs</button>
+            <button class="primary-outline" style="margin-left: 10px;" routerLink="/claims/files-list-detailed">View Details</button>
+            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+        </div>
+    </div>
+    <div *ngIf="!noPatientFound" class="box mt-20" style="padding: 0px; margin-bottom: 20px;">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>
+                            <p>File Name</p>
+                        </td>
+                        <td>
+                            <p>Status</p>
+                        </td>
+                        <td>
+                            <p>Client</p>
+                        </td>
+                        <td>
+                            <p>Added On</p>
+                        </td>
+                        <td>
+                            <p>View Details</p>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="!list || !list.length">
+                        <td colspan="4" class="text-center">No file found</td>
+                    </tr>
+                    <tr *ngFor="let item of list;">
+                        <td (click)="getS3File(item.s3Key, item.fileName)">
+                            <p style="color: #8400d9;" class="cell">{{item.fileName}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.status}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item?.client?.name || 'Not Assigned'}}</p>
+                        </td>
+                        <td>
+                            <p class="cell">{{item.createdAt | date: 'd MMM y h:mm a'}}</p>
+                        </td>
+                        <td routerLink="/claims/view-file/{{item._id}}">
+                            <p class="cell">View Details</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>
+<div *ngIf="noPatientFound" style="background-color: white;" class="no-patient">
+    <div class="no-patient-container">
+        <div class="act-no-patient">
+            <p>You need to import patients to get started. Click "Import Patients" button below to get started.</p>
+            <div class="flex g-20 buttons">
+                <div class="flex-child fc-100">
+                    <button class="primary" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

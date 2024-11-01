@@ -5,6 +5,7 @@ import { PatientsService } from '../../shared/services/patients.service';
 import { UsersService } from '../../shared/services/users.service';
 import { SnackBarService } from '../../shared/services/snack-bar.service';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
+import { ClaimsService } from 'src/app/shared/services/claims.service';
 
 declare var $: any;
 declare var readXlsxFile: any;
@@ -21,7 +22,8 @@ export class BulkImportPatientsComponent implements OnInit {
     public patientsService: PatientsService,
     private router: Router,
     private snackBarService: SnackBarService,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private claimsService: ClaimsService
   ) { }
 
   public errors: any = [];
@@ -29,6 +31,9 @@ export class BulkImportPatientsComponent implements OnInit {
   public errCount = 0;
   public isDone = false;
   public sheetNames: any = [];
+
+  public clients: any = [];
+  public selectedClient: any = '';
 
   public file: any ={};
 
@@ -42,6 +47,8 @@ export class BulkImportPatientsComponent implements OnInit {
     cigna: false,
     humana: false,
     medicarePCP: false,
+    addClaims: false,
+    addClaimsWithCpts: false,
     cptCodes: [{
       start: '',
       end: ''
@@ -60,7 +67,15 @@ export class BulkImportPatientsComponent implements OnInit {
     const userr = SessionStorageService.getGenericJSON('user');
     this.usersService.getMyInfo(userr._id).subscribe(data => {
       this.userFromApi = data;
-      console.log(data);
+    });
+    if(userr && userr.role && userr.role == 'Admin'){
+      this.getClients();
+    } 
+  }
+
+  getClients(){
+    this.claimsService.getClients({}).subscribe((d: any) => {
+      this.clients = d['clients'];
     });
   }
 
@@ -84,6 +99,14 @@ export class BulkImportPatientsComponent implements OnInit {
 
   downloadGeneralSampleImport(){
     this.snackBarService.downloadFileWithUrl('Broader-Wellcare-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/General-Format.xlsx');
+  }
+
+  downloadClaimsSampleImport(){
+    this.snackBarService.downloadFileWithUrl('Claims-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/Claims-Format.xlsx');
+  }
+
+  downloadClaimsCptSampleImport(){
+    this.snackBarService.downloadFileWithUrl('Claims-Format.xlsx', 'application/vnd.ms-excel', environment.apiUrlPrefix + '/public/CPT-Claims-Format.xlsx');
   }
 
   onFileChange(event: any): void{
@@ -119,6 +142,10 @@ export class BulkImportPatientsComponent implements OnInit {
         this.process.cigna = true;
       } else if(this.radioModel == 'humana'){
         this.process.humana = true;
+      } else if(this.radioModel == 'add-claims'){
+        this.process.addClaims = true;
+      } else if(this.radioModel == 'add-claims-cpts'){
+        this.process.addClaimsWithCpts = true;
       } else {
         return this.snackBarService.errorMessage('Invalid processor selected');
       }
@@ -133,9 +160,13 @@ export class BulkImportPatientsComponent implements OnInit {
         }
       }
     }
+    if(this.process.addClaimsWithCpts && !this.selectedClient){
+      return this.snackBarService.errorMessage('Select a client'); 
+    }
     this.patientsService.bulkUpload({
       file: this.file,
-      process: this.process
+      process: this.process,
+      client: this.selectedClient
     }).subscribe((d: any) => {
         this.data = d.data;
         this.isDone = true;
@@ -156,8 +187,22 @@ export class BulkImportPatientsComponent implements OnInit {
   }
 
   addVerifiedBulkImport(){
-    this.patientsService.addVerifiedBulkImport(this.data).subscribe((d: any) => {
-      this.router.navigate(['/app']); 
+    if(this.radioModel == 'add-claims' || this.radioModel == 'add-claims-cpts'){
+      this.addVerifiedClaimsBulkImport();
+    } else {
+      this.patientsService.addVerifiedBulkImport(this.data).subscribe((d: any) => {
+        this.router.navigate(['/app']); 
+      });
+    }
+  }
+
+  addVerifiedClaimsBulkImport(){
+    this.claimsService.addVerifiedBulkImport(this.data).subscribe((d: any) => {
+      if(this.process.addClaims){
+        this.router.navigate(['/claims']); 
+      } else {
+        this.router.navigate(['/app']); 
+      }
     });
   }
 

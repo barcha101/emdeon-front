@@ -1,0 +1,68 @@
+.user-details{
+    .initials{
+        margin: 0 auto;
+        width: 90px;
+        height: 90px;
+        font-size: 40px;
+    }
+    .picture{
+        width: 90px;
+        height: 90px;
+    }
+    .title{
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        margin-top: 30px;
+    }
+    .regno{
+        color: #94A4C4;
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+    .cats{
+        margin-bottom: 15px;
+        .chip{
+            margin-top: 5px;
+        }
+    }
+}
+
+.basic-details{
+    .login-key{
+        color: #94A4C4;
+        margin-bottom: 5px;
+    }
+    .login-value{
+        margin-top: 0px;
+    }
+}
+
+.address{
+    .flex{
+        p{
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.upload-container{
+    border: 1px solid #8400d9;
+    border-radius: 0px;
+    padding: 8px 15px;
+    margin-top: 10px;
+    background: #8400d90a;
+    position: relative;
+    h3{
+        margin-bottom: 0px;
+        color: #8400d9;
+        font-weight: 700;   
+    }
+    .fc-25{
+        text-align: right;
+        button{
+            top: 38px;
+            position: relative;
+        }
+    }
+}

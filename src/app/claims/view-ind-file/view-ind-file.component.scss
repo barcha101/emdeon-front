@@ -1,0 +1,49 @@
+.gd-ind-info{
+    background-color: rgb(230, 230, 230);
+    padding: 5px 15px;
+    border-radius: 6px;
+    
+    p{
+        padding: 0px;
+        margin: 0px;
+    }
+    .topKey{
+        color: grey;
+    }
+}
+thead tr td{
+    color: white;
+    font-weight: 700;
+}
+.fa-plus-circle{
+    color: green;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.fa-minus-square{
+    color: red;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.popup-backdrop{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    .popup-container{
+        width: 70vw;
+        background-color: white;
+        border-radius: 12px;
+        padding: 25px;
+        box-sizing: border-box;
+    }
+}

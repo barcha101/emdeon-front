@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const token = SessionStorageService.getValue('token');
     if(token){
-      this.router.navigate(['/app']); 
+      this.router.navigate(['/claims']); 
     }
   }
 

@@ -1,0 +1,312 @@
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">{{fileDetails?.file?.fileName}}</h3>
+    </div>
+</div>
+<ng-container *ngIf="fileDetails?.file?.fileName">
+    <div class="mt-20 box">
+        <h3 class="title">General Details</h3>
+        <div class="flex g-15" style="flex-wrap: wrap;">
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">File Name</p>
+                <p class="bottomValue">{{fileDetails?.file?.fileName}}</p>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Uploaded On</p>
+                <p class="bottomValue">{{fileDetails?.file?.createdAt | date: 'd MMM y h:mm a'}}</p>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Status</p>
+                <p class="bottomValue">{{fileDetails?.file?.status}}</p>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Client</p>
+                <p class="bottomValue">{{fileDetails?.file?.client?.name || 'Not Assigned'}}</p>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Total Patients</p>
+                <p class="bottomValue">{{totalPatients}}</p>
+            </div>
+            <button class="primary-outline fc-30" (click)="removeDupsInSingleFile()">{{dupButtonText}}</button>
+        </div>
+    </div>
+    <div class="mt-20 box">
+        <h3 class="title">Status Details</h3>
+        <div class="flex g-15" style="flex-wrap: wrap;">
+            <ng-container *ngIf="fileDetails.patientStatuses && fileDetails.patientStatuses.length">
+                <div class="fc-30 gd-ind-info" *ngFor="let stat of fileDetails.patientStatuses;">
+                    <p class="topKey">Status: {{stat._id}}</p>
+                    <p class="bottomValue">{{stat.total}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="mt-20 box">
+        <h3 class="title">Claim Status Details</h3>
+        <div class="flex g-15" style="flex-wrap: wrap;">
+            <ng-container *ngIf="fileDetails.claimStatuses && fileDetails.claimStatuses.length">
+                <div class="fc-30 gd-ind-info" *ngFor="let stat of fileDetails.claimStatuses;">
+                    <p class="topKey">Status: {{stat._id ? stat._id : 'Not Checked'}}</p>
+                    <p class="bottomValue">{{stat.total}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <div class="mt-20 box" *ngIf="fileDetails?.details?.cpt?.length">
+        <h3 class="title">CPT Details</h3>
+        <div class="flex g-15" style="flex-wrap: wrap;">
+            <div class="fc-30 gd-ind-info" *ngFor="let cpt of fileDetails.details.cpt;">
+                <p class="topKey">CPT: {{cpt._id}}</p>
+                <p class="bottomValue">{{cpt.total}}</p>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!fileDetails?.file?.client" class="mt-20 box">
+        <div class="flex g-15" style="justify-content: space-evenly; flex-wrap: wrap; align-items: center;">
+            <h3 class="title fc-30" style="padding: 0px; margin: 0px;">Assign Client</h3>
+            <select [(ngModel)]="selectedClient" class="basic fc-30">
+                <option selected disabled value="">Assign Client</option>
+                <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
+            </select>
+            <button class="primary fc-30" (click)="assignClient()"><i class="fas fa-building"></i>&nbsp;Assign Client</button>
+        </div>
+    </div>
+
+    <div *ngIf="fileDetails?.file?.status == 'File Uploaded'" class="mt-20 box">
+        <h3 class="title fc-30">Split Into Multiple Files</h3>
+        <div class="flex g-15" style="justify-content: space-evenly; flex-wrap: wrap;">
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Min Per File</p>
+                <input class="basic" type="number" [(ngModel)]="minPerFile" placeholder="Min per file"/>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Max Per File</p>
+                <input class="basic" type="number" [(ngModel)]="maxPerFile" placeholder="Max per file"/>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <button class="primary-outline" style="margin-right: 15px;" (click)="splitFile()">Split File</button>
+            </div>
+        </div>
+    </div>
+    
+    <div *ngIf="fileDetails?.file?.client?.name && fileDetails?.file?.status == 'File Uploaded'" class="mt-20 box">
+        <h3 class="title fc-30">Assign CPTs</h3>
+        <div class="flex g-15" style="justify-content: space-evenly; flex-wrap: wrap;">
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Min Per Day</p>
+                <input class="basic" type="number" [(ngModel)]="minPerDay" placeholder="Min per day"/>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Max Per Day</p>
+                <input class="basic" type="number" [(ngModel)]="maxPerDay" placeholder="Max per day"/>
+            </div>
+            <div class="fc-30 gd-ind-info">
+                <p class="topKey">Start DOS</p>
+                <input class="basic" type="text" [(ngModel)]="startDate" placeholder="Start DOS"/>
+            </div>
+        </div>
+        <div class="text-center mt-20">
+            <button class="primary-outline" style="margin-right: 15px;" (click)="dividePatients()">Divide Patients</button>
+            <button class="primary-outline" (click)="isAddingOverallCpts = true;">CPTs for All Patients</button>
+        </div>
+        <ng-container *ngIf="assignTable && assignTable.length">
+            <div class="divider"></div>
+            <div class="table-container mt-20">
+                <table>
+                    <thead>
+                        <tr>
+                            <td>DOS</td>
+                            <td>Day</td>
+                            <td>Patients</td>
+                            <td>CPTs</td>
+                            <td>Remove</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- <tr *ngFor="let data of assignTable;">
+                            <td><p class="cell">{{data.date | date: 'd MMM y'}}</p></td>
+                            <td><p class="cell">{{data.day}}</p></td>
+                            <td><p class="cell">{{data.patients}}</p></td>
+                            <td><p class="cell"></p></td>
+                        </tr> -->
+                        <tr *ngFor="let data of assignTable; let i=index;">
+                            <td><input class="basic" type="text" [(ngModel)]="data.date" (ngModelChange)="adjustDaysAndCounts()" /></td>
+                            <td><p class="cell">{{data.day}}</p></td>
+                            <td><input class="basic" type="number" [(ngModel)]="data.patients" (ngModelChange)="adjustDaysAndCounts()" /></td>
+                            <td (click)="selectedDayIndex = i;">
+                                <i *ngIf="!data.cpts.length"  class="fas fa-plus-circle"></i>
+                                <!-- <p *ngIf="data.cpts.length" class="cell">CPTs Added</p> -->
+                                <div *ngIf="data.cpts.length" class="table-container mt-20">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <td>CPT</td>
+                                                <td>Quantity</td>
+                                                <td>ICD</td>
+                                                <td>Amount</td>
+                                                <td>Modifier</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                           <ng-container>
+                                                <tr *ngFor="let cptData of data.cpts; let i=index;">
+                                                    <td><p class="cell">{{cptData.code}}</p></td>
+                                                    <td><p class="cell">{{cptData.quantity}}</p></td>
+                                                    <td><p class="cell">{{cptData.icd}}</p></td>
+                                                    <td><p class="cell">{{cptData.amount}}</p></td>
+                                                    <td><p class="cell">{{cptData.modifier}}</p></td>                                                  
+                                                </tr>
+                                           </ng-container>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                            <td (click)="assignTable.splice(i,1); adjustDaysAndCounts()"><i class="fas fa-minus-square"></i></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <button class="primary-outline" style="margin-right: 15px;" (click)="addTableDay()">+ Add Day</button>
+                                <button class="primary-outline" (click)="sortDateWise()">Sort date wise</button>
+                            </td>
+                            <td></td>
+                            <td>
+                                Remaining Patients: {{remainingInTable}}
+                            </td>
+                            <td></td><td>
+                                <button class="primary" (click)="saveEverything()">Save</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </ng-container>
+    </div> 
+    <div *ngIf="fileDetails?.details?.dos?.length" class="box mt-20">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>DOS</td>
+                        <td>Status</td>
+                        <td>Count</td>
+                    </tr>
+                </thead>
+                <tbody>
+                   <ng-container>
+                        <tr *ngFor="let cc of fileDetails.details.dos; let i=index;">
+                            <td><p class="cell">{{cc._id.dos}}</p></td>
+                            <td><p class="cell">{{cc._id.status}}</p></td>
+                            <td><p class="cell">{{cc.total}}</p></td>                                           
+                        </tr>
+                   </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>  
+    <div *ngIf="fileDetails?.details?.submitAfter?.length" class="box mt-20">
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Submit On</td>
+                        <td>Status</td>
+                        <td>Count</td>
+                    </tr>
+                </thead>
+                <tbody>
+                   <ng-container>
+                        <tr *ngFor="let cc of fileDetails.details.submitAfter; let i=index;">
+                            <td><p class="cell">{{cc._id.dos}}</p></td>
+                            <td><p class="cell">{{cc._id.status}}</p></td>
+                            <td><p class="cell">{{cc.total}}</p></td>                                           
+                        </tr>
+                   </ng-container>
+                </tbody>
+            </table>
+        </div>
+    </div>   
+</ng-container>
+<div *ngIf="selectedDayIndex != null" class="popup-backdrop">
+    <div class="popup-container">
+        <h1>Adding CPTs for {{assignTable[selectedDayIndex]?.date}}</h1>
+        <div class="table-container mt-20">
+            <table>
+                <thead>
+                    <tr>
+                        <td>CPT</td>
+                        <td>Quantity</td>
+                        <td>ICD</td>
+                        <td>Amount</td>
+                        <td>Modifier</td>
+                        <td>Remove</td>
+                    </tr>
+                </thead>
+                <tbody>
+                   <ng-container *ngIf="assignTable[selectedDayIndex] && assignTable[selectedDayIndex].cpts && assignTable[selectedDayIndex].cpts.length">
+                        <tr *ngFor="let data of assignTable[selectedDayIndex].cpts; let i=index;">
+                            <td>
+                                <select class="basic" type="text" [(ngModel)]="data.code" (ngModelChange)="cptUpdated(i)">
+                                    <option *ngFor="let cpt of cptsList;" [value]="cpt.cptCode">{{cpt.cptCode}}</option>
+                                </select>
+                            </td>
+                            <td><input class="basic" type="number" [(ngModel)]="data.quantity" /></td>
+                            <td><input class="basic" type="text" [(ngModel)]="data.icd" /></td>
+                            <td><input class="basic" type="number" [(ngModel)]="data.amount" /></td>
+                            <td><input class="basic" type="text" [(ngModel)]="data.modifier" /></td>
+                            <td (click)="assignTable[selectedDayIndex].cpts.splice(i,1);"><i class="fas fa-minus-square"></i></td>
+                        </tr>
+                   </ng-container>
+                   <tr>
+                        <td colspan="3" >
+                            <button class="primary-outline" (click)="addEmptyCpt()">+ Add</button>
+                        </td>
+                        <td colspan="3" class="text-right">
+                            <button class="primary" style="margin-right: 10px;" (click)="saveIndCpts()">Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div *ngIf="isAddingOverallCpts" class="popup-backdrop">
+    <div class="popup-container">
+        <h1>Adding CPTs for All Patients</h1>
+        <div class="table-container mt-20">
+            <table>
+                <thead>
+                    <tr>
+                        <td>CPT</td>
+                        <td>Quantity</td>
+                        <td>ICD</td>
+                        <td>Amount</td>
+                        <td>Modifier</td>
+                        <td>Remove</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of overallCpts; let i=index;">
+                        <td>
+                            <select class="basic" type="text" [(ngModel)]="data.code" (ngModelChange)="cptUpdatedOverall(i)">
+                                <option *ngFor="let cpt of cptsList;" [value]="cpt.cptCode">{{cpt.cptCode}}</option>
+                            </select>
+                        </td>
+                        <td><input class="basic" type="number" [(ngModel)]="data.quantity" /></td>
+                        <td><input class="basic" type="text" [(ngModel)]="data.icd" /></td>
+                        <td><input class="basic" type="number" [(ngModel)]="data.amount" /></td>
+                        <td><input class="basic" type="text" [(ngModel)]="data.modifier" /></td>
+                        <td (click)="overallCpts.splice(i,1);"><i class="fas fa-minus-square"></i></td>
+                    </tr>
+                   <tr>
+                        <td colspan="3" >
+                            <button class="primary-outline" (click)="overallCpts.push({})">+ Add</button>
+                        </td>
+                        <td colspan="3" class="text-right">
+                            <button class="primary" style="margin-right: 10px;" (click)="saveOverallCpts()">Save</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

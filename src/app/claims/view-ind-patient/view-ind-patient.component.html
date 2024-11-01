@@ -1,0 +1,297 @@
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">PATIENTS</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item">Patients</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">View Patient</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <!-- <button class="primary-outline" routerLink="/app/update/{{patientId}}"><i class="icon-edit"></i>&nbsp;Edit</button> -->
+    </div>
+</div>
+<div class="flex mt-20 g-20">
+    <div class="flex-child fc-50">
+        <div class="box user-details">
+            <div class="text-center">
+                <div class="initials">{{patient.fName | initials}}</div>
+                <p class="title">{{patient.fName}}, {{patient.lName}}</p>
+                <div class="cats">
+                    <p class="chip blue">{{patient.gender}}</p>
+                </div>
+                <div class="text-left">
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>DoB</p>
+                        <p class="value fc-50 ml-a text-right">{{patient?.dob?.month}}/{{patient?.dob?.day}}/{{patient?.dob?.year}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Subscriber Id</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.subscriberId}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Status</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.status}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Officeally Visit Id</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.officeAlyVisitId}}</p>
+                    </div>
+                    <div class="flex keyvalues g-20">
+                        <p class="key fc-50"><i class="icon-email"></i>Officeally Claim Id</p>
+                        <p class="value fc-50 ml-a text-right">{{patient.officeAlyClaimId}}</p>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <div class="flex-child fc-50">
+        <div class="box user-details">
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>File</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.fileId?.fileName}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Street</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.street}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>City</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.city}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>State</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.state}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Zip</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.zip}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Insurance Name</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.insuranceName}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Subscriber Id</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.subscriberId}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>DOS</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.dos?.month}}/{{patient?.dos?.day}}/{{patient?.dos?.year}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Doctor First Name</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.docFirst}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Doctor Last Name</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.docLast}}</p>
+            </div>
+            <div class="flex keyvalues g-20">
+                <p class="key fc-50"><i class="icon-email"></i>Doctor NPI</p>
+                <p class="value fc-50 ml-a text-right">{{patient?.docNpi}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="patient.era && patient.era.length" class="box mt-20">
+    <h1 class="title">ERAs</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Check #</p></td>
+                    <td><p>Check Date</p></td>
+                    <td><p>Claim Status</p></td>
+                    <td><p>Paid Amount</p></td>
+                    <td><p>Patient Ctrl #</p></td>
+                    <td><p>Payer Ctrl #</p></td>
+                    <td><p>Adjustments</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let era of patient.era">
+                    <td>
+                        <p class="cell">{{era.checkNumber}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{era.checkDate}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{era.claimStatus}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">${{era.paidAmt}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{era.patientControlNum}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{era.payerClaimCtrlNum}}</p>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td><p>Group Code</p></td>
+                                <td><p>Reason Code</p></td>
+                                <td><p>Adj Amount</p></td>
+                            </tr>
+                            <tr *ngFor="let adj of era.adjustments">
+                                <td>{{adj.groupCode}}</td>
+                                <td>{{adj.reasonCode}}</td>
+                                <td>${{adj.adjstmntAmt}}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="patient.cpt && patient.cpt.length" class="box mt-20">
+    <h1 class="title">CPTs</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>CPT Code</p></td>
+                    <td><p>Quantity</p></td>
+                    <td><p>ICD</p></td>
+                    <td><p>Amount (Single)</p></td>
+                    <td><p>Modifier</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cpt of patient.cpt">
+                    <td>
+                        <p class="cell">{{cpt.code}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{cpt.quantity}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{cpt.icd}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">${{cpt.amount}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{cpt.modifier}}</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div *ngIf="logsList && logsList.length" class="box mt-20">
+    <h1 class="title">Bot Logs</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Bot Name</p></td>
+                    <td><p>Activity</p></td>
+                    <td><p>Log Time</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of logsList">
+                    <td>
+                        <p class="cell">{{item.botId.username}}</p>
+                    </td>
+                    <td>
+                        <p class="cell">{{item.activity}}</p>
+                    </td>
+                    <td>
+                        <div class="detailed">
+                            <div class="second">
+                                <p class="big">{{item.on ? (item.on | date: 'd MMM y') : '-'}}</p>
+                                <p class="small">{{item.on ? (item.on | date: 'h:mm a') : '-'}}</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box mt-20" *ngIf="patient && patient.eligibilityRaw && patient.eligibilityRaw.length">
+    <h1 class="title">Eligibility Raw Data</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Title</p></td>
+                    <td><p>Value/Table</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let item of patient.eligibilityRaw">
+                    <tr *ngIf="!item.colMds || (item.colMds && item.title == 'Results Table')">
+                        <td>
+                            <p class="cell">{{item.title}}</p>
+                        </td>
+                        <td *ngIf="!item.colMds">
+                            <p class="cell">{{item.value}}</p>
+                        </td>
+                        <td *ngIf="item.colMds">
+                            <table>
+                                <tr *ngFor="let tr of item.colMds">
+                                    <td *ngFor="let td of tr">{{td}}</td>
+                                </tr>
+                            </table>
+                            <!-- <p class="cell">{{item.colMds}}</p> -->
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="separator mt-20"></div>
+<div *ngIf="patientId && patient && patient.metadata" class="item-history flex mt-20 g-20">
+    <div class="fc-33 ind-history box">
+        <p class="title">Created By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.createdBy && patient.metadata.createdBy.name" class="first">
+                <div class="initials">{{patient.metadata.createdBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.createdBy && patient.metadata.createdBy.name ? patient.metadata.createdBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.createdOn" class="small">{{patient.metadata.createdOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="fc-33 ind-history box">
+        <p class="title">Last Edited By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.lastEditedBy && patient.metadata.lastEditedBy.name" class="first">
+                <div class="initials">{{patient.metadata.lastEditedBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.lastEditedBy && patient.metadata.lastEditedBy.name ? patient.metadata.lastEditedBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.lastEditedOn" class="small">{{patient.metadata.lastEditedOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+    <div class="fc-33 ind-history box">
+        <p class="title">Last Archived By</p>
+        <div class="detailed">
+            <div *ngIf="patient.metadata.deletedBy && patient.metadata.deletedBy.name" class="first">
+                <div class="initials">{{patient.metadata.deletedBy.name | initials}}</div>
+            </div>
+            <div class="second">
+                <p class="big">{{patient.metadata.deletedBy && patient.metadata.deletedBy.name ? patient.metadata.deletedBy.name : '-'}}</p>
+                <p *ngIf="patient.metadata.deletedOn" class="small">{{patient.metadata.deletedOn | date: 'd MMM y h:mm a'}}</p>
+            </div>
+        </div>
+    </div>
+</div>

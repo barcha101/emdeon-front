@@ -34,13 +34,13 @@
                 </tr>
                     <tr *ngFor="let item of list">
                         <td>
-                            <p class="cell" routerLink="/app/view/{{item.patientId._id}}">{{item.patientId.lName}}</p>
+                            <p class="cell" routerLink="/app/view/{{item.patientId?._id}}">{{item.patientId?.lName}}</p>
                         </td>
                         <td>
-                            <p class="cell">{{item.patientId.phone}}</p>
+                            <p class="cell">{{item.patientId?.phone}}</p>
                         </td>
                         <td>
-                            <p class="cell">{{item.patientId.subscriberId}}</p>
+                            <p class="cell">{{item.patientId?.subscriberId}}</p>
                         </td>
                         <td>
                             <p class="cell">{{item.activity}}</p>

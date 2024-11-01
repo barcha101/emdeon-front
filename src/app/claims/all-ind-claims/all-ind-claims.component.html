@@ -1,0 +1,187 @@
+<div class="bc-contain">
+    <div class="titles">
+        <h3 class="title">All Claims</h3>
+        <div class="breadcrumb">
+            <span class="item">Home</span>
+            <i class="fas fa-caret-right"></i>
+            <span class="item active">All Claims</span>
+        </div>
+    </div>
+    <div class="buttons">
+        <button class="primary" (click)="exportPatients()">Export (Filter less than 20000)</button>
+    </div>
+</div>
+<div class="box mt-20">
+    <div class="filters flex g-20">
+        <div class="search-bar fc-25">
+            <i class="fas fa-search"></i>
+            <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterEmdStatus" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Emdeon Status</option>
+                <option value="">All</option>
+                <option *ngFor="let status of statusList" [value]="status">{{status}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterClient" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Client/Providor</option>
+                <option value="">All</option>
+                <option *ngFor="let client of clientList" [value]="client._id">{{client.name}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterPaymentStatus" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Payment Status</option>
+                <option value="">All</option>
+                <option value="Fully Paid">Fully Paid</option>
+                <option value="Partially Paid">Partially Paid</option>
+                <option value="0 Paid">0 Paid</option>
+                <option value="Negative">Negative</option>            
+            </select>
+        </div>
+    </div>
+    <div class="filters flex g-20 mt-20">
+        <div class="fc-25">
+            <select [(ngModel)]="filterClaimStatusCode" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Claim Status Code</option>
+                <option value="">All</option>
+                <option *ngFor="let code of claimStatusCodeList" [value]="code">{{code}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterGroupReason" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Group - Reason</option>
+                <option value="">All</option>
+                <option *ngFor="let gr of groupReasonList" [value]="gr">{{gr}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterCptCode" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>CPT</option>
+                <option value="">All</option>
+                <option *ngFor="let cpt of cptCodeList" [value]="cpt">{{cpt}}</option>            
+            </select>
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterIcdCode" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>ICD</option>
+                <option value="">All</option>
+                <option *ngFor="let icd of icdCodeList" [value]="icd">{{icd}}</option>            
+            </select>
+        </div>
+    </div>
+    <div class="filters flex g-20 mt-20">
+        <div class="fc-25" style="position: relative;">
+            <input class="basic" [(ngModel)]="filterCheckDateStart" [matDatepicker]="checkDateStart" (ngModelChange)="filterUpdated()" placeholder="Check Date Start" />
+            <mat-datepicker-toggle style="position: absolute; top: -4px; right: 5px;" matSuffix [for]="checkDateStart"></mat-datepicker-toggle>
+            <mat-datepicker #checkDateStart></mat-datepicker>
+        </div>
+        <div class="fc-25" style="position: relative;">
+            <input class="basic" [(ngModel)]="filterCheckDateEnd" [matDatepicker]="checkDateEnd" (ngModelChange)="filterUpdated()" placeholder="Check Date End" />
+            <mat-datepicker-toggle style="position: absolute; top: -4px; right: 5px;" matSuffix [for]="checkDateEnd"></mat-datepicker-toggle>
+            <mat-datepicker #checkDateEnd></mat-datepicker>
+        </div>
+        <div class="fc-25" style="position: relative;">
+            <input class="basic" [(ngModel)]="filterDosStart" [matDatepicker]="dosStart" (ngModelChange)="filterUpdated()" placeholder="DOS Start" />
+            <mat-datepicker-toggle style="position: absolute; top: -4px; right: 5px;" matSuffix [for]="dosStart"></mat-datepicker-toggle>
+            <mat-datepicker #dosStart></mat-datepicker>
+        </div>
+        <div class="fc-25" style="position: relative;">
+            <input class="basic" [(ngModel)]="filterDosEnd" [matDatepicker]="dosEnd" (ngModelChange)="filterUpdated()" placeholder="DOS End" />
+            <mat-datepicker-toggle style="position: absolute; top: -4px; right: 5px;" matSuffix [for]="dosEnd"></mat-datepicker-toggle>
+            <mat-datepicker #dosEnd></mat-datepicker>
+        </div>
+    </div>
+    <div class="filters flex g-20 mt-20">
+        <div class="fc-25">
+            <input class="basic" [(ngModel)]="filterCheckNum" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Check Number" />
+        </div>
+        <div class="fc-25">
+            <input class="basic" [(ngModel)]="filterInsurance" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Insurance Name" />
+        </div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterEraAvailable" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>ERA Available</option>
+                <option value="">All</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>            
+            </select>
+        </div>
+        <div class="fc-25"></div>
+    </div>
+    <div class="table-container mt-20">
+        <table>
+            <thead>
+                <tr>
+                    <td><p>Name</p></td>
+                    <td><p>Client</p></td>
+                    <td><p>Insurance</p></td>
+                    <td><p>Emdeon Status</p></td>
+                    <td><p>Status Code</p></td>
+                    <td><p>Group - Reason</p></td>
+                    <td><p>CPT - ICD</p></td>
+                    <td><p>Check Number</p></td>
+                    <td><p>Check Date</p></td>
+                </tr>
+            </thead>
+            <tbody>
+                    <tr *ngFor="let item of list" routerLink="/claims/view-patient/{{item._id}}">
+                        <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.lName}}, {{item.fName}}</p>
+                                    <p class="small">{{item.street}}, {{item.city}}, {{item.state}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="cell">{{item?.client?.name}}</p>
+                        </td>
+                        <td>
+                            <div class="detailed">
+                                <div class="second">
+                                    <p class="big">{{item.insuranceName}}</p>
+                                    <p class="small">{{item.subscriberId}}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="chip blue">{{item.status}}</p>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item?.era?.length">
+                                <p class="cell" *ngFor="let era of item.era;">{{era?.claimStatus}}</p>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item?.era?.length">
+                                <ng-container *ngFor="let era of item.era;">
+                                    <ng-container *ngIf="era?.adjustments?.length">
+                                        <p class="cell" *ngFor="let adj of era.adjustments;">{{adj?.groupCode}}-{{adj?.reasonCode}}</p>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item?.cpt?.length">
+                                <p class="cell" *ngFor="let cpt of item.cpt;">{{cpt.code}}:{{cpt.icd}}</p>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item?.era?.length">
+                                <p class="cell" *ngFor="let era of item.era;">{{era?.checkNumber}}</p>
+                            </ng-container>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="item?.era?.length">
+                                <p class="cell" *ngFor="let era of item.era;">{{era?.checkDate}}</p>
+                            </ng-container>
+                        </td>
+                    </tr>
+            </tbody>
+        </table>
+        <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+    </div>
+</div>
