@@ -109,7 +109,14 @@
                 <option value="No">No</option>            
             </select>
         </div>
-        <div class="fc-25"></div>
+        <div class="fc-25">
+            <select [(ngModel)]="filterHasAdjustCodes" (ngModelChange)="filterUpdated()" class="basic">
+                <option value="" disabled selected>Has Adjustment Codes?</option>
+                <option value="">All</option>
+                <option value="Yes">Yes (CO45 & CO253)</option>
+                <option value="No">No</option>            
+            </select>
+        </div>
     </div>
     <div class="table-container mt-20">
         <table>

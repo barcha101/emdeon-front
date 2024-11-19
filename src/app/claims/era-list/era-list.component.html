@@ -16,6 +16,9 @@
                             <p>File Name</p>
                         </td>
                         <td>
+                            <p>Status</p>
+                        </td>
+                        <td>
                             <p>Client</p>
                         </td>
                         <td>
@@ -39,29 +42,56 @@
                     <tr *ngIf="!list || !list.length">
                         <td colspan="4" class="text-center">No file found</td>
                     </tr>
-                    <tr *ngFor="let item of list;">
-                        <td (click)="getS3File(item.s3Key, item.fileName)">
-                            <p style="color: #8400d9;" class="cell">{{item.fileName}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item?.client?.name || 'Not Assigned'}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item.checkNumber}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item.checkAmount}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item.checkDate?.month}}/{{item.checkDate?.day}}/{{item.checkDate?.year}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item.nullMatch || 0}}|{{item.singleMatch || 0}}|{{item.multipleMatch || 0}}</p>
-                        </td>
-                        <td>
-                            <p class="cell">{{item.createdAt | date: 'd MMM y h:mm a'}}</p>
-                        </td>
-                    </tr>
+                    <ng-container *ngFor="let item of list;">
+                        <ng-container *ngIf="!item?.checks?.length">
+                            <tr>
+                                <td (click)="getS3File(item.s3Link, item.fileName)">
+                                    <p style="color: #8400d9;" class="cell">{{item.fileName}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{item.fileStatus}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{item?.client?.name || 'Not Assigned'}}</p>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <p class="cell">{{item.createdAt | date: 'd MMM y h:mm a'}}</p>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="item?.checks?.length">
+                            <tr *ngFor="let check of item.checks;">
+                                <td (click)="getS3File(item.s3Link, item.fileName)">
+                                    <p style="color: #8400d9;" class="cell">{{item.fileName}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{item.fileStatus}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{item?.client?.name || 'Not Assigned'}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{check.checkNumber}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{check.checkAmount}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{check.checkDate?.month}}/{{check.checkDate?.day}}/{{check.checkDate?.year}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{check.nullMatch || 0}}|{{check.singleMatch || 0}}|{{check.multipleMatch || 0}}</p>
+                                </td>
+                                <td>
+                                    <p class="cell">{{item.createdAt | date: 'd MMM y h:mm a'}}</p>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
                 </tbody>
             </table>
         </div>

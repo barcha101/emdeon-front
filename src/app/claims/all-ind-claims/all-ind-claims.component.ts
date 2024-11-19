@@ -30,6 +30,7 @@ export class AllIndClaimsComponent implements OnInit {
   public filterEmdStatus: any = '';
   public filterPaymentStatus: any = '';
   public filterEraAvailable: any = '';
+  public filterHasAdjustCodes: any = '';
 
 
   public clientList: any = [];
@@ -94,7 +95,8 @@ export class AllIndClaimsComponent implements OnInit {
         filterInsurance: this.filterInsurance,
         filterEmdStatus: this.filterEmdStatus,
         filterPaymentStatus: this.filterPaymentStatus,
-        filterEraAvailable: this.filterEraAvailable
+        filterEraAvailable: this.filterEraAvailable,
+        filterHasAdjustCodes: this.filterHasAdjustCodes
       },
       pagination: {
         perPage: this.perPage,
