@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ClaimsService } from '../../shared/services/claims.service';
 import { HelperService } from '../../shared/services/helper.service';
 import { BotsService } from 'src/app/shared/services/bots.service';
+import { ReportsService } from 'src/app/shared/services/reports.service';
 
 @Component({
   selector: 'app-view-ind-patient',
@@ -20,8 +21,8 @@ export class ViewIndPatientComponent implements OnInit {
     public dialog: MatDialog,
     public claimsService: ClaimsService,
     private helperService: HelperService,
-    private botsService: BotsService
-
+    private botsService: BotsService,
+    private reportsService: ReportsService
     ) { }
 
   public patient: any = {
@@ -61,6 +62,17 @@ export class ViewIndPatientComponent implements OnInit {
     }).subscribe((d: any) => {
       this.logsList = d.list;
     });
+  }
+
+  exportReport(){
+    if(!this.patient.reportS3Link){
+      this.snackBarService.errorMessage('Report not generated for this patient yet');
+      return;
+    } else {
+      this.helperService.getS3File(this.patient.reportS3Link).subscribe(d=> {
+        this.helperService.downloadBlobFile(d, this.patient.fName+' '+this.patient.lName+'.pdf');
+      });
+    }
   }
   
   getS3File(fileKey: any, fileName: any){

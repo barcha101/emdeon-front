@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClaimsService } from '../../shared/services/claims.service';
 import { SnackBarService } from '../../shared/services/snack-bar.service';
+import { HelperService } from '../../shared/services/helper.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -43,7 +44,8 @@ export class AllIndClaimsComponent implements OnInit {
 
   constructor(
     private claimsService: ClaimsService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
+    private helperService: HelperService
   ) { }
 
   ngOnInit(): void {
@@ -106,6 +108,17 @@ export class AllIndClaimsComponent implements OnInit {
       this.list = d.list;
       this.totalCount = d.count;
     });
+  }
+
+  exportReport(patient: any){
+    if(!patient.reportS3Link){
+      this.snackBarService.errorMessage('Report not generated for this patient yet');
+      return;
+    } else {
+      this.helperService.getS3File(patient.reportS3Link).subscribe(d=> {
+        this.helperService.downloadBlobFile(d, patient.fName+' '+patient.lName+'.pdf');
+      });
+    }
   }
 
   pageChanged(pageNum: any){

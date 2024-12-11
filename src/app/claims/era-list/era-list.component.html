@@ -8,7 +8,27 @@
         </div>
     </div>
     <div class="box mt-20" style="padding: 0px; margin-bottom: 20px;">
-        <div class="table-container">
+        <div class="filters flex g-20 mt-20" style="padding: 0 15px;">
+            <div class="search-bar fc-50">
+                <i class="fas fa-search"></i>
+                <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+            </div>
+            <div class="fc-25">
+                <select [(ngModel)]="filterStatus" (ngModelChange)="filterUpdated()" class="basic">
+                    <option value="" disabled selected>Status</option>
+                    <option value="">All</option>
+                    <option *ngFor="let opt of statusOpts" [value]="opt">{{opt}}</option>            
+                </select>
+            </div>
+            <div class="fc-25">
+                <select [(ngModel)]="filterClient" (ngModelChange)="filterUpdated()" class="basic">
+                    <option value="" disabled selected>Client</option>
+                    <option value="">All</option>
+                    <option *ngFor="let opt of clientOpts" [value]="opt._id">{{opt.name}}</option>            
+                </select>
+            </div>
+        </div>
+        <div class="table-container mt-20">
             <table>
                 <thead>
                     <tr>
@@ -94,6 +114,9 @@
                     </ng-container>
                 </tbody>
             </table>
+            <div style="padding: 0px 15px 10px 15px; box-sizing: border-box; border-top: 1px solid #F5F5F6;">
+                <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+            </div>
         </div>
     </div>
 </ng-container>

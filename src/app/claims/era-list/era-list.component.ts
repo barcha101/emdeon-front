@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SnackBarService } from '../../shared/services/snack-bar.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EraService } from '../../shared/services/era.service';
+import { ClaimsService } from '../../shared/services/claims.service';
 import { HelperService } from '../../shared/services/helper.service';
 import { SessionStorageService } from 'src/app/shared/services/session-storage.service';
 import { AddEraComponent } from 'src/app/shared/components/popups/add-era/add-era.component';
@@ -14,7 +14,7 @@ import { AddEraComponent } from 'src/app/shared/components/popups/add-era/add-er
 export class EraListComponent implements OnInit {
 
   constructor(
-    private snackBarService: SnackBarService,
+    private claimsService: ClaimsService,
     public dialog: MatDialog,
     private eraService: EraService,
     private helperService: HelperService
@@ -24,10 +24,28 @@ export class EraListComponent implements OnInit {
 
   public thisUser: any = {};
 
+  public totalCount = 0;
+  public perPage = 20;
+  public pageNum = 1;
+
+  public filterSearch = '';
+  public filterStatus = '';
+  public filterClient = '';
+
+  public statusOpts: any = ['Pending', 'Processing', 'Processed', 'Error'];
+  public clientOpts: any = [];
+
 
   ngOnInit(): void {
     this.getFiles();
     this.thisUser = SessionStorageService.getGenericJSON('user');
+    this.getClients();
+  }
+
+  getClients(){
+    this.claimsService.getClients({}).subscribe((d: any) => {
+      this.clientOpts = d['clients'];
+    });
   }
 
   addEra(){
@@ -47,14 +65,33 @@ export class EraListComponent implements OnInit {
   getFiles() {
     this.eraService.list({
       query: {
+        filterSearch: this.filterSearch,
+        filterStatus: this.filterStatus,
+        filterClient: this.filterClient
       },
       pagination: {
-        perPage: null,
-        pageNum: null
+        perPage: this.perPage,
+        pageNum: this.pageNum
       }
     }).subscribe((d: any) => {
       this.list = d['list'];
+      this.totalCount = d['count'];
     });
+  }
+
+  filterUpdated(){
+    this.pageNum = 1;
+    this.getFiles();
+  }
+
+  perPageUpdated(perPage: any){
+    this.perPage = parseInt(perPage);
+    this.getFiles();
+  }
+
+  pageChanged(pageNum: any){
+    this.pageNum = pageNum;
+    this.getFiles();
   }
 
  

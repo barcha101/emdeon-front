@@ -131,11 +131,12 @@
                     <td><p>CPT - ICD</p></td>
                     <td><p>Check Number</p></td>
                     <td><p>Check Date</p></td>
+                    <td><p>Export Report</p></td>
                 </tr>
             </thead>
             <tbody>
-                    <tr *ngFor="let item of list" routerLink="/claims/view-patient/{{item._id}}">
-                        <td>
+                    <tr *ngFor="let item of list">
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <div class="detailed">
                                 <div class="second">
                                     <p class="big">{{item.lName}}, {{item.fName}}</p>
@@ -143,7 +144,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <p class="cell">{{item?.client?.name}}</p>
                         </td>
                         <td>
@@ -154,15 +155,15 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <p class="chip blue">{{item.status}}</p>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <ng-container *ngIf="item?.era?.length">
                                 <p class="cell" *ngFor="let era of item.era;">{{era?.claimStatus}}</p>
                             </ng-container>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <ng-container *ngIf="item?.era?.length">
                                 <ng-container *ngFor="let era of item.era;">
                                     <ng-container *ngIf="era?.adjustments?.length">
@@ -171,20 +172,23 @@
                                 </ng-container>
                             </ng-container>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <ng-container *ngIf="item?.cpt?.length">
                                 <p class="cell" *ngFor="let cpt of item.cpt;">{{cpt.code}}:{{cpt.icd}}</p>
                             </ng-container>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <ng-container *ngIf="item?.era?.length">
                                 <p class="cell" *ngFor="let era of item.era;">{{era?.checkNumber}}</p>
                             </ng-container>
                         </td>
-                        <td>
+                        <td routerLink="/claims/view-patient/{{item._id}}">
                             <ng-container *ngIf="item?.era?.length">
                                 <p class="cell" *ngFor="let era of item.era;">{{era?.checkDate}}</p>
                             </ng-container>
+                        </td>
+                        <td>
+                            <p *ngIf="item?.reportS3Link" (click)="exportReport(item)" class="cell"><a>Export Report</a></p>
                         </td>
                     </tr>
             </tbody>

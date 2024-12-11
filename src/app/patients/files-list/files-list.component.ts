@@ -27,6 +27,10 @@ export class FilesListComponent implements OnInit {
   public currentView: any = '';
   public thisUser: any = {};
 
+  public totalCount = 0;
+  public perPage = 20;
+  public pageNum = 1;
+
 
   ngOnInit(): void {
     this.getFiles();
@@ -52,11 +56,12 @@ export class FilesListComponent implements OnInit {
       query: {
       },
       pagination: {
-        perPage: null,
-        pageNum: null
+        perPage: this.perPage,
+        pageNum: this.pageNum
       }
     }).subscribe((d: any) => {
-      this.list = d;
+      this.list = d['files'];
+      this.totalCount = d['count'];
       if(!this.list.length){
         this.noPatientFound = true;
       }
@@ -115,6 +120,16 @@ export class FilesListComponent implements OnInit {
     this.helperService.getS3File(fileKey).subscribe(d=> {
       this.helperService.downloadBlobFile(d, fileName);
     });
+  }
+
+  perPageUpdated(perPage: any){
+    this.perPage = parseInt(perPage);
+    this.getFiles();
+  }
+
+  pageChanged(pageNum: any){
+    this.pageNum = pageNum;
+    this.getFiles();
   }
 
 }

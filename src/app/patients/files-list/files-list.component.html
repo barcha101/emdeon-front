@@ -49,6 +49,14 @@
                 </div>
             </div>
         </div>
+        <div style="background-color: white;
+        padding: 1px 20px 10px 20px;
+        border-radius: 12px;
+        box-shadow: 0px 3px 8px 0px rgba(132, 0, 217, 0.4784313725);
+        margin-top: 20px;">
+            <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+        </div>
+        
     </div>
     <div *ngIf="!noPatientFound && currentView == 'table'" class="box mt-20" style="padding: 0px; margin-bottom: 20px;">
         <div class="table-container">
@@ -120,6 +128,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div style="padding: 0px 15px 10px 15px; box-sizing: border-box; border-top: 1px solid #F5F5F6;">
+                <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+            </div>
         </div>
     </div>
 </ng-container>
