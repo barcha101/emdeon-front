@@ -68,7 +68,8 @@ export class EraListComponent implements OnInit {
       query: {
         filterSearch: this.filterSearch,
         filterStatus: this.filterStatus,
-        filterClient: this.filterClient
+        filterClient: this.filterClient,
+        filterInsurance: this.filterInsurance
       },
       pagination: {
         perPage: this.perPage,
