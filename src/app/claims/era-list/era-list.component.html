@@ -9,9 +9,12 @@
     </div>
     <div class="box mt-20" style="padding: 0px; margin-bottom: 20px;">
         <div class="filters flex g-20 mt-20" style="padding: 0 15px;">
-            <div class="search-bar fc-50">
+            <div class="search-bar fc-25">
                 <i class="fas fa-search"></i>
                 <input [(ngModel)]="filterSearch" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Search" />
+            </div>
+            <div class="fc-25">
+                <input class="basic" [(ngModel)]="filterInsurance" debounce (debouncedModelUpdate)="filterUpdated()" placeholder="Insurance" />
             </div>
             <div class="fc-25">
                 <select [(ngModel)]="filterStatus" (ngModelChange)="filterUpdated()" class="basic">

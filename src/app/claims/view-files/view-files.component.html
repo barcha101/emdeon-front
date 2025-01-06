@@ -21,7 +21,13 @@
                             <p>Status</p>
                         </td>
                         <td>
+                            <p>Patients</p>
+                        </td>
+                        <td>
                             <p>Client</p>
+                        </td>
+                        <td>
+                            <p>Export</p>
                         </td>
                         <td>
                             <p>Added On</p>
@@ -43,7 +49,13 @@
                             <p class="cell">{{item.status}}</p>
                         </td>
                         <td>
+                            <p class="cell">{{item.claimCount}}</p>
+                        </td>
+                        <td>
                             <p class="cell">{{item?.client?.name || 'Not Assigned'}}</p>
+                        </td>
+                        <td>
+                            <p class="cell" (click)="exportClaimFile(item._id, item.fileName)"><a>Export</a></p>
                         </td>
                         <td>
                             <p class="cell">{{item.createdAt | date: 'd MMM y h:mm a'}}</p>

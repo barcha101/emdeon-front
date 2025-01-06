@@ -106,4 +106,10 @@ export class ViewFilesComponent implements OnInit {
     });
   }
 
+  exportClaimFile(fileId: any, fileName: any){
+    this.claimsService.exportClaimFile(fileId).subscribe((d: any) => {
+      this.snackBarService.downloadFileWithUrl('Results - '+fileName, 'application/vnd.ms-excel', environment.apiUrlPrefix + '/' + d['fileUrl']);
+    });
+  }
+
 }

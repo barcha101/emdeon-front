@@ -25,6 +25,10 @@ export class ClaimsService {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/exportClaims', data);
   }
 
+  exportClaimFile(fileId: any){
+    return this.HttpClientObj.post(this.apiUrlPrefix + '/exportClaimFile', {fileId});
+  }
+
   getSingle(_id: any) {
     return this.HttpClientObj.post(this.apiUrlPrefix + '/getSingle', {_id});
   }

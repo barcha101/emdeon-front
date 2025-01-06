@@ -31,6 +31,7 @@ export class EraListComponent implements OnInit {
   public filterSearch = '';
   public filterStatus = '';
   public filterClient = '';
+  public filterInsurance = '';
 
   public statusOpts: any = ['Pending', 'Processing', 'Processed', 'Error'];
   public clientOpts: any = [];
