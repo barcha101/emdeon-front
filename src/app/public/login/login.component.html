@@ -1,55 +1,51 @@
-<div class="lc-top">
-    <div class="old-flex">
-        <div class="image-container">
-            <div class="bg">
-                <div class="overlay">
-                    <div class="content">
-                        <div class="fc">
-                            <img src="assets/images/eslogo.png" class="logo" />
-                            <p *ngIf="view == 'login'" class="title">Log in to Emdeon System</p>
-                            <h2 *ngIf="view == 'forgot'" class="title">RESET PASSWORD</h2>
-                            <h2 *ngIf="view == 'code'" class="title">Enter emailed one-time passcode</h2>
-                            <form #loginForm="ngForm" (submit)="submit()">
-                                <div *ngIf="view == 'login'" class="input">
-                                    <p class="label">Username</p>
-                                    <input type="email" [(ngModel)]="email" required #emailInput="ngModel" name="emailInput"/>
-                                    <!-- <div [hidden]="emailInput.valid || emailInput.pristine" class="error">
-                                        Email is required
-                                    </div> -->
-                                    <ng-container *ngIf="emailInput.touched">
-                                        <p class="error" *ngIf="emailInput.errors?.['required']">Username is required</p>
-                                    </ng-container>
-                                </div>
-                                <div *ngIf="view == 'login'" class="input">
-                                    <p class="label">Password</p>
-                                    <input [(ngModel)]="password" type="password" name="passInput" #passInput="ngModel" required />
-                                    <ng-container *ngIf="passInput.touched">
-                                        <p class="error" *ngIf="passInput.errors?.['required']">Password is required</p>
-                                    </ng-container>
-                                </div>
-                                <div *ngIf="view == 'code'" class="input">
-                                    <p class="label">{{message ? message : 'One-Time Passphrase'}}</p>
-                                    <input [(ngModel)]="code" type="text" name="codee" #codee="ngModel" required />
-                                    <div [hidden]="codee.valid || codee.pristine" class="error">
-                                        Code is required
-                                    </div>
-                                </div>
-                                <!-- <p *ngIf="view == 'code'" class="message">Enter email code</p> -->
-                                <div class="action">
-                                    <button *ngIf="view == 'login'"  type="submit" [disabled]="!loginForm.valid" class="primary">Email Login Code</button>
-                                    <button *ngIf="view == 'forgot'"  type="submit" [disabled]="!loginForm.valid" class="primary">Send Reset Link</button>
-                                    <button *ngIf="view == 'code'"  type="submit" [disabled]="!loginForm.valid" class="primary">Sign In</button>
-                                </div>
-                            </form>
-                            <div class="forgot">
-                                <!-- <p *ngIf="view == 'login'" (click)="view = 'forgot'" class="clickable">Forgot Password?</p> -->
-                                <p *ngIf="view == 'forgot'" (click)="view = 'login'" class="clickable">Sign In</p>
-                                <p *ngIf="view == 'code'" (click)="view = 'login'" class="clickable">Back</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<div class="w-full h-screen flex items-center justify-start bg-slate-400 flex-row">
+        <div class="w-3/5 h-full flex flex-col justify-center items-center bg-orange-400">
+            <div class="w-2/3 flex flex-row justify-center items-end">
+                <img src="assets/images/eslogo.png" class=" w-[200px]" />
+                <p class="font-montserrat font-bold text-white text-lg">Optimize healthcare with real-time insurance verification and automated coverage discovery.</p>
             </div>
         </div>
-    </div>
+        <div class="w-2/5 h-full flex flex-col items-center justify-center bg-white">
+            <p *ngIf="view == 'login'" class="text-4xl mb-4 text-orange-400 font-montserrat font-bold">Login</p>
+            <h2 *ngIf="view == 'forgot'" class="title">RESET PASSWORD</h2>
+            <h2 *ngIf="view == 'code'" class="title">Enter emailed one-time passcode</h2>
+            <form #loginForm="ngForm" (submit)="submit()" class="w-[80%]">
+                <div *ngIf="view == 'login'" class="mb-4">
+                    <p class="label text-slate-600">Username</p>
+                    <input type="email" [(ngModel)]="email" required #emailInput="ngModel" name="emailInput" class="input-box"/>
+                    <!-- <div [hidden]="emailInput.valid || emailInput.pristine" class="error">
+                        Email is required
+                    </div> -->
+                    <ng-container *ngIf="emailInput.touched">
+                        <p class="input-error" *ngIf="emailInput.errors?.['required']">Username is required</p>
+                    </ng-container>
+                </div>
+                <div *ngIf="view == 'login'" class="mb-4">
+                    <p class="label text-slate-600">Password</p>
+                    <input [(ngModel)]="password" type="password" name="passInput" #passInput="ngModel" required class="input-box"/>
+                    <ng-container *ngIf="passInput.touched">
+                        <p class="input-error" *ngIf="passInput.errors?.['required']">Password is required</p>
+                    </ng-container>
+                </div>
+                <div *ngIf="view == 'code'" class="mb-4">
+                    <p class="label text-slate-600">{{message ? message : 'One-Time Passphrase'}}</p>
+                    <input [(ngModel)]="code" type="text" name="codee" #codee="ngModel" required class="input-box"/>
+                    <div [hidden]="codee.valid || codee.pristine" class="error">
+                        Code is required
+                    </div>
+                </div>
+                <!-- <p *ngIf="view == 'code'" class="message">Enter email code</p> -->
+                <div class="action">
+                    <button *ngIf="view == 'login'"  type="submit" [disabled]="!loginForm.valid" class="primary-btn">Email Login Code</button>
+                    <button *ngIf="view == 'forgot'"  type="submit" [disabled]="!loginForm.valid" class="primary">Send Reset Link</button>
+                    <button *ngIf="view == 'code'"  type="submit" [disabled]="!loginForm.valid" class="primary-btn">Sign In</button>
+            
+                </div>
+            </form>
+            <div class="forgot">
+                <!-- <p *ngIf="view == 'login'" (click)="view = 'forgot'" class="clickable">Forgot Password?</p> -->
+                <p *ngIf="view == 'forgot'" (click)="view = 'login'" class="primary-btn">Sign In</p>
+                <p *ngIf="view == 'forgot'" (click)="view = 'login'" class="secondary-btn">Back</p>
+            </div>
+        </div>
 </div>

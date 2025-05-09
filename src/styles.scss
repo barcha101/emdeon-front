@@ -1,3 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Tailwind custom classes
+
+//Login page
+.input-box {
+    @apply w-full h-10 rounded-lg p-5 border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400;
+}
+.primary-btn {
+    @apply bg-orange-400 px-4 py-2 rounded-lg text-white border-[3px] border-orange-400 transition-all duration-500 ;
+  }
+.secondary-btn {
+    @apply bg-white px-4 py-2 rounded-lg text-orange-400 border-[3px] border-gray-400 transition-all duration-500 ;
+  }
+  
+.primary-btn:hover {
+    @apply bg-white text-orange-400 border-orange-400;
+    border-width: 3px; /* Custom hover border width */
+  }
+.input-error{
+    @apply text-red-500 text-sm mt-2;
+}
+
+// side bar
+
+.link-list{
+    @apply px-4 py-2 text-black cursor-pointer
+}
+.list-icon{
+    @apply bg-orange-200 px-2 py-2 text-orange-400 rounded-md
+
+
+}
+
+
+
+// 
+
 /* You can add global styles to this file, and also import other style files */
 html, body{
     margin: 0px;

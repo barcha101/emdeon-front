@@ -1,46 +1,47 @@
-<div class="menu-container">
-    <div class="top-menu">
-        <img routerLink="/claims" class="logo" src="assets/images/eslogo.png" />
-        <div *ngIf="userFromApi.role == 'Admin'" class="user-menu">
-            <div class="user-dropdown">{{userFromApi.name}}<i class="fas fa-caret-down"></i></div>
-            <div class="menu-content">
-                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/app')}" routerLink="/app">
-                    <i class="fas fa-hospital-user"></i>
-                    <span>Patients</span>
-                </div>
-                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/claims')}" routerLink="/claims">
-                    <i class="fas fa-hospital-user"></i>
-                    <span>Claim Files</span>
-                </div>
-                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/claims')}" routerLink="/claims/all">
-                    <i class="fas fa-hospital-user"></i>
-                    <span>All Claims</span>
-                </div>
-                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/users')}" routerLink="/users/list">
-                    <i class="fas fa-users" style="position: relative; right: 1px;"></i>
-                    <span>Users</span>
-                </div>
-                <div *ngIf="userFromApi && userFromApi.role && userFromApi.role == 'Admin'" class="link" [ngClass]="{'active': cUrl.startsWith('/bots')}" routerLink="/bots/list">
-                    <i class="fas fa-robot" style="position: relative; right: 2px;"></i>
-                    <span>Pets</span>
-                </div>
-                <div *ngIf="userFromApi && userFromApi.permissions && userFromApi.permissions.viewLogs" class="link" [ngClass]="{'active': cUrl.startsWith('/logs')}" routerLink="/logs">
-                    <i class="fas fa-list-alt"></i>
-                    <span>Audit Logs</span>
-                </div>
-        
-                <div class="separator"></div>
-        
-                <div class="link user" [ngClass]="{'active': cUrl.startsWith('/profile')}" routerLink="/profile">
-                    <i class="fas fa-user-circle"></i>
-                    <span>My Profile</span>
-                </div>
-                <div (click)="signout()" class="link">
-                    <i class="fas fa-door-closed" style="position: relative; right: 3px;"></i>
-                    <span>Sign out</span>
-                </div>
+<div class="w-full bg-orange-400 h-20 flex flex-row justify-between">
+    <div class=" flex items-center ml-4">
+        <img routerLink="/claims" class="h-[80%]" src="assets/images/eslogo.png" />
+    </div>
+    <div class="flex flex-row w-full justify-end items-center">
+        <div *ngIf="userFromApi.role == 'Admin'" class="user-menu relative group flex flex-col items-center">
+            <!-- Trigger -->
+            <div class="user-dropdown cursor-pointer flex items-center justify-center bg-white px-4 py-2 rounded-lg mr-5 text-orange-400 font-montserrat">
+                {{ userFromApi.name }} &nbsp;
+                <i class="fas fa-caret-down transform transition-transform duration-300 group-hover:rotate-180"></i>
+              </div>
+          
+            <!-- Dropdown Menu (initially hidden, shown on hover of parent group) -->
+            <div class="menu-content absolute hidden group-hover:block bg-white shadow-lg rounded-md z-50 min-w-[200px] right-5 top-9 border border-orange-400">
+              <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/app') }" routerLink="/app">
+                <i class="fas fa-hospital-user list-icon"></i> &nbsp;Patients
+              </div>
+              <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/claims') }" routerLink="/claims">
+                <i class="fas fa-hospital-user"></i> &nbsp;Claim Files
+              </div>
+              <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/claims') }" routerLink="/claims/all">
+                <i class="fas fa-hospital-user"></i> &nbsp;All Claims
+              </div>
+              <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/users') }" routerLink="/users/list">
+                <i class="fas fa-users"></i> &nbsp;Users
+              </div>
+              <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/bots') }" routerLink="/bots/list">
+                <i class="fas fa-robot"></i> &nbsp;Pets
+              </div>
+              <div *ngIf="userFromApi.permissions?.viewLogs" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/logs') }" routerLink="/logs">
+                <i class="fas fa-list-alt"></i> <span>Audit Logs</span>
+              </div>
+          
+              <div class="separator my-2 border-t border-gray-200"></div>
+          
+              <div class="link user" [ngClass]="{ 'active': cUrl.startsWith('/profile') }" routerLink="/profile">
+                <i class="fas fa-user-circle"></i> <span>My Profile</span>
+              </div>
+              <div (click)="signout()" class="link cursor-pointer">
+                <i class="fas fa-door-closed"></i> <span>Sign out</span>
+              </div>
             </div>
-        </div>
+          </div>
+          
         <div (click)="signout()" *ngIf="userFromApi.role == 'User'" class="user-menu">
             <div class="user-dropdown"><i class="fas fa-door-closed" style="position: relative; right: 3px;"></i>Sign out</div>
         </div>
