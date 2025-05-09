@@ -108,6 +108,7 @@
         <div class="text-center mt-20">
             <button class="primary-outline" style="margin-right: 15px;" (click)="dividePatients()">Divide Patients</button>
             <button class="primary-outline" (click)="isAddingOverallCpts = true;">CPTs for All Patients</button>
+            <button class="primary-outline" style="margin-left: 15px;"(click)="saveCptsWithDos()">Save CPTs Without DOS</button>
         </div>
         <ng-container *ngIf="assignTable && assignTable.length">
             <div class="divider"></div>
@@ -181,7 +182,7 @@
             </div>
         </ng-container>
     </div> 
-    <div *ngIf="fileDetails?.details?.dos?.length" class="box mt-20">
+    <!-- <div *ngIf="fileDetails?.details?.dos?.length" class="box mt-20">
         <div class="table-container">
             <table>
                 <thead>
@@ -202,7 +203,7 @@
                 </tbody>
             </table>
         </div>
-    </div>  
+    </div>   -->
     <div *ngIf="fileDetails?.details?.submitAfter?.length" class="box mt-20">
         <div class="table-container">
             <table>
@@ -224,7 +225,68 @@
                 </tbody>
             </table>
         </div>
-    </div>   
+    </div>
+    
+    <div class="box mt-20">
+        <h3 class="title">All Claims</h3>
+        <div class="filters flex g-20">
+            <div class="search-bar fc-25">
+                <i class="fas fa-search"></i>
+                <input [(ngModel)]="filterSearchAllClaims" debounce (debouncedModelUpdate)="getIndClaimList()" placeholder="Search" />
+            </div>
+            <div class="fc-25">
+                <select [(ngModel)]="filterEmdStatusAllClaims" (ngModelChange)="getIndClaimList()" class="basic">
+                    <option value="" disabled selected>Emdeon Status</option>
+                    <option value="">All</option>
+                    <option *ngFor="let status of statusListAllClaimsOpts" [value]="status">{{status}}</option>            
+                </select>
+            </div>
+        </div>
+        
+        <div class="table-container mt-20">
+            <table>
+                <thead>
+                    <tr>
+                        <td><p>Name</p></td>
+                        <td><p>Insurance</p></td>
+                        <td><p>DoB</p></td>
+                        <td><p>DoS</p></td>
+                        <td><p>Status</p></td>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr *ngFor="let item of listAllClaims">
+                            <td routerLink="/claims/view-patient/{{item._id}}">
+                                <div class="detailed">
+                                    <div class="second">
+                                        <p class="big">{{item.lName}}, {{item.fName}}</p>
+                                        <p class="small">{{item.street}}, {{item.city}}, {{item.state}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="detailed">
+                                    <div class="second">
+                                        <p class="big">{{item.insuranceName}}</p>
+                                        <p class="small">{{item.subscriberId}}</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="cell">{{item.dob?.month}}/{{item.dob?.day}}/{{item.dob?.year}}</p>
+                            </td>
+                            <td>
+                                <p class="cell">{{item.dos?.month}}/{{item.dos?.day}}/{{item.dos?.year}}</p>
+                            </td>
+                            <td>
+                                <p class="cell">{{item.status}}</p>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+            <emdeon-paginator [totalCount]="totalCountAllClaims" [perPage]="perPageAllClaims" [pageNum]="pageNumAllClaims" (onPageChange)="pageNumAllClaims = $event; getIndClaimList();" (perPageUpdated)="perPageAllClaims = $event; getIndClaimList();"></emdeon-paginator>
+        </div>
+    </div>
 </ng-container>
 <div *ngIf="selectedDayIndex != null" class="popup-backdrop">
     <div class="popup-container">

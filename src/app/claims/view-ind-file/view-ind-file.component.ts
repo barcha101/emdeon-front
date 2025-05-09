@@ -34,6 +34,8 @@ export class ViewIndFileComponent implements OnInit {
 
   public remainingInTable = 0;
 
+  public savingCptsWithDos = false;
+
   public dupButtonText = 'Assign client to check duplicates';
 
   public days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -43,8 +45,17 @@ export class ViewIndFileComponent implements OnInit {
   public overallCpts: any = [];
   public isAddingOverallCpts = false;
 
-  public holidays = ['08/05/2023','08/06/2023','08/12/2023','08/13/2023','08/16/2023','08/19/2023','08/20/2023','08/26/2023','08/27/2023','09/02/2013','09/03/2023','09/04/2023','09/09/2023','09/10/2023','09/11/2023','09/16/2023','09/17/2023','09/23/2023','09/24/2023','09/30/2023','10/01/2023','10/07/2023','10/08/2023','10/14/2023','10/15/2023','10/21/2023','10/22/2023','10/28/2023','10/29/2023','11/04/2023','11/05/2023','11/10/2023','11/11/2023','11/12/2023','11/18/2023','11/19/2023','11/23/2023','11/24/2023','11/25/2023','11/26/2023','12/02/2023','12/03/2023','12/09/2023','12/10/2023','12/16/2023','12/17/2023','12/23/2023','12/24/2023','12/25/2023','12/26/2023','12/30/2023','12/31/2023','01/01/2024','01/02/2024','01/06/2024','01/07/2024','01/13/2024','01/14/2024','01/15/2024','01/20/2024','01/21/2024','01/27/2024','01/28/2024','02/03/2024','02/04/2024','02/10/2024','02/11/2024','02/17/2024','02/18/2024','02/19/2024','02/24/2024','02/25/2024','03/02/2024','03/03/2024','03/09/2024','03/10/2024','03/16/2024','03/17/2024','03/23/2024','03/24/2024','03/30/2024','03/31/2024',]
+  public holidays = ['08/05/2023','08/06/2023','08/12/2023','08/13/2023','08/16/2023','08/19/2023','08/20/2023','08/26/2023','08/27/2023','09/02/2013','09/03/2023','09/04/2023','09/09/2023','09/10/2023','09/11/2023','09/16/2023','09/17/2023','09/23/2023','09/24/2023','09/30/2023','10/01/2023','10/07/2023','10/08/2023','10/14/2023','10/15/2023','10/21/2023','10/22/2023','10/28/2023','10/29/2023','11/04/2023','11/05/2023','11/10/2023','11/11/2023','11/12/2023','11/18/2023','11/19/2023','11/23/2023','11/24/2023','11/25/2023','11/26/2023','12/02/2023','12/03/2023','12/09/2023','12/10/2023','12/16/2023','12/17/2023','12/23/2023','12/24/2023','12/25/2023','12/26/2023','12/30/2023','12/31/2023','01/01/2024','01/02/2024','01/06/2024','01/07/2024','01/13/2024','01/14/2024','01/15/2024','01/20/2024','01/21/2024','01/27/2024','01/28/2024','02/03/2024','02/04/2024','02/10/2024','02/11/2024','02/17/2024','02/18/2024','02/19/2024','02/24/2024','02/25/2024','03/02/2024','03/03/2024','03/09/2024','03/10/2024','03/16/2024','03/17/2024','03/23/2024','03/24/2024','03/30/2024','03/31/2024'];
 
+  public listAllClaims: any = [];
+  public filterSearchAllClaims: any = '';
+  public filterEmdStatusAllClaims: any = '';
+  public totalCountAllClaims: any = 0;
+  public perPageAllClaims: any = 10;
+  public pageNumAllClaims: any = 1;
+  public statusListAllClaimsOpts: any = ['Claim Added', 'Error', 'Ready To Submit', 'Pending Verification'];
+
+  
   ngOnInit(): void {
     this.fileId = this.route.snapshot.paramMap.get('id');
     this.startDate = new Date();
@@ -59,6 +70,7 @@ export class ViewIndFileComponent implements OnInit {
       for(const status of this.fileDetails.patientStatuses){
         this.totalPatients+= status.total;
       }
+      this.getIndClaimList();
       if(this.fileDetails.file && this.fileDetails.file.client && this.fileDetails.file.client._id){
         this.getCpts();
         this.findDupsInSingleFile();
@@ -202,7 +214,7 @@ export class ViewIndFileComponent implements OnInit {
     let isError = false;
     this.remainingInTable = this.totalPatients;
     for(let i=0 ; i<this.assignTable.length ; i++){
-      if(isNaN(new Date(this.assignTable[i].date).getTime())){
+      if(isNaN(new Date(this.assignTable[i].date).getTime()) && this.assignTable[i].date != 'Dos Already Added'){
         this.snackBarService.errorMessage('Enter a valid date');
         isError = true;
       } else {
@@ -282,7 +294,18 @@ export class ViewIndFileComponent implements OnInit {
     for(let i=0 ; i<this.assignTable.length ; i++){
       this.assignTable[i].cpts = JSON.parse(JSON.stringify(this.overallCpts))
     }
+    console.log(this.assignTable);
     this.isAddingOverallCpts = false;
+  }
+
+  saveCptsWithDos(){
+    this.savingCptsWithDos = true;
+    this.assignTable.push({
+      date: 'Dos Already Added',
+      day: 'Dos Already Added',
+      patients: this.totalPatients,
+      cpts: []
+    });
   }
 
   saveEverything(){
@@ -312,6 +335,23 @@ export class ViewIndFileComponent implements OnInit {
     this.claimsService.saveCptsForFile({fileId: this.fileId, assignTable: this.assignTable}).subscribe(ignore => {
       this.ngOnInit();
     })
+  }
+
+  getIndClaimList() {
+    this.claimsService.getIndClaimList({
+      query: {
+        filterSearch: this.filterSearchAllClaims,
+        filterFileId: this.fileDetails.file._id,
+        filterEmdStatus: this.filterEmdStatusAllClaims
+      },
+      pagination: {
+        perPage: this.perPageAllClaims,
+        pageNum: this.pageNumAllClaims
+      }
+    }).subscribe((d: any) => {
+      this.listAllClaims = d.list;
+      this.totalCountAllClaims = d.count;
+    });
   }
 
 }

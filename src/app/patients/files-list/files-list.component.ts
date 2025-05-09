@@ -94,6 +94,9 @@ export class FilesListComponent implements OnInit {
         if(this.list[i]?._id?.processors?.humana){
           this.list[i]['whatis'].push('Humana Eligibility')
         }
+        if(this.list[i]?._id?.processors?.essence){
+          this.list[i]['whatis'].push('Essence Eligibility')
+        }
       }
     });
   }

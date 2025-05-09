@@ -49,6 +49,7 @@ export class BulkImportPatientsComponent implements OnInit {
     medicarePCP: false,
     addClaims: false,
     addClaimsWithCpts: false,
+    addClaimsWithDos: false,
     cptCodes: [{
       start: '',
       end: ''
@@ -146,6 +147,8 @@ export class BulkImportPatientsComponent implements OnInit {
         this.process.addClaims = true;
       } else if(this.radioModel == 'add-claims-cpts'){
         this.process.addClaimsWithCpts = true;
+      } else if(this.radioModel == 'add-claims-dos'){
+        this.process.addClaimsWithDos = true;
       } else {
         return this.snackBarService.errorMessage('Invalid processor selected');
       }
@@ -187,7 +190,7 @@ export class BulkImportPatientsComponent implements OnInit {
   }
 
   addVerifiedBulkImport(){
-    if(this.radioModel == 'add-claims' || this.radioModel == 'add-claims-cpts'){
+    if(this.radioModel == 'add-claims' || this.radioModel == 'add-claims-cpts' || this.radioModel == 'add-claims-dos'){
       this.addVerifiedClaimsBulkImport();
     } else {
       this.patientsService.addVerifiedBulkImport(this.data).subscribe((d: any) => {

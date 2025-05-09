@@ -31,17 +31,18 @@
             </div> -->
             <div class="check-container">
                 <mat-radio-group class="rad-group" [(ngModel)]="radioModel" aria-label="Select an option">
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('medicare')" value="medicare">Medicare Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('wellcare')" value="wellcare">Wellcare Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('broaderWellcare')" value="broaderWellcare">Broader Wellcare Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('medicarePCP')" value="medicarePCP">Medicare Physician(s)</mat-radio-button>
+                    <mat-radio-button value="medicare">Medicare Eligibility</mat-radio-button>
+                    <mat-radio-button value="wellcare">Wellcare Eligibility</mat-radio-button>
+                    <mat-radio-button value="broaderWellcare">Broader Wellcare Eligibility</mat-radio-button>
+                    <mat-radio-button value="medicarePCP">Medicare Physician(s)</mat-radio-button>
                     
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('united')" value="united">UHC Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('aetna')" value="aetna">Aetna Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('cigna')" value="cigna">Cigna Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('humana')" value="humana">Humana Eligibility</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('add-claims')" value="add-claims">Add Claims</mat-radio-button>
-                    <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('add-claims-cpts')" value="add-claims-cpts">Add Claims with CPTs</mat-radio-button>
+                    <mat-radio-button value="united">UHC Eligibility</mat-radio-button>
+                    <mat-radio-button value="aetna">Aetna Eligibility</mat-radio-button>
+                    <mat-radio-button value="cigna">Cigna Eligibility</mat-radio-button>
+                    <mat-radio-button value="humana">Humana Eligibility</mat-radio-button>
+                    <mat-radio-button value="add-claims">Add Claims</mat-radio-button>
+                    <mat-radio-button value="add-claims-cpts">Add Claims with CPTs</mat-radio-button>
+                    <!-- <mat-radio-button *ngIf="userFromApi?.allowedServices?.includes('add-claims-dos')" value="add-claims-dos">Add Claims with DOS</mat-radio-button> -->
                     
                 </mat-radio-group>
                 <div style="margin-top: 20px;">
