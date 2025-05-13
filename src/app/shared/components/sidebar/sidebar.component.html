@@ -16,16 +16,16 @@
                 <i class="fas fa-hospital-user list-icon"></i> &nbsp;Patients
               </div>
               <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/claims') }" routerLink="/claims">
-                <i class="fas fa-hospital-user"></i> &nbsp;Claim Files
+                <i class="fas fa-hospital-user list-icon"></i> &nbsp;Claim Files
               </div>
               <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/claims') }" routerLink="/claims/all">
-                <i class="fas fa-hospital-user"></i> &nbsp;All Claims
+                <i class="fas fa-hospital-user list-icon"></i> &nbsp;All Claims
               </div>
               <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/users') }" routerLink="/users/list">
-                <i class="fas fa-users"></i> &nbsp;Users
+                <i class="fas fa-users list-icon"></i> &nbsp;Users
               </div>
               <div *ngIf="userFromApi.role == 'Admin'" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/bots') }" routerLink="/bots/list">
-                <i class="fas fa-robot"></i> &nbsp;Pets
+                <i class="fas fa-robot list-icon"></i> &nbsp;Pets
               </div>
               <div *ngIf="userFromApi.permissions?.viewLogs" class="link-list" [ngClass]="{ 'active': cUrl.startsWith('/logs') }" routerLink="/logs">
                 <i class="fas fa-list-alt"></i> <span>Audit Logs</span>
@@ -33,11 +33,11 @@
           
               <div class="separator my-2 border-t border-gray-200"></div>
           
-              <div class="link user" [ngClass]="{ 'active': cUrl.startsWith('/profile') }" routerLink="/profile">
-                <i class="fas fa-user-circle"></i> <span>My Profile</span>
+              <div class="link-list user" [ngClass]="{ 'active': cUrl.startsWith('/profile') }" routerLink="/profile">
+                <i class="fas fa-user-circle list-icon"></i> &nbsp;My Profile
               </div>
-              <div (click)="signout()" class="link cursor-pointer">
-                <i class="fas fa-door-closed"></i> <span>Sign out</span>
+              <div (click)="signout()" class="link-list cursor-pointer">
+                <i class="fas fa-door-closed list-icon"></i> &nbsp;Sign out
               </div>
             </div>
           </div>

@@ -12,7 +12,10 @@
     @apply bg-orange-400 px-4 py-2 rounded-lg text-white border-[3px] border-orange-400 transition-all duration-500 ;
   }
 .secondary-btn {
-    @apply bg-white px-4 py-2 rounded-lg text-orange-400 border-[3px] border-gray-400 transition-all duration-500 ;
+    @apply bg-white px-4 py-2 rounded-lg text-gray-300 border-[1px] border-gray-400 transition-all duration-500 ;
+  }
+.secondary-btn:hover {
+    @apply bg-gray-100 text-gray-400  border-orange-400  ;
   }
   
 .primary-btn:hover {
@@ -26,17 +29,63 @@
 // side bar
 
 .link-list{
-    @apply px-4 py-2 text-black cursor-pointer
+    @apply px-4 py-2 cursor-pointer text-gray-800 hover:bg-orange-100 transition duration-300
 }
 .list-icon{
-    @apply bg-orange-200 px-2 py-2 text-orange-400 rounded-md
+    @apply bg-orange-200 px-2 py-2 text-orange-400 rounded-md 
 
 
 }
 
+// paginator
+.basic-list{
+    @apply  border border-orange-400 px-2 py-2 rounded-lg outline-none
+}
+.page-list{
+    @apply border border-gray-300 px-3 py-1 rounded-lg hover:bg-gray-200 transition duration-300 cursor-pointer m-5
+}
+.page-active{
+    @apply border-orange-300 bg-orange-300 text-white hover:bg-white hover:border-gray-300 hover:text-black transition duration-300
+}
 
+// table Ui
 
-// 
+.table-title{
+    @apply font-montserrat font-semibold text-2xl bg-orange-200 px-3 py-2 text-orange-600 rounded-lg
+}
+
+// Unviversal
+.primary-title{
+    @apply font-montserrat font-semibold text-2xl  text-orange-600 rounded-lg w-auto
+}
+.danger-btn {
+    @apply bg-red-400 px-4 py-2 rounded-lg text-white border-[3px] border-red-400 transition-all duration-500 ;
+  }
+.secondary-btn {
+    @apply bg-white px-4 py-2 rounded-lg text-orange-400 border-[3px] border-gray-400 transition-all duration-500 ;
+  }
+  
+.danger-btn:hover {
+    @apply bg-white text-red-400 border-red-400;
+    border-width: 3px; /* Custom hover border width */
+  }
+  .common-title{
+    @apply px-1 py-2 text-orange-500 bg-orange-50 rounded-lg font-montserrat
+  }
+
+//   Universal class
+.main-title{
+    @apply font-montserrat pt-5 text-2xl 
+}
+.basic-title{
+    @apply font-montserrat text-2xl font-bold
+}
+.list-head{
+    @apply text-gray-400 text-sm
+}
+.list-body{
+    @apply text-black text-sm
+}
 
 /* You can add global styles to this file, and also import other style files */
 html, body{
@@ -48,7 +97,7 @@ html, body{
 
 .top-banner{
     text-align: center;
-    background-color: #8400d9;
+    background-color: #ea580c;
     padding: 10px;
     position: fixed;
     top: 0px;
@@ -81,7 +130,7 @@ html, body{
 //       90deg,
 //       #2e308e,
 //       #ffffff,
-//       #8400d9,
+//       #ea580c,
 //       #ffffff,
 //     );
 //     background-size: 500%;
@@ -106,7 +155,7 @@ html, body{
     position: absolute;
     right: 25px;
     top: 60px;
-    border-radius: 25px !important;
+    border-radius: 10px !important;
     .mat-simple-snack-bar-content{
         // color: #ffffff !important;
         color: white !important;
@@ -114,7 +163,7 @@ html, body{
 }
 
 .success-snackbar{
-    background-color: #8400d9;
+    background-color: #ea580c;
     border-radius: 0px !important;
     position: absolute;
     right: 25px;
@@ -140,7 +189,7 @@ h1,h2,h3,h4,h5,p,span,select,input{
 
 a{
     text-decoration: none;
-    color: #8400d9;
+    color: #ea580c;
     cursor: pointer;
 }
 
@@ -201,7 +250,7 @@ a{
         margin: 0px;
         margin-bottom: 5px;
         .required{
-            color: #8400d9;
+            color: #ea580c;
         }
     }
     input,select,textarea, mat-select{
@@ -216,7 +265,7 @@ a{
         border-radius: 25px;
     }
     input:focus,select:focus,textarea:focus, mat-select:focus{
-        border-color: #8400d9;
+        border-color: #ea580c;
     }
     .error{
         color: #ec4757;
@@ -253,7 +302,7 @@ select:disabled{
 }
 
 .separator.colored{
-    background-color: #8400d9;
+    background-color: #ea580c;
 }
 
 .last-edited{
@@ -271,9 +320,9 @@ select:disabled{
 }
 
 button.primary{
-    border: 5px solid #8400d9;
+    border: 5px solid #ea580c;
     outline: none;
-    background-color: #8400d9;
+    background-color: #ea580c;
     color: white;
     padding: 10px 25px;
     border-radius: 25px;
@@ -290,7 +339,7 @@ button.primary{
 
 button.primary:hover{
     background-color: rgba(240,248,255,0);
-    color:#8400d9;
+    color:#ea580c;
 }
 
 button.danger{
@@ -330,10 +379,10 @@ button.danger-outline{
 }
 
 button.primary-outline{
-    border: 5px solid #8400d9;
+    border: 5px solid #ea580c;
     outline: none;
     background-color: #EC475800;
-    color: #8400d9;
+    color: #ea580c;
     padding: 10px 25px;
     border-radius: 25px;
     box-sizing: border-box;
@@ -349,7 +398,7 @@ button.primary-outline{
 
 button.primary-outline:hover{
     color: white;
-    background-color:#8400d9;
+    background-color:#ea580c;
 }
 
 button.grey-outline{
@@ -390,7 +439,7 @@ p{
         // min-height: calc(100vh - 100px);
         padding: 30px 20px;
         box-sizing: border-box;
-        margin-top: 70px;
+        margin-top: 20px;
         margin-bottom: 50px;
         .bc-contain{
             align-items: center;
@@ -414,7 +463,7 @@ p{
                         margin: 0px 10px;
                     }
                     .item.active{
-                        color: #8400d9;
+                        color: #FF7600;
                     }
                 }
             }
@@ -435,7 +484,7 @@ textarea.basic{
     outline: none;
     width: 100%;
     padding: 8px 10px;
-    border-radius: 0px;
+    border-radius: 7px;
     box-sizing: border-box;
     font-size: 16px;
     transition: border-color .5s;
@@ -444,7 +493,7 @@ textarea.basic{
 input.basic:focus,
 select.basic:focus,
 textarea.basic:focus{
-    border-color: #8400d9;
+    border-color: #ea580c;
 }
 
 select{
@@ -466,9 +515,11 @@ option:disabled {
     align-content: center;
     border: 1px solid #d5d5d5;
     box-sizing: border-box;
-    border-radius: 0px;
+    border-radius: 7px;
     overflow: hidden;
     transition: border-color .5s;
+    outline: none;
+
     i{
         color: #111111;
         transition: color .5s;
@@ -486,9 +537,9 @@ option:disabled {
 }
 
 .search-bar:focus-within{
-    border-color: #8400d9;
+    border-color: #ea580c;
     i{
-        color: #8400d9;
+        color: #ea580c;
     }
 }
 
@@ -498,7 +549,7 @@ option:disabled {
     background-color: white;
     border-radius: 0px;
     position: relative;
-    border-radius: 25px;
+    border-radius: 8px;
     overflow: hidden;
     .title{
         margin-top: 0px;
@@ -513,20 +564,26 @@ option:disabled {
 .initials{
     width: 37px;
     height: 37px;
-    background-color: #8400d9;
+    background-color: #fb923c;
     color: white;
     align-content: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0px;
+    border-radius: 50%;
+    font-weight: 700;
 }
 
 .chip{
     display: inline-block;
     padding: 5px 15px;
     border-radius: 0px;
+    background-color: #fed7aa;
+    color: black;
+    border-radius: 7px;
 }
+
+
 
 .chip-container{
     .chip{
@@ -549,18 +606,19 @@ option:disabled {
 }
 
 .chip.primary{
-    background-color: #8400d9;
+    background-color: #fb923c;
     color: white;
 }
 
 .chip.blue-outline{
-    border: 1px solid #00285f;
-    color: #00285f;
+    border: 1px solid #fb923c;
+    color: #fed7aa;
 }
 
 .chip.blue{
-    background-color: #8400d9;
+    background-color: #fb923c;
     color: white;
+    border-radius: 7px;
 }
 
 .chip.purple{
@@ -574,37 +632,41 @@ option:disabled {
 
 .table-container{
     // margin-top: 25px;
+    border-radius: 7px;
+    overflow: hidden;
     table{
         width: 100%;
         border-collapse: collapse;
         thead{
-            background-color: #8400d9;
+            // background-color: #fb923c;
+            background-color: rgba(243, 238, 238, 0.664);
             td{
                 padding: 5px 0px 5px 15px;
                 z-index: 1;
-                background-color: #8400d9;
                 p{
                     font-weight: 500;
-                    color: white;
                     margin: 0px;
                     padding: 10px 0px;
-                    font-size: 18px;
+                    font-size: 14px;
                 }
             }
         }
         thead.sortable{
-            background-color: #8400d9;
-            td{
-                cursor: pointer;
-                background-color: #8400d9;
-                font-size: 22px;
-                p{
-                    display: inline;
-                    margin-right: 5px;
-                    color: white;
-                }
-                i{
-                    color: white;
+            // background-color: #fb923c;
+            tr{
+                background-color: gainsboro;
+                border-radius: 7px;
+                td{
+                    cursor: pointer;
+                    font-size: 22px;
+                    p{
+                        display: inline;
+                        margin-right: 5px;
+                        color: black;
+                    }
+                    i{
+                        color: black;
+                    }
                 }
             }
         }
@@ -615,6 +677,7 @@ option:disabled {
                 td{
                     z-index: 1;
                     padding: 5px 0px 5px 15px;
+                    background-color: #e4dfdf41;
                     .detailed{
                         display: flex;
                         align-items: center;
@@ -623,7 +686,7 @@ option:disabled {
                         .first{
                             img{
                                 width: 33px;
-                                border: 2px solid #8400d9;
+                                border: 2px solid #fb923c;
                                 border-radius: 50%;
                                 height: 33px;
                             }
@@ -639,12 +702,13 @@ option:disabled {
                         }
                     }
                     .cell, p, a{
+                        font-size: 14px;
                         margin: 0px;
                     }
                 }
             }
             tr:hover{
-                background-color: rgba(132, 0, 217, 0.14);
+                background-color: #fcecd79a;
             }
         }
     }
@@ -707,6 +771,7 @@ option:disabled {
         margin-bottom: 10px;
         color: #94A4C4;
         margin-top: 0px;
+        font-size: 14px;
         i{
             font-size: 20px;
             margin-right: 10px;
@@ -717,6 +782,7 @@ option:disabled {
     .value{
         margin-bottom: 10px;
         margin-top: 0px;
+        font-size: 14px;
     }
 }
 
@@ -726,8 +792,11 @@ option:disabled {
 }
 
 .icon-primary{
-    background-color: #8400d9;
+    background-color: #fb923c;
     color: white;
+    padding: 0.5em;
+    font-size: 2em;
+    border-radius: 50%;
 }
 
 .icon-round-popup{
@@ -755,7 +824,7 @@ option:disabled {
     img{
         width: 118px;
         height: 118px;
-        border: 2px solid #8400d9;
+        border: 2px solid #ea580c;
         border-radius: 50%;
     }
     .upload-title{
@@ -799,8 +868,8 @@ option:disabled {
         }
         .tab:hover,
         .tab.active{
-            color: #8400d9;
-            border-color: #8400d9;
+            color: #ea580c;
+            border-color: #ea580c;
         }
     }
 }
@@ -890,7 +959,7 @@ span.reduce{
         position: absolute;
         background-color: #f9f9f9;
         min-width: 175px;
-        box-shadow: 0px 8px 16px 0px #8400d97a;
+        box-shadow: 0px 8px 16px 0px #ea580c7a;
         // padding: 12px 16px;
         border-radius: 0px;
         z-index: 1;
@@ -958,7 +1027,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mat-checkbox-checked.mat-accent .mat-checkbox-background {
-    background-color: #8400d9 !important;
+    background-color: #ea580c !important;
   }
 
 .footer{
@@ -990,8 +1059,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     height: 0;
     margin: 8px;
     box-sizing: border-box;
-    border: 32px solid #8400d9;
-    border-color: #8400d9 transparent #8400d9 transparent;
+    border: 32px solid #ea580c;
+    border-color: #ea580c transparent #ea580c transparent;
     animation: lds-hourglass 1.2s infinite;
   }
   @keyframes lds-hourglass {
@@ -1012,14 +1081,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
-    border-color:#8400d9;
+    border-color:#ea580c;
   }
   
   .mat-radio-button.mat-accent .mat-radio-inner-circle{
-    color:#8400d9;
-    background-color: #8400d9;
+    color:#ea580c;
+    background-color: #ea580c;
   }
   
   .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
-      background-color:#8400d950;
+      background-color:#ea580c50;
   }

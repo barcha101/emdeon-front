@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">USERS</h3>
+        <h3 class="primary-title">USERS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -12,9 +12,9 @@
         </div>
     </div>
     <div class="buttons">
-        <button *ngIf="user._id != loggedInUser._id" class="grey-outline" routerLink="/users/list">Cancel</button>
-        <button *ngIf="user._id == loggedInUser._id" class="grey-outline" routerLink="/profile">Cancel</button>
-        <button class="primary" [disabled]="isLoading" (click)="
+        <button *ngIf="user._id != loggedInUser._id" class="secondary-btn" routerLink="/users/list">Cancel</button>
+        <button *ngIf="user._id == loggedInUser._id" class="secondary-btn" routerLink="/profile">Cancel</button>
+        <button class="primary-btn" [disabled]="isLoading" (click)="
         basicInfo.form.markAllAsTouched(); 
         contactForm.form.markAllAsTouched(); 
         basicInfo.form.valid && contactForm.form.valid ? submit() : '';
@@ -26,27 +26,27 @@
         <div class="box user-details">
             <h3 class="title">Basic Information</h3>
             <form #basicInfo="ngForm" (submit)="submit()">
-                <div class="input">
-                    <p class="label">Name <span class="required">*</span></p>
-                    <input type="text" [(ngModel)]="user.name" required #userName="ngModel" name="userName"/>
+                <div class="mb-4">
+                    <p class="label text-slate-600">Name <span class="required text-orange-400">*</span></p>
+                    <input type="text" [(ngModel)]="user.name" required #userName="ngModel" name="userName" class="input-box"/>
                     <ng-container *ngIf="userName.touched">
-                        <p class="error" *ngIf="userName.errors?.['required']">Name is required</p>
+                        <p class="text-xs text-red-500" *ngIf="userName.errors?.['required']">Name is required</p>
                     </ng-container>
                 </div>
-                <div class="input">
-                    <p class="label">Username <span class="required">*</span></p>
-                    <input type="text" [(ngModel)]="user.username" required #userNamee="ngModel" name="userNamee"/>
+                <div class="mb-4">
+                    <p class="label text-slate-600">Username <span class="required text-orange-400">*</span></p>
+                    <input type="text" [(ngModel)]="user.username" required #userNamee="ngModel" name="userNamee" class="input-box"/>
                     <ng-container *ngIf="userNamee.touched">
-                        <p class="error" *ngIf="userNamee.errors?.['required']">Username is required</p>
+                        <p class="text-xs text-red-500" *ngIf="userNamee.errors?.['required']">Username is required</p>
                     </ng-container>
                 </div>
-                <div *ngIf="loggedInUser.role == 'Admin'" class="input">
-                    <p class="label">Role <span class="required">*</span></p>
-                    <select [(ngModel)]="user.role" required #userRole="ngModel" name="userRole">
+                <div *ngIf="loggedInUser.role == 'Admin'" class="mb-4">
+                    <p class="label text-slate-600">Role <span class="required text-orange-400">*</span></p>
+                    <select [(ngModel)]="user.role" required #userRole="ngModel" name="userRole" class=" border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 w-full py-3 px-5  rounded-lg">
                         <option *ngFor="let c of roles" [value]="c">{{c}}</option>
                     </select>
                     <ng-container *ngIf="userRole.touched">
-                        <p class="error" *ngIf="userRole.errors?.['required']">Role is required</p>
+                        <p class="text-xs text-red-500" *ngIf="userRole.errors?.['required']">Role is required</p>
                     </ng-container>
                 </div>
             </form>
@@ -56,19 +56,19 @@
         <div class="box">
             <h3 class="title mb-5">Contact Information</h3>
             <form #contactForm="ngForm" (submit)="submit()">
-                <div class="input">
-                    <p class="label">Email <span class="required">*</span></p>
-                    <input type="email" [(ngModel)]="user.email" required #emailInput="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="emailInput"/>
+                <div class="mb-4">
+                    <p class="label text-slate-600">Email <span class="required text-orange-400">*</span></p>
+                    <input type="email" [(ngModel)]="user.email" required #emailInput="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="emailInput" class="input-box"/>
                     <ng-container *ngIf="emailInput.touched">
-                        <p class="error" *ngIf="emailInput.errors?.['required']">Email is required</p>
-                        <p class="error" *ngIf="emailInput.errors?.['pattern']">Enter a valid email address</p>
+                        <p class="text-xs text-red-500" *ngIf="emailInput.errors?.['required']">Email is required</p>
+                        <p class="text-xs text-red-500" *ngIf="emailInput.errors?.['pattern']">Enter a valid email address</p>
                     </ng-container>
                 </div>
-                <div class="input">
-                    <p class="label">Phone <span class="required">*</span></p>
-                    <input type="text" [(ngModel)]="user.cellNum" required #phone="ngModel" name="phone"/>
+                <div class="mb-4">
+                    <p class="label text-slate-600">Phone <span class="required text-orange-400">*</span></p>
+                    <input type="text" [(ngModel)]="user.cellNum" required #phone="ngModel" name="phone" class="input-box"/>
                     <ng-container *ngIf="phone.touched">
-                        <p class="error" *ngIf="phone.errors?.['required']">Valid phone is required</p>
+                        <p class="text-xs text-red-500" *ngIf="phone.errors?.['required']">Valid phone is required</p>
                     </ng-container>
                 </div>
             </form>
@@ -80,50 +80,40 @@
 <div *ngIf="loggedInUser.role == 'Admin'" class="box mt-20 permissions">
     <h3 class="title mb-5">Permissions</h3>
     <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.medicareEligibility">Medicare Eligibility</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.medicareEligibility" >Medicare Eligibility</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.wellcareFromWellcare">Wellcare From Wellcare ID</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.wellcareFromMedicare" class="mx-16">Wellcare From Medicare/Medicaid</mat-checkbox>
     </div>
     <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.wellcareFromMedicare">Wellcare From Medicare/Medicaid</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.medicarePCP">Medicare Physician(s)</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.united">United Eligibility</mat-checkbox>
-    </div>
-    <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.aetna">Aetna Eligibility</mat-checkbox>
-    </div>
-    <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.cigna">Cigna Eligibility</mat-checkbox>
-    </div>
-    <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.humana">Humana Eligibility</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.aetna" class="mx-16">Aetna Eligibility</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.cigna" class="mx-16">Cigna Eligibility</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.humana" class="mx-16">Humana Eligibility</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.addClaims">Add Claims</mat-checkbox>
-    </div>
-    <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.addClaimsWithCpts">Add Claims with CPTs</mat-checkbox>
-    </div>
-    <div class="ind-row">
-        <mat-checkbox [(ngModel)]="user.permissions.addClaimsWithDos">Add Claims with DOS</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.addClaimsWithCpts" class="mx-16">Add Claims with CPTs</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.addClaimsWithDos" class="mx-16">Add Claims with DOS</mat-checkbox>
     </div>
     
     <div class="hr separator"></div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.viewPatientsMenu">View Patients Menu</mat-checkbox>
-        <mat-checkbox [(ngModel)]="user.permissions.viewPatients" class="ml-20">View Patients</mat-checkbox>
-        <mat-checkbox [(ngModel)]="user.permissions.updatePatients" class="ml-20">Add/Update Patients</mat-checkbox>
-        <mat-checkbox [(ngModel)]="user.permissions.getFiles" class="ml-20">View Patient Files</mat-checkbox>
-        <mat-checkbox [(ngModel)]="user.permissions.uploadFiles" class="ml-20">Add/Update Patient Files</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.viewPatients" class="mx-16">View Patients</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.updatePatients" class="mx-16">Add/Update Patients</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.getFiles" class="mx-16">View Patient Files</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.uploadFiles" class="mx-16">Add/Update Patient Files</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.viewUsers">View Users</mat-checkbox>
-        <mat-checkbox [(ngModel)]="user.permissions.updateUsers" class="ml-20">Update Users</mat-checkbox>
+        <mat-checkbox [(ngModel)]="user.permissions.updateUsers" class="mx-16">Update Users</mat-checkbox>
     </div>
     <div class="ind-row">
         <mat-checkbox [(ngModel)]="user.permissions.viewLogs">View Audit Logs</mat-checkbox>

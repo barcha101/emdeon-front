@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">BOTS</h3>
+        <h3 class="primary-title">BOTS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -10,13 +10,13 @@
         </div>
     </div>
     <div class="buttons">
-        <button *ngIf="botInfo && botInfo.metadata && !botInfo.metadata.isDeleted" class="danger" (click)="archive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Archive</button>
-        <button *ngIf="botInfo && botInfo.metadata && botInfo.metadata.isDeleted" class="danger" (click)="unarchive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Unarchive</button>
-        <button class="primary" (click)="updateBot()"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Update</button>
+        <button *ngIf="botInfo && botInfo.metadata && !botInfo.metadata.isDeleted" class="danger-btn" (click)="archive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Archive</button>
+        <button *ngIf="botInfo && botInfo.metadata && botInfo.metadata.isDeleted" class="danger-btn" (click)="unarchive()"><i class="fas fa-trash-alt"></i>&nbsp;&nbsp;Unarchive</button>
+        <button class="primary-btn" (click)="updateBot()"><i class="fas fa-pencil-alt"></i>&nbsp;&nbsp;Update</button>
     </div>
 </div>
 <div class="box mt-20">
-    <h1 class="title">Logs</h1>
+    <h1 class="primary-title">Logs</h1>
     <div class="table-container">
         <table>
             <thead>

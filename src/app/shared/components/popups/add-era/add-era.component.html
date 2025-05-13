@@ -1,29 +1,29 @@
 <div class="popup">
-    <i class="fas fa-upload icon-primary icon-round-popup"></i>
-    <h4>Import New .835 File</h4>
+    <i class="fas fa-upload bg-orange-400 px-6 py-4 text-2xl text-white rounded-full"></i>
+    <h4 class="table-title">Import New .835 File</h4>
     <input style="display:none;" multiple="multiple" type="file" name="file-era-input" id="file-era-input" accept=".835, .txt" class="inputfile" (change)="onFileChange($event)">
     <form #passForm="ngForm">
-        <div class="input">
+        <div class="mt-5">
             <p class="label">Client</p>
-            <select type="text" [(ngModel)]="selectedClient" required #client="ngModel" name="client">
+            <select type="text" [(ngModel)]="selectedClient" required #client="ngModel" name="client" class="w-full py-3 px-5 rounded-lg  border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
                 <option selected disabled value="">Assign Client</option>
                 <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
             </select>
         </div>
         <div class="input" style="text-align: center;">
             <div *ngIf="!files || !files.length" class="no-file">
-                <button class="primary-outline" onclick="$('#file-era-input').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose File</button>
+                <button class="primary-btn" onclick="$('#file-era-input').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose File</button>
             </div>
             <div *ngIf="files && files.length" class="yes-file">
                 <ng-container *ngFor="let file of files; let i=index;">
                     <p class="filename" (click)="files.splice(i,1)">{{file.name}}</p>
                 </ng-container>
-                <button class="primary-outline" onclick="$('#file-era-input').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
+                <button class="primary-btn" onclick="$('#file-era-input').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
             </div>
         </div>
-        <div class="btns">
-            <button class="grey-outline" (click)="close()">Cancel</button>
-            <button type="submit" class="primary" (click)="passForm.form.markAllAsTouched(); passForm.form.valid ? addEra() : '' ">Save</button>
+        <div class="w-full flex flex-row justify-center gap-3 mt-20">
+            <button class="secondary-btn w-2/3" (click)="close()">Cancel</button>
+            <button type="submit" class="primary-btn w-2/3" (click)="passForm.form.markAllAsTouched(); passForm.form.valid ? addEra() : '' ">Save</button>
         </div>
     </form>
 </div>

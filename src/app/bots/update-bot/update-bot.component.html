@@ -3,43 +3,43 @@
     <h4 *ngIf="what == 'add'">Add New Bot</h4>
     <h4 *ngIf="what == 'update'">Update Bot</h4>
     <form #passForm="ngForm">
-        <div class="input">
-            <p class="label">Username</p>
-            <input type="text" [(ngModel)]="bot.username" required #username="ngModel" name="username"/>
+        <div class="mt-4">
+            <p class="label text-slate-600">Username</p>
+            <input type="text" [(ngModel)]="bot.username" required #username="ngModel" name="username" class="input-box"/>
             <ng-container *ngIf="username.touched">
-                <p class="error" *ngIf="username.errors?.['required']">Username is required</p>
+                <p class="text-xs text-red-500" *ngIf="username.errors?.['required']">Username is required</p>
             </ng-container>
         </div>
-        <div class="input">
-            <p class="label">Password</p>
-            <input type="text" [(ngModel)]="bot.password" required #password="ngModel" name="password"/>
+        <div class="mt-4">
+            <p class="label text-slate-600">Password</p>
+            <input type="text" [(ngModel)]="bot.password" required #password="ngModel" name="password"class="input-box"/>
             <ng-container *ngIf="password.touched">
-                <p class="error" *ngIf="password.errors?.['required']">Password is required</p>
+                <p class="text-xs text-red-500" *ngIf="password.errors?.['required']">Password is required</p>
             </ng-container>
         </div>
-        <div class="input">
-            <p class="label">Email Code Received</p>
-            <input type="text" [(ngModel)]="bot.myCgsCode" #myCgsCode="ngModel" name="myCgsCode"/>
+        <div class="mt-4">
+            <p class="label text-slate-600">Email Code Received</p>
+            <input type="text" [(ngModel)]="bot.myCgsCode" #myCgsCode="ngModel" name="myCgsCode"class="input-box"/>
         </div>
-        <div class="input">
-            <p class="label">Machine ID</p>
-            <input type="text" [(ngModel)]="bot.machine" #machine="ngModel" name="machine"/>
+        <div class="mt-4">
+            <p class="label text-slate-600">Machine ID</p>
+            <input type="text" [(ngModel)]="bot.machine" #machine="ngModel" name="machine"class="input-box"/>
         </div>
-        <div class="input">
-            <p class="label">Email</p>
-            <input type="text" [(ngModel)]="bot.email" #emaill="ngModel" name="emaill"/>
+        <div class="mt-4">
+            <p class="label text-slate-600">Email</p>
+            <input type="text" [(ngModel)]="bot.email" #emaill="ngModel" name="emaill"class="input-box"/>
         </div>
-        <div *ngIf="what == 'update'" class="input">
-            <p class="label">Status</p>
-            <select type="text" [(ngModel)]="bot.status" required #status="ngModel" name="status">
+        <div *ngIf="what == 'update'" class="mt-4">
+            <p class="label text-slate-600">Status</p>
+            <select type="text" [(ngModel)]="bot.status" required #status="ngModel" name="status"class="input-box">
                 <option value="Idle">Idle</option>
                 <option value="Ready">Ready</option>
             </select>
             <p>Update status if bot is running on same patient for more than 15 minutes</p>
         </div>
-        <div class="input">
-            <p class="label">Eligibility Platform</p>
-            <select type="text" [(ngModel)]="bot.eligibilityPlatform" required #eligibilityPlatform="ngModel" name="eligibilityPlatform">
+        <div class="mt-4">
+            <p class="label text-slate-600">Eligibility Platform</p>
+            <select type="text" [(ngModel)]="bot.eligibilityPlatform" required #eligibilityPlatform="ngModel" name="eligibilityPlatform" class="w-full py-3 px-5 rounded-lg  border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
                 <option value="MyCGS">MyCGS</option>
                 <option value="Noridian">Noridian</option>
                 <option value="Availity">Availity</option>
@@ -50,23 +50,23 @@
                 <option value="Noridian SNS">Noridian SNS</option>
             </select>
         </div>
-        <div *ngIf="bot.eligibilityPlatform == 'OfficeAlly Claims'" class="input">
-            <p class="label">Client</p>
-            <select type="text" [(ngModel)]="bot.client" required #client="ngModel" name="client">
+        <div *ngIf="bot.eligibilityPlatform == 'OfficeAlly Claims'" class="mt-4">
+            <p class="label label text-slate-600">Client</p>
+            <select type="text" [(ngModel)]="bot.client" required #client="ngModel" name="client"  class="w-full py-3 px-5 rounded-lg  border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
                 <option selected disabled value="">Assign Client</option>
                 <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
             </select>
         </div>
-        <div class="input">
-            <p class="label">Code Type</p>
-            <select type="text" [(ngModel)]="bot.codeType" required #codeType="ngModel" name="codeType">
+        <div class="mt-4">
+            <p class="label label text-slate-600">Code Type</p>
+            <select type="text" [(ngModel)]="bot.codeType" required #codeType="ngModel" name="codeType"  class="w-full py-3 px-5 rounded-lg  border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400">
                 <option value="Email">Email</option>
                 <option value="Authenticator">Authenticator</option>
             </select>
         </div>
         <div class="btns">
-            <button class="grey-outline" (click)="close()">Cancel</button>
-            <button type="submit" class="primary" (click)="passForm.form.markAllAsTouched(); passForm.form.valid ? submit() : '' ">Save</button>
+            <button class="secondary-btn" (click)="close()">Cancel</button>
+            <button type="submit" class="primary-btn" (click)="passForm.form.markAllAsTouched(); passForm.form.valid ? submit() : '' ">Save</button>
         </div>
     </form>
 </div>

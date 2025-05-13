@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">BOTS</h3>
+        <h3 class="table-title">BOTS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="buttons">
-        <button class="primary" (click)="addBot()">+ Add New</button>
+        <button class="primary-btn" (click)="addBot()">+ Add New</button>
     </div>
 </div>
 <div class="box mt-20">
@@ -23,7 +23,7 @@
     </div>
     <div class="table-container mt-20">
         <table>
-            <thead>
+            <thead class="w-full">
                 <tr>
                     <td><p>Username</p></td>
                     <td><p>Email</p></td>
@@ -52,7 +52,7 @@
                             <p class="cell">{{item.eligibilityPlatform}}</p>
                         </td>
                         <td>
-                            <p class="chip blue">{{item.status}}</p>
+                            <p class="chip">{{item.status}}</p>
                         </td>
                         <td>
                             <div class="detailed">
@@ -63,7 +63,7 @@
                             </div>
                         </td>
                         <td>
-                            <i class="fas fa-pencil-alt" style="font-size: 20px; color: #8400d9; cursor: pointer;" (click)="updateBot(item)"></i>
+                            <i class="fas fa-pencil-alt" style="font-size: 20px; color: #fb923c; cursor: pointer;" (click)="updateBot(item)"></i>
                         </td>
                     </tr>
             </tbody>

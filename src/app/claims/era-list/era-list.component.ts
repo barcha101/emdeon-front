@@ -52,7 +52,7 @@ export class EraListComponent implements OnInit {
   addEra(){
     const dialogRef = this.dialog.open(AddEraComponent, {
       width: '400px',
-      height: '90vh',
+      height: '65vh',
       data: {},
     });
 

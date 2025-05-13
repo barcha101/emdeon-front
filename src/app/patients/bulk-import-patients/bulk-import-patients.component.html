@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">IMPORT PATIENTS</h3>
+        <h3 class="primary-title">IMPORT PATIENTS</h3>
         <!-- <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -10,9 +10,9 @@
         </div> -->
     </div>
     <div class="buttons">
-        <button class="grey-outline" routerLink="/app">Cancel</button>
-        <button  *ngIf="data && data.length && process.eligibility" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
-        <button *ngIf="isDone" (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
+        <button class="secondary-btn" routerLink="/app">Cancel</button>
+        <button  *ngIf="data && data.length && process.eligibility" class="danger-btn" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
+        <button *ngIf="isDone" (click)="addVerifiedBulkImport()" class="primary-btn"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
     </div>
 </div>
 
@@ -46,12 +46,12 @@
                     
                 </mat-radio-group>
                 <div style="margin-top: 20px;">
-                    <button *ngIf="radioModel == 'medicare' || radioModel == 'medicarePCP'" class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
-                    <button *ngIf="radioModel == 'wellcare'" class="primary-outline" (click)="downloadWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
-                    <button *ngIf="radioModel == 'broaderWellcare'" class="primary-outline" (click)="downloadBroaderWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
-                    <button *ngIf="['united', 'aetna', 'cigna', 'humana'].indexOf(radioModel) >= 0" class="primary-outline" (click)="downloadGeneralSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
-                    <button *ngIf="radioModel == 'add-claims'" class="primary-outline" (click)="downloadClaimsSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
-                    <button *ngIf="radioModel == 'add-claims-cpts'" class="primary-outline" (click)="downloadClaimsCptSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
+                    <button *ngIf="radioModel == 'medicare' || radioModel == 'medicarePCP'" class="secondary-btn" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'wellcare'" class="secondary-btn" (click)="downloadWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'broaderWellcare'" class="secondary-btn" (click)="downloadBroaderWellcareSample()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
+                    <button *ngIf="['united', 'aetna', 'cigna', 'humana'].indexOf(radioModel) >= 0" class="secondary-btn" (click)="downloadGeneralSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+                    <button *ngIf="radioModel == 'add-claims'" class="secondary-btn" (click)="downloadClaimsSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
+                    <button *ngIf="radioModel == 'add-claims-cpts'" class="secondary-btn" (click)="downloadClaimsCptSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button> 
                 </div>
             </div>
             <div *ngIf="process.sns" class="sns">
@@ -74,15 +74,15 @@
         </div>
         <div class="second">
             <p class="title">Step 2: Choose Excel File </p>
-            <input style="display:none;" type="file" name="sheet-file-ori" id="sheet-file-ori" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="inputfile" (change)="onFileChange($event)">
+            <input style="display:none;" type="file" name="sheet-file-ori" id="sheet-file-ori" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" class="inputfile " (change)="onFileChange($event)">
             <div *ngIf="!file || !file.name" class="no-file">
-                <button class="primary" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose File</button>
+                <button class="primary-btn" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose File</button>
             </div>
             <div *ngIf="file && file.name" class="yes-file">
                 <p class="filename">{{file.name}}</p>
-                <button  *ngIf="!isDone" class="primary-outline" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
+                <button  *ngIf="!isDone" class="secondary-btn" onclick="$('#sheet-file-ori').trigger('click');"><i class="fas fa-border-all"></i>&nbsp;Choose Another File</button>
             </div>
-            <select *ngIf="radioModel == 'add-claims-cpts'" [(ngModel)]="selectedClient" style="margin-top: 20px; border-radius: 20px; max-width: 200px;" class="basic fc-30">
+            <select *ngIf="radioModel == 'add-claims-cpts'" [(ngModel)]="selectedClient" class=" py-3 px-5 rounded-lg  border border-gray-300 outline-none focus:border-orange-400 focus:ring-1 focus:ring-orange-400 w-2/3 mt-5">
                 <option selected disabled value="">Select Client</option>
                 <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
             </select>
@@ -90,7 +90,7 @@
         </div>
         <div class="third">
             <p class="title">Step 3: Submit for Processing </p>
-            <button  *ngIf="!isDone" class="primary" (click)="submitFile()"><i class="fas fa-cogs"></i>&nbsp;Submit</button>
+            <button  *ngIf="!isDone" class="primary-btn" (click)="submitFile()"><i class="fas fa-cogs"></i>&nbsp;Submit</button>
         </div>
     </div>
 </div>
@@ -102,7 +102,7 @@
     <div class="box fc-33">
         <p class="mb-0">Total Errors - Incorrect Info</p>
         <h1 class="mb-0" style="display: inline;">{{errCount}}</h1>
-        <button  *ngIf="data && data.length && process.eligibility" style="margin-left: 20px;" class="primary-outline" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
+        <button  *ngIf="data && data.length && process.eligibility" style="margin-left: 20px;" class="danger-btn" (click)="exportBulkImportResults()"><i class="fas fa-download"></i>&nbsp;Download Errors</button>
     </div>
     <div class="box fc-33">
         <p class="mb-0">Total Patients - Correct Info</p>
@@ -114,7 +114,7 @@
     <div class="table-container">
         <table>
             <thead class="sortable">
-                <tr>
+                <tr class="">
                     <td (click)="sortDir = (sortKey == 'fName') ? !sortDir : sortDir; sortKey = 'fName';">
                         <p>First Name</p>
                         <span *ngIf="sortKey == 'fName'" class="sort">
@@ -158,7 +158,7 @@
                     <td><p class="cell">{{item.error}}</p></td>
                 </tr> -->
                 <ng-container *ngFor="let item of data">
-                    <tr *ngIf="item.error" [ngClass]="{'red-back': item.error}">
+                    <tr *ngIf="item.error" [ngClass]="{'red-back': item.error}" class="border border-gray-200 rounded-lg">
                         <td><p class="cell">{{item.fName}}</p></td>
                         <td><p class="cell">{{item.lName}}</p></td>
                         <td><p class="cell">{{item.subscriberId}}</p></td>
@@ -169,7 +169,7 @@
             </tbody>
         </table>
         <div class="mt-20 text-right"> 
-            <button (click)="addVerifiedBulkImport()" class="primary"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
+            <button (click)="addVerifiedBulkImport()" class="primary-btn"><i class="fas fa-check-circle"></i>&nbsp;Run selected processor for {{data.length - errCount}} patients</button> 
         </div>
     </div>
 </div>

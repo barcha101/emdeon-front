@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">LOGS</h3>
+        <h3 class="primary-title">LOGS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -25,7 +25,7 @@
             </select>
         </div>
     </div>
-    <div class="table-container">
+    <div class="table-container mt-10">
         <table>
             <thead class="sortable">
                 <tr>
@@ -81,7 +81,7 @@
                             <a routerLink="/app/view/{{item.objectId}}">View Patient</a>
                         </td> -->
                         <td>
-                            <button class="primary" (click)="viewData(item.data)">View Data</button>
+                            <button class="primary-btn" (click)="viewData(item.data)">View Data</button>
                         </td>
                     </tr>
             </tbody>

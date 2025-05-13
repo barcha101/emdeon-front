@@ -1,65 +1,91 @@
 <ng-container *ngIf="!noPatientFound">
     <div class="bc-contain">
         <div class="titles">
-            <h3 *ngIf="thisUser.email == 'dmetlpc5@gmail.com'" class="title">SOCIAL MARKETING ELIGIBILITY</h3>
-            <h3 *ngIf="thisUser.email != 'dmetlpc5@gmail.com'" class="title">FILES</h3>
+            <h3 *ngIf="thisUser.email == 'dmetlpc5@gmail.com'" class="table-title">SOCIAL MARKETING ELIGIBILITY</h3>
+            <h3 *ngIf="thisUser.email != 'dmetlpc5@gmail.com'" class="table-title">FILES</h3>
         </div>
         <div class="buttons">
-            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+            <button class="primary-btn" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
             <div *ngIf="thisUser.role == 'Admin'" class="view-select">
                 <i [ngClass]="{'active': currentView == 'grid'}" (click)="currentView='grid'" class="fas fa-grip-horizontal"></i>
                 <i [ngClass]="{'active': currentView == 'table'}" (click)="currentView='table'" class="fas fa-table"></i>
             </div>
         </div>
     </div>
-    <div *ngIf="!noPatientFound && currentView == 'grid'" class="grid-view mt-20" style="padding: 0px; margin-bottom: 20px;">
-        <div class="grid-container">
-            <div class="grid-item" *ngFor="let item of list;">
-                <p class="title"><a (click)="getS3File(item._id.s3Key, item._id.fileName)">{{item._id.fileName}}</a></p>
-                <p class="processor">{{item.whatis}}</p>
-                <div *ngIf="item._id.warning" class="warning" [matTooltip]="item._id.warning">
-                    <i class="fas fa-exclamation-triangle"></i>
+
+    <div *ngIf="!noPatientFound && currentView == 'grid'" class="mt-20">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div *ngFor="let item of list" class="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between">
+            <div>
+              <p class=" cursor-pointer">
+                <a (click)="getS3File(item._id.s3Key, item._id.fileName)" class="text-orange-600 font-montserrat text-xl font-semibold">
+                  {{ item._id.fileName }}
+                </a>
+              </p>
+              <p class="text-sm text-gray-500">{{ item.whatis }}</p>
+      
+              <div *ngIf="item._id.warning" class="text-yellow-600 mt-2" [matTooltip]="item._id.warning">
+                <i class="fas fa-exclamation-triangle text-xl"></i>
+              </div>
+      
+              <div class="grid grid-cols-3 gap-4 text-center mt-4">
+                <div>
+                  <p class="text-xs text-gray-500">Processed</p>
+                  <p class="font-medium">
+                    <span *ngIf="item.processing != 0">
+                      {{ ((100 - (item.processing / item.total) * 100)) | number: '1.2-2' }}%
+                    </span>
+                    <span *ngIf="item.processing == 0">100%</span>
+                  </p>
                 </div>
-                <div class="stats">
-                    <div class="ind-stat">
-                        <p class="title">Processed</p>
-                        <p class="value" *ngIf="item.processing != 0">{{((100-(item.processing/item.total)*100)) | number: '1.2-2'}}%</p>
-                        <p class="value" *ngIf="item.processing == 0">100%</p>
-                    </div>
-                    <div class="ind-stat">
-                        <p class="title">Error</p>
-                        <p class="value" *ngIf="item.error || item.dead">{{(((item.error+item.dead)/(item.total-item.processing))*100) | number: '1.2-2'}}%</p>
-                        <p class="value" *ngIf="!item.error && !item.dead">0%</p>
-                    </div>
-                    <div class="ind-stat">
-                        <p class="title">Found</p>
-                        <p class="value" *ngIf="item.found">{{(((item.found)/(item.total-item.processing))*100) | number: '1.2-2'}}%</p>
-                        <p class="value" *ngIf="!item.found">0%</p>
-                    </div>
+                <div>
+                  <p class="text-xs text-gray-500">Error</p>
+                  <p class="font-medium">
+                    <span *ngIf="item.error || item.dead">
+                      {{ (((item.error + item.dead) / (item.total - item.processing)) * 100) | number: '1.2-2' }}%
+                    </span>
+                    <span *ngIf="!item.error && !item.dead">0%</span>
+                  </p>
                 </div>
-                <div class="divider"></div>
-                <div class="card-footer">
-                    <div class="timestamp">
-                        <p class="time">{{item._id.createdAt | date: 'd MMM y h:mm a'}}</p>
-                    </div>
-                    <div class="export">
-                        <a *ngIf="!item.processing" (click)="exportPatients(item._id._id, item._id.fileName)"><i class="fas fa-download"></i>&nbsp;Export Results</a>
-                        <a *ngIf="item.processing" (click)="stillProcessingClicked()">Still Processing</a>
-                    </div>
+                <div>
+                  <p class="text-xs text-gray-500">Found</p>
+                  <p class="font-medium">
+                    <span *ngIf="item.found">
+                      {{ ((item.found / (item.total - item.processing)) * 100) | number: '1.2-2' }}%
+                    </span>
+                    <span *ngIf="!item.found">0%</span>
+                  </p>
                 </div>
+              </div>
             </div>
+      
+            <div class="border-t border-gray-200 mt-4 pt-4 flex justify-between items-center text-sm text-gray-500">
+              <p>{{ item._id.createdAt | date: 'd MMM y h:mm a' }}</p>
+              <div class="text-indigo-600 font-medium">
+                <a *ngIf="!item.processing" (click)="exportPatients(item._id._id, item._id.fileName)" class="hover:underline cursor-pointer">
+                  <i class="fas fa-download"></i>&nbsp;Export Results
+                </a>
+                <a *ngIf="item.processing" (click)="stillProcessingClicked()" class="hover:underline cursor-pointer text-orange-500">
+                  Still Processing
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="background-color: white;
-        padding: 1px 20px 10px 20px;
-        border-radius: 12px;
-        box-shadow: 0px 3px 8px 0px rgba(132, 0, 217, 0.4784313725);
-        margin-top: 20px;">
-            <emdeon-paginator [totalCount]="totalCount" [perPage]="perPage" [pageNum]="pageNum" (onPageChange)="pageChanged($event)" (perPageUpdated)="perPageUpdated($event)"></emdeon-paginator>
+      
+        <div class="bg-white rounded-xl shadow-md mt-8 p-4">
+          <emdeon-paginator 
+            [totalCount]="totalCount"
+            [perPage]="perPage"
+            [pageNum]="pageNum"
+            (onPageChange)="pageChanged($event)"
+            (perPageUpdated)="perPageUpdated($event)">
+          </emdeon-paginator>
         </div>
-        
     </div>
+      
     <div *ngIf="!noPatientFound && currentView == 'table'" class="box mt-20" style="padding: 0px; margin-bottom: 20px;">
-        <div class="table-container">
+        <div class="table-container m-6">
             <table>
                 <thead>
                     <tr>
@@ -98,7 +124,7 @@
                     </tr>
                     <tr *ngFor="let item of list;">
                         <td (click)="getS3File(item._id.s3Key, item._id.fileName)">
-                            <p style="color: #8400d9;" class="cell">{{item._id.fileName}} <i *ngIf="item._id.warning" [matTooltip]="item._id.warning" class="fas fa-exclamation-triangle warning"></i></p>
+                            <p style="color: #f97316;" class="cell">{{item._id.fileName}} <i *ngIf="item._id.warning" [matTooltip]="item._id.warning" class="fas fa-exclamation-triangle warning"></i></p>
                         </td>
                         <td>
                             <p class="cell">{{item.whatis}}</p>
@@ -123,7 +149,7 @@
                             <p *ngIf="thisUser.role != 'Admin'" class="cell">{{item._id.createdAt | date: 'd MMM y h:mm a'}}</p>
                         </td>
                         <td (click)="exportPatients(item._id._id, item._id.fileName)">
-                            <p class="cell" style="color: #8400d9;"><i class="fas fa-download"></i>&nbsp;Export Results</p>
+                            <p class="cell" style="color: #f97316;"><i class="fas fa-download bg-orange-200 p-2 rounded-md"></i>&nbsp;Export Results</p>
                         </td>
                     </tr>
                 </tbody>

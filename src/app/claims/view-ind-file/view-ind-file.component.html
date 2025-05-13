@@ -1,11 +1,11 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">{{fileDetails?.file?.fileName}}</h3>
+        <h3 class="primary-title">{{fileDetails?.file?.fileName}}</h3>
     </div>
 </div>
 <ng-container *ngIf="fileDetails?.file?.fileName">
     <div class="mt-20 box">
-        <h3 class="title">General Details</h3>
+        <h3 class="basic-title">General Details</h3>
         <div class="flex g-15" style="flex-wrap: wrap;">
             <div class="fc-30 gd-ind-info">
                 <p class="topKey">File Name</p>
@@ -27,7 +27,7 @@
                 <p class="topKey">Total Patients</p>
                 <p class="bottomValue">{{totalPatients}}</p>
             </div>
-            <button class="primary-outline fc-30" (click)="removeDupsInSingleFile()">{{dupButtonText}}</button>
+            <button class="primary-btn fc-30 w-2/3" (click)="removeDupsInSingleFile()">{{dupButtonText}}</button>
         </div>
     </div>
     <div class="mt-20 box">
@@ -68,7 +68,7 @@
                 <option selected disabled value="">Assign Client</option>
                 <option *ngFor="let client of clients" [value]="client._id">{{client.name}}</option>
             </select>
-            <button class="primary fc-30" (click)="assignClient()"><i class="fas fa-building"></i>&nbsp;Assign Client</button>
+            <button class="primary-btn fc-30" (click)="assignClient()"><i class="fas fa-building"></i>&nbsp;Assign Client</button>
         </div>
     </div>
 
@@ -83,8 +83,8 @@
                 <p class="topKey">Max Per File</p>
                 <input class="basic" type="number" [(ngModel)]="maxPerFile" placeholder="Max per file"/>
             </div>
-            <div class="fc-30 gd-ind-info">
-                <button class="primary-outline" style="margin-right: 15px;" (click)="splitFile()">Split File</button>
+            <div class="fc-30 flex items-center justify-center">
+                <button class="secondary-btn w-full"  (click)="splitFile()">Split File</button>
             </div>
         </div>
     </div>
@@ -106,9 +106,9 @@
             </div>
         </div>
         <div class="text-center mt-20">
-            <button class="primary-outline" style="margin-right: 15px;" (click)="dividePatients()">Divide Patients</button>
-            <button class="primary-outline" (click)="isAddingOverallCpts = true;">CPTs for All Patients</button>
-            <button class="primary-outline" style="margin-left: 15px;"(click)="saveCptsWithDos()">Save CPTs Without DOS</button>
+            <button class="primary-btn" style="margin-right: 15px;" (click)="dividePatients()">Divide Patients</button>
+            <button class="secondary-btn" (click)="isAddingOverallCpts = true;">CPTs for All Patients</button>
+            <button class="primary-btn" style="margin-left: 15px;"(click)="saveCptsWithDos()">Save CPTs Without DOS</button>
         </div>
         <ng-container *ngIf="assignTable && assignTable.length">
             <div class="divider"></div>
@@ -166,8 +166,8 @@
                         </tr>
                         <tr>
                             <td>
-                                <button class="primary-outline" style="margin-right: 15px;" (click)="addTableDay()">+ Add Day</button>
-                                <button class="primary-outline" (click)="sortDateWise()">Sort date wise</button>
+                                <button class="secondary-btn" style="margin-right: 15px;" (click)="addTableDay()">+ Add Day</button>
+                                <button class="primary-btn" (click)="sortDateWise()">Sort date wise</button>
                             </td>
                             <td></td>
                             <td>
@@ -209,9 +209,9 @@
             <table>
                 <thead>
                     <tr>
-                        <td>Submit On</td>
-                        <td>Status</td>
-                        <td>Count</td>
+                        <td><p>Submit On</p></td>
+                        <td><p>Status</p></td>
+                        <td><p>Count</p></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -320,7 +320,7 @@
                    </ng-container>
                    <tr>
                         <td colspan="3" >
-                            <button class="primary-outline" (click)="addEmptyCpt()">+ Add</button>
+                            <button class="primary-btn" (click)="addEmptyCpt()">+ Add</button>
                         </td>
                         <td colspan="3" class="text-right">
                             <button class="primary" style="margin-right: 10px;" (click)="saveIndCpts()">Save</button>
