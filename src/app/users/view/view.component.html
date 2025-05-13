@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">USERS</h3>
+        <h3 class="primary-title">USERS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -10,10 +10,10 @@
         </div>
     </div>
     <div class="buttons">
-        <button *ngIf="user && user.metadata && !user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger" (click)="archive()"><i class="icon-bin"></i>&nbsp;Archive</button>
-        <button *ngIf="user && user.metadata && user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger" (click)="unarchive()"><i class="icon-bin"></i>&nbsp;Unrchive</button>
-        <button *ngIf="user._id != loggedInUser._id" class="primary-outline" routerLink="/users/edit/{{user._id}}"><i class="icon-edit"></i>&nbsp;Edit</button>
-        <button *ngIf="user._id == loggedInUser._id" class="primary-outline" routerLink="/profile/update"><i class="icon-edit"></i>&nbsp;Edit</button>
+        <button *ngIf="user && user.metadata && !user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger-btn" (click)="archive()"><i class="fas fa-trash"></i>&nbsp;Archive</button>
+        <button *ngIf="user && user.metadata && user.metadata.isDeleted && user._id != loggedInUser._id && user.role == 'Admin'" class="danger-btn" (click)="unarchive()"><i class="fas fa-trash"></i>&nbsp;Unrchive</button>
+        <button *ngIf="user._id != loggedInUser._id" class="primary-btn" routerLink="/users/edit/{{user._id}}"><i class="far fa-edit"></i>&nbsp;Edit</button>
+        <button *ngIf="user._id == loggedInUser._id" class="primary-btn" routerLink="/profile/update"><i class="far fa-edit"></i>&nbsp;Edit</button>
     </div>
 </div>
 <div class="flex mt-20 g-20">
@@ -22,19 +22,19 @@
             <div class="text-center">
                 <div *ngIf="!user.picture" class="initials">{{user.name | initials}}</div>
                 <img class="picture"  *ngIf="user.picture" [src]="user.picture" />
-                <p class="title">{{user.name}}</p>
+                <p class="main-title">{{user.name}}</p>
                 <p class="regno">{{user.userIdString}}</p>
                 <div class="cats">
-                    <p class="chip blue">{{user.role}}</p>
+                    <p class="chip">{{user.role}}</p>
                 </div>
             </div>
             <div *ngIf="user.metadata && user.metadata.createdOn" class="flex keyvalues g-20">
-                <p class="key fc-50">Added On</p>
-                <p class="value fc-50 ml-a text-right">{{user.metadata.createdOn | date: 'd MMM y, h:mm a'}}</p>
+                <p class="list-head">Added On</p>
+                <p class="list-body text-right">{{user.metadata.createdOn | date: 'd MMM y, h:mm a'}}</p>
             </div>
             <div *ngIf="user.metadata && user.metadata.createdBy" class="flex keyvalues g-20">
-                <p class="key fc-50">Added By</p>
-                <p class="value fc-50 ml-a text-right"><a routerLink="/users/view/{{user.metadata.createdBy._id}}">{{user.metadata.createdBy.name}}</a></p>
+                <p class="list-head">Added By</p>
+                <p class="list-body text-right"><a routerLink="/users/view/{{user.metadata.createdBy._id}}">{{user.metadata.createdBy.name}}</a></p>
             </div>
             <ng-container *ngIf="user.metadata && user.metadata.lastEditedBy && user.metadata.lastEditedOn">
                 <div class="separator"></div>
@@ -51,7 +51,7 @@
                     <p class="login-value">02 Jan 2022 2:23AM</p>
                 </div>
                 <div class="fc-50 ml-a text-right">
-                    <button class="primary" (click)="changePassword()"><i class="icon-lock"></i>&nbsp;&nbsp;Change Password</button>
+                    <button class="primary-btn" (click)="changePassword()"><i class="icon-lock"></i>&nbsp;&nbsp;Change Password</button>
                 </div>
             </div>
             <div class="separator"></div>

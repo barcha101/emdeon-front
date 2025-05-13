@@ -1,6 +1,6 @@
 <div class="bc-contain">
     <div class="titles">
-        <h3 class="title">USERS</h3>
+        <h3 class="table-title">USERS</h3>
         <div class="breadcrumb">
             <span class="item">Home</span>
             <i class="fas fa-caret-right"></i>
@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="buttons">
-        <button class="primary" routerLink="/users/add">+ Add New</button>
+        <button class="primary-btn" routerLink="/users/add">+ Add New</button>
     </div>
 </div>
 <div class="box mt-20">
@@ -27,10 +27,10 @@
             <mat-checkbox style="margin-top: 6px;" [(ngModel)]="filterIsArchive" (ngModelChange)="filterUpdated()">Show Archived</mat-checkbox>
         </div>
     </div>
-    <div class="table-container mt-20">
-        <table>
+    <div class="mt-20 table-container">
+        <table class="w-full ">
             <thead>
-                <tr>
+                <tr >
                     <td><p>Name</p></td>
                     <td><p>Username</p></td>
                     <td><p>Email</p></td>
@@ -38,7 +38,7 @@
                     <td><p>Last Login</p></td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="w-full">
                     <tr *ngFor="let item of list" routerLink="/users/view/{{item._id}}">
                         <td>
                             <div class="detailed">
@@ -52,13 +52,13 @@
                             </div>
                         </td>
                         <td>
-                            <p class="cell">{{item.username}}</p>
+                            <span class="text-sm">{{item.username}}</span>
                         </td>
                         <td>
-                            <p class="cell">{{item.email}}</p>
+                            <span class="text-sm">{{item.email}}</span>
                         </td>
                         <td>
-                            <p class="chip blue">{{item.role}}</p>
+                            <span class="text-xs bg-orange-200 text-black p-2 rounded-lg">{{item.role}}</span>
                         </td>
                         <td>
                             <div class="detailed">

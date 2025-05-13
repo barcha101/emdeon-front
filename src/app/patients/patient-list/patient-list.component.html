@@ -14,7 +14,7 @@
         <div class="flex g-20 top-stats">
             <div *ngFor="let stat of statusCounts" class="stat box">
                 <h2>{{stat._id}}</h2>
-                <h1>{{stat.total}}</h1>
+                <h1 class="text-center">{{stat.total}}</h1>
             </div>
         </div>
         <div class="buttons" style="margin-left: auto;">
@@ -29,9 +29,9 @@
                     </div>
                 </div>
             </div> -->
-            <button class="primary-outline" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
-            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
-            <button *ngIf="selectedSourceFile" class="primary" style="margin-left: 10px;" (click)="exportPatients()"><i class="fas fa-download"></i>&nbsp;Export Selected File</button>
+            <button class="secondary-btn" (click)="downloadSampleImport()"><i class="fas fa-download"></i>&nbsp;Download Sample File</button>
+            <button class="primary-btn" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+            <button *ngIf="selectedSourceFile" class="primary-btn" style="margin-left: 10px;" (click)="exportPatients()"><i class="fas fa-download"></i>&nbsp;Export Selected File</button>
         </div>
     </div>
     <div class="box mt-20">

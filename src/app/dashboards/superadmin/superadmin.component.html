@@ -1,9 +1,9 @@
 <div class="box mt-20">
-    <h3 class="title">Days Till Last Appointment Report</h3>
+    <h3 class="primary-title">Days Till Last Appointment Report</h3>
     <div class="filters flex g-20">
         <div class="search-bar fc-75">
             <i class="fas fa-search"></i>
-            <input [(ngModel)]="days_filterSearch" debounce (debouncedModelUpdate)="days_filterUpdated()" placeholder="Search" />
+            <input [(ngModel)]="days_filterSearch" debounce (debouncedModelUpdate)="days_filterUpdated()" placeholder="Search"  />
         </div>
         <div class="fc-25">
             <select [(ngModel)]="filterDays" (ngModelChange)="days_filterUpdated()" class="basic">

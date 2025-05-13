@@ -1,11 +1,11 @@
 <ng-container *ngIf="!noPatientFound">
     <div class="bc-contain">
         <div class="titles">
-            <h3 *ngIf="thisUser.email == 'dmetlpc5@gmail.com'" class="title">SOCIAL MARKETING ELIGIBILITY</h3>
-            <h3 *ngIf="thisUser.email != 'dmetlpc5@gmail.com'" class="title">FILES</h3>
+            <h3 *ngIf="thisUser.email == 'dmetlpc5@gmail.com'" class="primary-title">SOCIAL MARKETING ELIGIBILITY</h3>
+            <h3 *ngIf="thisUser.email != 'dmetlpc5@gmail.com'" class="primary-title">FILES</h3>
         </div>
         <div class="buttons">
-            <button class="primary" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
+            <button class="primary-btn" style="margin-left: 10px;" routerLink="/app/import-patients"><i class="fas fa-upload"></i>&nbsp;Import Patients</button>
             <div *ngIf="thisUser.role == 'Admin'" class="view-select">
                 <i [ngClass]="{'active': currentView == 'grid'}" (click)="currentView='grid'" class="fas fa-grip-horizontal"></i>
                 <i [ngClass]="{'active': currentView == 'table'}" (click)="currentView='table'" class="fas fa-table"></i>
